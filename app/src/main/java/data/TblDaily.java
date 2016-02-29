@@ -19,9 +19,17 @@ public enum TblDaily {
 	@Override
 	public String toString() {return this.colName;}
 
+	public static final String[] ALL_COLUMNS = new String[] {
+			KEY_ID.toString(),
+			DATE.toString(),
+			YEAR.toString(),
+			WEEK_NUM.toString(),
+			DAY.toString()
+	};
+
 	private static final String CREATE_DAILY_TBL = "CREATE TABLE " + TABLE_NAME.toString() + "(" +
 			KEY_ID.toString() + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-			DATE.toString() + " INTEGER NOT NULL, " +
+			DATE.toString() + " INTEGER UNIQUE NOT NULL, " +
 			YEAR.toString() + " INTEGER NOT NULL, " +
 			WEEK_NUM.toString() + " INTEGER NOT NULL, " +
 			DAY.toString() + " INTEGER NOT NULL);";

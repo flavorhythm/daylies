@@ -18,6 +18,13 @@ public enum TblToDo {
 	@Override
 	public String toString() {return this.colName;}
 
+	public static final String[] ALL_COLUMNS = new String[] {
+			KEY_ID.toString(),
+			DAY_KEY.toString(),
+			TODO_TYPE.toString(),
+			TODO_ITEM.toString()
+	};
+
 	private static final String CREATE_TODO_TBL = "CREATE TABLE " + TABLE_NAME.toString() + "(" +
 			KEY_ID.toString() + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			DAY_KEY.toString() + " INTEGER NOT NULL, " +
