@@ -33,6 +33,8 @@ public class DataAccessObject {
     }
 
     public List<Day> getWeek(int year, int week) {
+        final int daysInWeek = 7;
+
         List<Day> dayList = new ArrayList<>();
 
         Cursor cursor = db.query(
@@ -55,25 +57,29 @@ public class DataAccessObject {
                 day.setWeekNum(cursor.getInt(cursor.getColumnIndex(TblDaily.WEEK_NUM.toString())));
                 day.setDay(DayName.values()[cursor.getInt(cursor.getColumnIndex(TblDaily.DAY.toString()))]);
 
-                day.setToDoList(getToDoList(day.getId()));
-
                 dayList.add(day);
             } while(cursor.moveToNext());
         }
 
         cursor.close();
 
+        if(dayList.size() != daysInWeek) {
+
+        }
+
         return dayList;
     }
 
-    private List<ToDo> getToDoList(int dayId) {
+    public List<ToDo> getToDoList(int year, int weekNum, int day) {
+        final String yearWeekDay = String.valueOf(year) + String.valueOf(weekNum) + String.valueOf(day);
+
         List<ToDo> toDoList = new ArrayList<>();
 
         Cursor cursor = db.query(
                 TblToDo.TABLE_NAME.toString(),
                 TblToDo.ALL_COLUMNS,
-                TblToDo.DAY_KEY + " =?",
-                new String[] {String.valueOf(dayId)},
+                TblToDo.YEAR_WEEK_DAY + " =?",
+                new String[] {yearWeekDay},
                 null,
                 null,
                 TblToDo.KEY_ID + " DESC"
@@ -83,6 +89,7 @@ public class DataAccessObject {
             do {
                 ToDo item = new ToDo();
 
+                item.setYearWeekDay(cursor.getString(cursor.getColumnIndex(TblToDo.YEAR_WEEK_DAY.toString())));
                 item.setType(cursor.getInt(cursor.getColumnIndex(TblToDo.TODO_TYPE.toString())));
                 item.setItem(cursor.getString(cursor.getColumnIndex(TblToDo.TODO_ITEM.toString())));
 
@@ -105,9 +112,9 @@ public class DataAccessObject {
         return db.replace(TblDaily.TABLE_NAME.toString(), null, values);
     }
 
-    public long putToDoItem(int dayId, ToDo item) {
+    public long putToDoItem(ToDo item) {
         ContentValues values = new ContentValues();
-        values.put(TblToDo.DAY_KEY.toString(), dayId);
+        values.put(TblToDo.YEAR_WEEK_DAY.toString(), item.getYearWeekDay());
         values.put(TblToDo.TODO_TYPE.toString(), item.getType());
         values.put(TblToDo.TODO_ITEM.toString(), item.getItem());
 
