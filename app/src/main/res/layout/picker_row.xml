@@ -3,18 +3,13 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/overviewRow_text_weekNum"
+        android:id="@+id/pickerRow_text_weekNum"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="start"/>
     <TextView
-        android:id="@+id/overviewRow_text_date"
-        android:layout_width="250dp"
+        android:id="@+id/pickerRow_text_date"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"/>
-    <Button
-        android:id="@+id/overviewRow_butn_showDetails"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:background="@android:drawable/ic_media_next"/>
 </LinearLayout>

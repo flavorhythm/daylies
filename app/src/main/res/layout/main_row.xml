@@ -5,46 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/dailyRow_text_dayOfWeek"
+        android:id="@+id/mainRow_text_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Placeholder"/>
-    <LinearLayout
-        android:id="@+id/dailyRow_linear_hideLunchtime"
-        android:layout_width="wrap_content"
+        android:text="date"/>
+    <TextView
+        android:id="@+id/mainRow_text_dayOfWeek"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="Lunchtime"/>
-        <Button
-            android:id="@+id/dailyRow_butn_addLunchtime"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@android:drawable/ic_input_add"/>
-    </LinearLayout>
-    <ListView
-        android:id="@+id/dailyRow_list_lunchtime"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="Daily To Do"/>
-        <Button
-            android:id="@+id/dailyRow_butn_addDailyToDo"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@android:drawable/ic_input_add"/>
-    </LinearLayout>
-    <ListView
-        android:id="@+id/dailyRow_list_afterWork"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:text="day of week"/>
 
 </LinearLayout>
