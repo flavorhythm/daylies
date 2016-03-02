@@ -1,7 +1,11 @@
 package utils;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static java.util.Calendar.*;
@@ -10,21 +14,70 @@ import static java.util.Calendar.*;
  * Created by zyuki on 2/29/2016.
  */
 public class DateCalcs {
-    public static final int getCurrentWeek(int year) {
-        final int firstMonth = 0;
-        final int firstDay = 1;
-        final int dayOffset = 2;
-        final int daysInWeek = 7;
+    public static final String YEAR_KEY = "year";
+    public static final String WEEK_NUM_KEY = "weekNum";
 
-        Calendar firstOfYear = Calendar.getInstance();
+    private static final int daysInWeek = 7;
+
+    private DateCalcs() {}
+
+    public static final String formatDate(long dateInMillis) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(dateInMillis);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
+        return dateFormat.format(cal.getTime());
+    }
+
+    public static final int getCurrentYear() {
         Calendar current = Calendar.getInstance();
-        firstOfYear.set(year, firstMonth, firstDay);
 
-        int startOfWeek = firstOfYear.get(DAY_OF_WEEK) - dayOffset;
-        firstOfYear.add(DAY_OF_MONTH, -1 * startOfWeek);
+        return current.get(YEAR);
+    }
+
+    public static final List<Integer> getTwoYears() {
+        List<Integer> twoYearSpan = new ArrayList<>();
+
+        for(int i = 0; i < 2; i++) {twoYearSpan.add(getCurrentYear() + i);}
+
+        return twoYearSpan;
+    }
+
+    public static final int getCurrentWeek(int year) {
+        Calendar current = Calendar.getInstance();
+        current.set(YEAR, year);
+
+        return getWeek(current);
+    }
+
+    public static final Map<String, Integer> getThisWeek(long dateInMillis) {
+        Map<String, Integer> yearWeek = new HashMap<>();
+
+        Calendar current = Calendar.getInstance();
+        current.setTimeInMillis(dateInMillis);
+
+        yearWeek.put(YEAR_KEY, current.get(YEAR));
+        yearWeek.put(WEEK_NUM_KEY, getWeek(current));
+
+        return yearWeek;
+    }
+
+    public static final Calendar getDateOfWeek(int year, int week) {
+        Calendar current = Calendar.getInstance();
+        current.set(YEAR, year);
+
+        Calendar firstOfYear = findFirstDate(current);
+
+        firstOfYear.add(DAY_OF_YEAR, (week - 1) * daysInWeek);
+
+        return firstOfYear;
+    }
+
+    private static final int getWeek(Calendar cal) {
+        Calendar firstOfYear = findFirstDate(cal);
 
         int weekNum = 0;
-        while(current.compareTo(firstOfYear) != 1) {
+        while(cal.compareTo(firstOfYear) == 1) {
             weekNum++;
             firstOfYear.add(DAY_OF_MONTH, daysInWeek);
         }
@@ -32,8 +85,17 @@ public class DateCalcs {
         return weekNum;
     }
 
-    public static final Map<String, Integer> getThisWeek(long dateInMillis) {
-        Map<String, Integer> yearWeek = new HashMap<>();
-        
+    private static final Calendar findFirstDate(Calendar cal) {
+        final int firstMonth = 0;
+        final int firstDay = 1;
+        final int dayOffset = 2;
+
+        Calendar firstOfYear = Calendar.getInstance();
+        firstOfYear.set(cal.get(YEAR), firstMonth, firstDay);
+
+        int startOfWeek = firstOfYear.get(DAY_OF_WEEK) - dayOffset;
+        firstOfYear.add(DAY_OF_MONTH, -1 * startOfWeek);
+
+        return firstOfYear;
     }
 }
