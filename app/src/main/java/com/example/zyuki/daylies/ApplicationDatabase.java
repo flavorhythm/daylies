@@ -11,7 +11,7 @@ import data.DataAccessObject;
  */
 public class ApplicationDatabase extends Application {
 
-    DataAccessObject dataAccess;
+    public DataAccessObject dataAccess;
 
     @Override
     public void onCreate() {

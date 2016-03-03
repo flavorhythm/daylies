@@ -1,9 +1,12 @@
 package utils;
 
+import com.example.zyuki.daylies.ApplicationDatabase;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import data.DataAccessObject;
 import models.Day;
 import models.DayName;
 import models.WeeksInYear;
@@ -13,7 +16,8 @@ import models.WeeksInYear;
  */
 public class ListBuilder {
 
-	public static List<Day> finishBuildingWeek(int year, int weekNum) {
+	public static List<Day> finishBuildingWeek(ApplicationDatabase context, int year, int weekNum) {
+        DataAccessObject dataAccess = context.dataAccess;
 		List<Day> week = new ArrayList<>();
 
 		Calendar firstDateOfWeek;
@@ -27,7 +31,7 @@ public class ListBuilder {
             day.setYear(year);
             day.setWeekNum(weekNum);
             day.setDay(DayName.values()[i]);
-//            day.setToDoList(dataAccess.getToDoList(year, weekNum, i));
+            day.setToDoList(dataAccess.getToDoList(year, weekNum, i));
 
             firstDateOfWeek.add(Calendar.DAY_OF_YEAR, 1);
             week.add(day);

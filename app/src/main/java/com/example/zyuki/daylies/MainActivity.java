@@ -21,16 +21,16 @@ import adapters.MainAdapter;
 import data.DataAccessObject;
 import models.Day;
 import models.DayName;
+import models.ToDo;
 import utils.DateCalcs;
 import utils.ListBuilder;
 
 public class MainActivity extends AppCompatActivity {
     private List<Day> week;
+    private List<ToDo> toDoList;
 
     private TextView yearText, weekNumText;
     private ListView dayList;
-
-    private DataAccessObject dataAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dataAccess = ((ApplicationDatabase)getApplicationContext()).dataAccess;
-
-        yearText = (TextView)findViewById(R.id.main_text_year);
-        weekNumText = (TextView)findViewById(R.id.main_text_weekNum);
-        dayList = (ListView)findViewById(R.id.main_list_daily);
+        findViewsById();
 
         buildWeek();
 
@@ -52,14 +48,14 @@ public class MainActivity extends AppCompatActivity {
         MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.main_row, week);
         dayList.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     @Override
@@ -86,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void findViewsById() {
+        yearText = (TextView)findViewById(R.id.main_text_year);
+        weekNumText = (TextView)findViewById(R.id.main_text_weekNum);
+        dayList = (ListView)findViewById(R.id.main_list_daily);
+    }
+
     private void buildWeek() {
         int year;
         int weekNum;
@@ -102,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             weekNum = extras.getInt(DateCalcs.WEEK_NUM_KEY);
         }
 
-		week = ListBuilder.finishBuildingWeek(year, weekNum);
+        ApplicationDatabase context = ((ApplicationDatabase)getApplicationContext());
+		week = ListBuilder.finishBuildingWeek(context , year, weekNum);
     }
 }
