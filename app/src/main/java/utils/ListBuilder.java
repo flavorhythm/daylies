@@ -43,7 +43,7 @@ public class ListBuilder {
 
         for(int i = 1; i <= weekNumInYear; i++) {
             WeeksInYear week = new WeeksInYear();
-            Calendar cal = DateCalcs.getDateOfWeek(year, weekNumInYear);
+            Calendar cal = DateCalcs.getDateOfWeek(year, i);
 
             week.setWeekNum(i);
             week.setDate(cal.getTimeInMillis());
