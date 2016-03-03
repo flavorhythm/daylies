@@ -79,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this, WeekPickerActivity.class));
+            finish();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO: partially move this elsewhere
     private void buildWeek() {
         int year;
         int weekNum;

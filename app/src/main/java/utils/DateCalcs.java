@@ -35,14 +35,6 @@ public class DateCalcs {
         return current.get(YEAR);
     }
 
-    public static final List<Integer> getTwoYears() {
-        List<Integer> twoYearSpan = new ArrayList<>();
-
-        for(int i = 0; i < 2; i++) {twoYearSpan.add(getCurrentYear() + i);}
-
-        return twoYearSpan;
-    }
-
     public static final int getCurrentWeek(int year) {
         Calendar current = Calendar.getInstance();
         current.set(YEAR, year);
