@@ -21,11 +21,9 @@ import data.DataAccessObject;
 import models.Day;
 import models.DayName;
 import utils.DateCalcs;
+import utils.ListBuilder;
 
 public class MainActivity extends AppCompatActivity {
-    private int year;
-    private int weekNum;
-    private Calendar firstDateOfWeek;
     private List<Day> week;
 
     private TextView yearText, weekNumText;
@@ -48,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         buildWeek();
 
-        yearText.setText(String.valueOf(year));
-        weekNumText.setText(String.valueOf(weekNum));
+        yearText.setText(String.valueOf(week.get(0).getYear()));
+        weekNumText.setText(String.valueOf(week.get(0).getWeekNum()));
         MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.main_row, week);
         dayList.setAdapter(adapter);
 
@@ -86,7 +84,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //TODO: partially move this elsewhere
-    private List<Day> buildWeek() {
+    private void buildWeek() {
+        int year;
+        int weekNum;
+
         week = new ArrayList<>();
 
         Bundle extras = getIntent().getExtras();
@@ -99,22 +100,6 @@ public class MainActivity extends AppCompatActivity {
             weekNum = extras.getInt(DateCalcs.WEEK_NUM_KEY);
         }
 
-        firstDateOfWeek = DateCalcs.getDateOfWeek(year, weekNum);
-
-        final int daysInWeek = 7;
-        for(int i = 0; i < daysInWeek; i++) {
-            Day day = new Day();
-
-            day.setDate(firstDateOfWeek.getTimeInMillis());
-            day.setYear(year);
-            day.setWeekNum(weekNum);
-            day.setDay(DayName.values()[i]);
-//            day.setToDoList(dataAccess.getToDoList(year, weekNum, i));
-
-            firstDateOfWeek.add(Calendar.DAY_OF_YEAR, 1);
-            week.add(day);
-        }
-
-        return week;
+		week = ListBuilder.finishBuildingWeek(year, weekNum);
     }
 }
