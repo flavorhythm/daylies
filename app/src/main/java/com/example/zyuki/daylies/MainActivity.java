@@ -79,11 +79,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         dailyToDoStr.clear();
+        lunchToDoStr.clear();
         DayName day = week.get(position).getDay();
         List<ToDo> dailyToDo = week.get(position).getToDoList();
 
         String noValStr = "Nothing to do on " + day.toString();
-
+        //TODO: nees to differentiate between days to remove "lunch" from weekends
         if(!dailyToDo.isEmpty()) {
             for(ToDo item : dailyToDo) {
                 switch(item.getType()) {
