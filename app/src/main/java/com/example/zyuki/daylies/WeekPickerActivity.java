@@ -14,35 +14,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapters.PickerAdapter;
+import fragments.DialogRouter;
 import models.WeeksInYear;
 import utils.DateCalcs;
 import utils.ListBuilder;
 
 public class WeekPickerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    private PickerAdapter adapter;
     private List<WeeksInYear> weeksInYear;
+    private ListView weekList;
     private int year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_picker);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.picker_toolbar);
-        setSupportActionBar(toolbar);
 
-        Bundle extras = getIntent().getExtras();
+        weekList = (ListView)findViewById(R.id.picker_list_week);
 
-        if(extras == null || extras.isEmpty()) {
-            year = DateCalcs.getCurrentYear();
-        } else {
-            year = extras.getInt(DateCalcs.YEAR_KEY);
-        }
-
-        weeksInYear = ListBuilder.buildWeeksInYear(year);
-
-        ListView weekList = (ListView)findViewById(R.id.picker_list_week);
-        adapter = new PickerAdapter(WeekPickerActivity.this, R.layout.picker_row, weeksInYear);
-        weekList.setAdapter(adapter);
+        year = DateCalcs.getCurrentYear();
+        selectedYear(year);
 
         weekList.setOnItemClickListener(this);
     }
@@ -75,17 +65,18 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.select_year) {
-
-
+            DialogRouter.instantiateDialogRouter(WeekPickerActivity.this);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO: figure out what to do here
     public void selectedYear(int year) {
+        this.year = year;
         weeksInYear = ListBuilder.buildWeeksInYear(year);
-        adapter.notifyDataSetChanged();
+
+        PickerAdapter adapter = new PickerAdapter(WeekPickerActivity.this, R.layout.picker_row, weeksInYear);
+        weekList.setAdapter(adapter);
     }
 }

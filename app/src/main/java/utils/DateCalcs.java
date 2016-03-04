@@ -21,6 +21,16 @@ public class DateCalcs {
 
     private DateCalcs() {}
 
+    public static final String addZeroToNum(int weekNum) {
+        String weekNumStr = "";
+
+        if(weekNum < 10) {
+            weekNumStr = "0";
+        }
+
+        return weekNumStr + String.valueOf(weekNum);
+    }
+
     public static final String formatDate(long dateInMillis) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(dateInMillis);

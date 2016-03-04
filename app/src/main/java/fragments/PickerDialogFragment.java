@@ -44,6 +44,8 @@ public class PickerDialogFragment extends DialogFragment implements View.OnClick
 		cancelBtn.setOnClickListener(this);
 		submitBtn.setOnClickListener(this);
 
+		getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 		return customLayout;
 	}
 

@@ -44,18 +44,10 @@ public class MainActivity extends AppCompatActivity {
         buildWeek();
 
         yearText.setText(String.valueOf(week.get(0).getYear()));
-        weekNumText.setText(String.valueOf(week.get(0).getWeekNum()));
+        weekNumText.setText(DateCalcs.addZeroToNum(week.get(0).getWeekNum()));
+
         MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.main_row, week);
         dayList.setAdapter(adapter);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override

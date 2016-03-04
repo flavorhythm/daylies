@@ -68,15 +68,9 @@ public class PickerAdapter extends ArrayAdapter<WeeksInYear> {
 
         WeeksInYear week = getItem(position);
 
-        String weekNumString = "";
+        String weekNumStr = DateCalcs.addZeroToNum(week.getWeekNum());
 
-        if(week.getWeekNum() < 10) {
-            weekNumString = "0";
-        }
-
-        weekNumString += String.valueOf(week.getWeekNum());
-
-        viewHolder.weekNum.setText(weekNumString);
+        viewHolder.weekNum.setText(weekNumStr);
         viewHolder.date.setText(DateCalcs.formatDate(week.getDate()));
 
         return row;
