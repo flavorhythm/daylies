@@ -19,17 +19,18 @@ import java.util.List;
 
 import adapters.MainAdapter;
 import models.Day;
+import models.DayName;
 import models.ToDo;
 import utils.DateCalcs;
 import utils.ListBuilder;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private List<Day> week;
-    private List<String> dailyToDoStr;
-    private ArrayAdapter<String> toDoAdapter;
+    private List<String> lunchToDoStr, dailyToDoStr;
+    private ArrayAdapter<String> lunchAdapter, toDoAdapter;
 
     private TextView yearText, weekNumText;
-    private ListView dayList, toDoList;
+    private ListView dayList, lunchList, toDoList;
     private SlidingUpPanelLayout slider;
 
     @Override
@@ -46,13 +47,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         yearText.setText(String.valueOf(week.get(0).getYear()));
         weekNumText.setText(DateCalcs.addZeroToNum(week.get(0).getWeekNum()));
 
-        dailyToDoStr = new ArrayList<>();
-
-        MainAdapter mainAdapter = new MainAdapter(MainActivity.this, R.layout.main_row, week);
-        dayList.setAdapter(mainAdapter);
-
-        toDoAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, dailyToDoStr);
-        toDoList.setAdapter(toDoAdapter);
+        setUpAdapters();
 
         dayList.setOnItemClickListener(this);
     }
@@ -84,13 +79,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         dailyToDoStr.clear();
+        DayName day = week.get(position).getDay();
         List<ToDo> dailyToDo = week.get(position).getToDoList();
 
-        if(dailyToDo.isEmpty()) {
-            dailyToDoStr.add("Nothing to do on " + week.get(position).getDay().toString());
-            toDoAdapter.notifyDataSetChanged();
+        String noValStr = "Nothing to do on " + day.toString();
+
+        if(!dailyToDo.isEmpty()) {
+            for(ToDo item : dailyToDo) {
+                switch(item.getType()) {
+                    case ToDo.LUNCH_TYPE:
+                        lunchToDoStr.add(item.getItem());
+                        break;
+                    case ToDo.TODO_TYPE:
+                        dailyToDoStr.add(item.getItem());
+                        break;
+                }
+            }
+        } else {
+            switch(day) {
+                case MON: case TUE: case WED: case THU: case FRI:
+                    lunchToDoStr.add(noValStr);
+                    break;
+                case SAT: case SUN:
+                    lunchList.setVisibility(View.GONE);
+                    toDoAdapter.add(noValStr);
+                    break;
+            }
         }
 
+        lunchAdapter.notifyDataSetChanged();
+        toDoAdapter.notifyDataSetChanged();
         slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
     }
 
@@ -100,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         dayList = (ListView)findViewById(R.id.main_list_daily);
         slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding_layout);
         toDoList = (ListView)findViewById(R.id.main_list_todo);
+        lunchList = (ListView)findViewById(R.id.main_list_lunch);
     }
 
     private void buildWeek() {
@@ -120,5 +139,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         ApplicationDatabase context = ((ApplicationDatabase)getApplicationContext());
 		week = ListBuilder.finishBuildingWeek(context , year, weekNum);
+    }
+
+    private void setUpAdapters() {
+        MainAdapter mainAdapter = new MainAdapter(MainActivity.this, R.layout.main_row, week);
+        dayList.setAdapter(mainAdapter);
+
+        lunchToDoStr = new ArrayList<>();
+        lunchAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, lunchToDoStr);
+        lunchList.setAdapter(lunchAdapter);
+
+        dailyToDoStr = new ArrayList<>();
+        toDoAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, dailyToDoStr);
+        toDoList.setAdapter(toDoAdapter);
     }
 }

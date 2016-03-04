@@ -65,10 +65,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="To Do List"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lunch To Do"/>
+            <ListView
+                android:id="@+id/main_list_lunch"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:dividerHeight="0dp"
+                android:divider="#ffffff"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="After Work"/>
             <ListView
                 android:id="@+id/main_list_todo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="150dp"
                 android:dividerHeight="0dp"
                 android:divider="#ffffff"/>
         </LinearLayout>
