@@ -17,13 +17,14 @@ import models.WeeksInYear;
 public class ListBuilder {
 
 	public static List<Day> finishBuildingWeek(ApplicationDatabase context, int year, int weekNum) {
+        final int daysInWeek = 7;
+
         DataAccessObject dataAccess = context.dataAccess;
 		List<Day> week = new ArrayList<>();
 
 		Calendar firstDateOfWeek;
         firstDateOfWeek = DateCalcs.getDateOfWeek(year, weekNum);
 
-        final int daysInWeek = 7;
         for(int i = 0; i < daysInWeek; i++) {
             Day day = new Day();
 

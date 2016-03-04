@@ -65,7 +65,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.select_year) {
-            DialogRouter.instantiateDialogRouter(WeekPickerActivity.this);
+            DialogRouter.instantiatePickerDialog(WeekPickerActivity.this, year);
             return true;
         }
 

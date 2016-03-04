@@ -18,20 +18,16 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12fc888c-573b-45b6-b841-a573863fac14" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/utils/DateCalcs.java" afterPath="$PROJECT_DIR$/app/src/main/java/utils/DateCalcs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/fragments/DialogRouter.java" afterPath="$PROJECT_DIR$/app/src/main/java/fragments/DialogRouter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/utils/ListBuilder.java" afterPath="$PROJECT_DIR$/app/src/main/java/utils/ListBuilder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/adapters/PickerAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/adapters/PickerAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/fragments/PickerDialogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/fragments/PickerDialogFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/WeekPickerActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/WeekPickerActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_week_picker.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_week_picker.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_week_picker.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_week_picker.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/year_picker_dialog.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/year_picker_dialog.xml" />
     </list>
     <ignored path="daylies.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,11 +55,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="WeekPickerActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/WeekPickerActivity.java">
+      <file leaf-file-name="PickerDialogFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/PickerDialogFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5475842">
-              <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.84626645">
+              <caret line="51" column="43" selection-start-line="51" selection-start-column="43" selection-end-line="51" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -1683,19 +1679,19 @@
         <option value="$PROJECT_DIR$/app/src/main/java/adapters/MainAdapter.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/ApplicationDatabase.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/utils/ListBuilder.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_picker.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/fragments/DialogRouter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_week_picker.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_week_picker.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/year_picker_dialog.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/fragments/PickerDialogFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/utils/DateCalcs.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/adapters/PickerAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/utils/ListBuilder.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/adapters/PickerAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/WeekPickerActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/fragments/DialogRouter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/fragments/PickerDialogFragment.java" />
       </list>
     </option>
   </component>
@@ -1833,6 +1829,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="fragments" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daylies" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daylies" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daylies" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2137,20 +2169,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/utils/ListBuilder.java</url>
-          <line>45</line>
-          <properties />
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/utils/ListBuilder.java</url>
-          <line>57</line>
-          <properties />
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="25" />
     </breakpoint-manager>
     <watches-manager />
@@ -2160,7 +2178,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="80" column="9" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
-          <folding />
+          <folding>
+            <marker date="1457106178359" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="//..." />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2265,14 +2291,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/data/DataAccessObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02895323">
-          <caret line="42" column="71" selection-start-line="42" selection-start-column="71" selection-end-line="42" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/data/DatabaseHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2650334">
@@ -2367,32 +2385,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/utils/ListBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7495908">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding>
-            <marker date="1457042824146" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1457042824146" expanded="true" signature="-1:-1" placeholder="/**...*/" />
-            <marker date="1457042824146" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1457042824146" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DialogRouter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67203516">
-          <caret line="31" column="1" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
-          <folding>
-            <marker date="1457101534004" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1457101534004" expanded="true" signature="-1:-1" placeholder="/**...*/" />
-            <marker date="1457101534004" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1457101534004" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/year_picker_dialog.xml">
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33740458">
@@ -2409,21 +2401,6 @@
       </provider>
       <provider selected="true" editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/PickerDialogFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.522694">
-          <caret line="40" column="32" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
-          <folding>
-            <marker date="1457104136985" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1457104136985" expanded="true" signature="-1:-1" placeholder="/**...*/" />
-            <marker date="1457104136985" expanded="false" signature="-1:-1" placeholder=" { " />
-            <marker date="1457104136985" expanded="false" signature="-1:-1" placeholder=" }" />
-            <marker date="1457104136985" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1457104136985" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/main_row.xml">
@@ -2506,32 +2483,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/utils/ListBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7013177">
+          <caret line="49" column="49" selection-start-line="49" selection-start-column="49" selection-end-line="49" selection-end-column="49" />
+          <folding>
+            <marker date="1457105073572" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1457105073572" expanded="true" signature="-1:-1" placeholder="/**...*/" />
+            <marker date="1457105073572" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457105073572" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/adapters/PickerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5270864">
-          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.7013177">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding>
-            <marker date="1457104430808" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1457104430808" expanded="true" signature="-1:-1" placeholder="/**...*/" />
-            <marker date="1457104430808" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1457104430808" expanded="false" signature="-1:-1" placeholder=" { " />
-            <marker date="1457104430808" expanded="false" signature="-1:-1" placeholder=" }" />
-            <marker date="1457104430808" expanded="false" signature="-1:-1" placeholder=" { " />
-            <marker date="1457104430808" expanded="false" signature="-1:-1" placeholder=" }" />
-            <marker date="1457104430808" expanded="false" signature="-1:-1" placeholder=" { " />
-            <marker date="1457104430808" expanded="false" signature="-1:-1" placeholder=" }" />
-            <marker date="1457104430808" expanded="false" signature="-1:-1" placeholder=" { " />
-            <marker date="1457104430808" expanded="false" signature="-1:-1" placeholder=" }" />
-            <marker date="1457104430808" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1457104430808" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457105178322" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1457105178322" expanded="true" signature="-1:-1" placeholder="/**...*/" />
+            <marker date="1457105178322" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457105178322" expanded="false" signature="-1:-1" placeholder=" { " />
+            <marker date="1457105178322" expanded="false" signature="-1:-1" placeholder=" }" />
+            <marker date="1457105178322" expanded="false" signature="-1:-1" placeholder=" { " />
+            <marker date="1457105178322" expanded="false" signature="-1:-1" placeholder=" }" />
+            <marker date="1457105178322" expanded="false" signature="-1:-1" placeholder=" { " />
+            <marker date="1457105178322" expanded="false" signature="-1:-1" placeholder=" }" />
+            <marker date="1457105178322" expanded="false" signature="-1:-1" placeholder=" { " />
+            <marker date="1457105178322" expanded="false" signature="-1:-1" placeholder=" }" />
+            <marker date="1457105178322" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457105178322" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/data/DataAccessObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2196193">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding>
+            <marker date="1456939554286" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1456939554286" expanded="true" signature="-1:-1" placeholder="/**...*/" />
+            <marker date="1456939554286" expanded="false" signature="-1:-1" placeholder=" { " />
+            <marker date="1456939554286" expanded="false" signature="-1:-1" placeholder=" }" />
+            <marker date="1456939554286" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1456939554286" expanded="false" signature="-1:-1" placeholder=" { " />
+            <marker date="1456939554286" expanded="false" signature="-1:-1" placeholder=" }" />
+            <marker date="1456939554286" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1456939554286" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1456939554286" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1456939554286" expanded="true" signature="-1:-1" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.522694">
-          <caret line="47" column="8" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.7759883">
+          <caret line="99" column="38" selection-start-line="99" selection-start-column="38" selection-end-line="99" selection-end-column="38" />
           <folding>
             <marker date="1457104541977" expanded="false" signature="-1:-1" placeholder="..." />
             <marker date="1457104541977" expanded="true" signature="-1:-1" placeholder="{...}" />
@@ -2546,8 +2556,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/WeekPickerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5475842">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.29868227">
+          <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
+          <folding>
+            <marker date="1457106178359" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="//..." />
+            <marker date="1457106178359" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DialogRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2489019">
+          <caret line="14" column="77" selection-start-line="14" selection-start-column="77" selection-end-line="14" selection-end-column="77" />
+          <folding>
+            <marker date="1457106178398" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1457106178398" expanded="true" signature="-1:-1" placeholder="/**...*/" />
+            <marker date="1457106178398" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457106178398" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/PickerDialogFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.84626645">
+          <caret line="51" column="43" selection-start-line="51" selection-start-column="43" selection-end-line="51" selection-end-column="43" />
           <folding />
         </state>
       </provider>

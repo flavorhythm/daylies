@@ -12,10 +12,10 @@ import android.support.v4.app.FragmentTransaction;
 public class DialogRouter {
 	private DialogRouter() {}
 
-	public static void instantiateDialogRouter(Activity activity) {
+	public static void instantiatePickerDialog(Activity activity, int year) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
-		PickerDialogFragment pickerDialog = PickerDialogFragment.newInstance();
+		PickerDialogFragment pickerDialog = PickerDialogFragment.newInstance(year);
 		pickerDialog.show(fragTransaction, "dialog");
 	}
 

@@ -25,9 +25,15 @@ import utils.DateCalcs;
 public class PickerDialogFragment extends DialogFragment implements View.OnClickListener {
 	private NumberPicker yearPicker;
 
-	public static PickerDialogFragment newInstance() {
-	        return new PickerDialogFragment();
-	    }
+	public static PickerDialogFragment newInstance(int year) {
+        Bundle args = new Bundle();
+        args.putInt(DateCalcs.YEAR_KEY, year);
+
+        PickerDialogFragment fragment = new PickerDialogFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class PickerDialogFragment extends DialogFragment implements View.OnClick
 
 		yearPicker.setMinValue(DateCalcs.getCurrentYear());
 		yearPicker.setMaxValue(DateCalcs.getCurrentYear() + 30);
+        yearPicker.setValue(getArguments().getInt(DateCalcs.YEAR_KEY));
 
 		cancelBtn.setOnClickListener(this);
 		submitBtn.setOnClickListener(this);
