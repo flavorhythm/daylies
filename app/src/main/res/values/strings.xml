@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Daylies</string>
-    <string name="action_settings">Settings</string>
     <string name="go_to_picker">Pick Week</string>
     <string name="select_year">Select Year</string>
 </resources>

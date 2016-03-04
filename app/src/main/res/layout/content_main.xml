@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,38 +13,64 @@
     tools:context="com.zenoyuki.flavorhythm.daily.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <LinearLayout
-        android:id="@+id/main_linear_weekYear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentStart="true">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Year"/>
-        <TextView
-            android:id="@+id/main_text_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Week"/>
-        <TextView
-            android:id="@+id/main_text_weekNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="52"/>
-    </LinearLayout>
-    <ListView
-        android:id="@+id/main_list_daily"
-        android:layout_width="wrap_content"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/main_sliding_layout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="0dp"
-        android:divider="#ffffff"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/main_linear_weekYear"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="50dp"/>
+        android:gravity="bottom">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/main_linear_weekYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentStart="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Year"/>
+                <TextView
+                    android:id="@+id/main_text_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Week"/>
+                <TextView
+                    android:id="@+id/main_text_weekNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="52"/>
+            </LinearLayout>
+            <ListView
+                android:id="@+id/main_list_daily"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerHeight="0dp"
+                android:divider="#ffffff"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/main_linear_weekYear"
+                android:layout_marginStart="50dp"
+                android:layout_marginBottom="50dp"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.8">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Do List"/>
+            <ListView
+                android:id="@+id/main_list_todo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerHeight="0dp"
+                android:divider="#ffffff"/>
+        </LinearLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </RelativeLayout>
