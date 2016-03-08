@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,13 +27,14 @@ import models.ToDo;
 import utils.DateCalcs;
 import utils.ListBuilder;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
     private List<Day> week;
     private List<String> lunchToDoStr, dailyToDoStr;
     private ArrayAdapter<String> lunchAdapter, toDoAdapter;
 
-    private TextView yearText, weekNumText;
+    private TextView yearText, weekNumText, lunchTitle, dailyToDoTitle;
     private ListView dayList, lunchList, toDoList;
+    private Button lunchAdd, dailyToDoAdd;
     private SlidingUpPanelLayout slider;
 
     @Override
@@ -50,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setUpAdapters();
 
         dayList.setOnItemClickListener(this);
+
+        lunchAdd.setOnClickListener(this);
+        dailyToDoAdd.setOnClickListener(this);
     }
 
     @Override
@@ -80,11 +87,65 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         dailyToDoStr.clear();
         lunchToDoStr.clear();
-        DayName day = week.get(position).getDay();
-        List<ToDo> dailyToDo = week.get(position).getToDoList();
 
-        String noValStr = "Nothing to do on " + day.toString();
-        //TODO: nees to differentiate between days to remove "lunch" from weekends
+        getDailyToDos(week.get(position));
+
+        lunchAdapter.notifyDataSetChanged();
+        toDoAdapter.notifyDataSetChanged();
+        slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.main_butn_lunchAdd:
+                break;
+            case R.id.main_butn_toDoAdd:
+                break;
+        }
+    }
+
+    private void getDailyToDos(Day day) {
+        switch(day.getDay()) {
+            case MON: case TUE: case WED: case THU: case FRI:
+                getWeekDayToDos(day);
+                break;
+            case SAT: case SUN:
+                getWeekEndToDos(day);
+                break;
+        }
+    }
+
+    private void getWeekDayToDos(Day day) {
+        setLunchVisibility(View.VISIBLE);
+        setToDoVisibility(View.VISIBLE);
+
+        dailyToDoTitle.setText("After Work");
+
+        putItemInArray(day.getToDoList());
+
+        if(lunchToDoStr.isEmpty()) {
+            lunchToDoStr.add("Nothing to do at lunch");
+        }
+        if(dailyToDoStr.isEmpty()) {
+            dailyToDoStr.add("Nothing to do after work");
+        }
+    }
+
+    private void getWeekEndToDos(Day day) {
+        setLunchVisibility(View.GONE);
+        setToDoVisibility(View.VISIBLE);
+
+        dailyToDoTitle.setText("Daily To Dos");
+
+        putItemInArray(day.getToDoList());
+
+        if(dailyToDoStr.isEmpty()){
+            toDoAdapter.add("Nothing to do today");
+        }
+    }
+
+    private void putItemInArray(List<ToDo> dailyToDo) {
         if(!dailyToDo.isEmpty()) {
             for(ToDo item : dailyToDo) {
                 switch(item.getType()) {
@@ -96,29 +157,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         break;
                 }
             }
-        } else {
-            switch(day) {
-                case MON: case TUE: case WED: case THU: case FRI:
-                    lunchToDoStr.add(noValStr);
-                    break;
-                case SAT: case SUN:
-                    lunchList.setVisibility(View.GONE);
-                    toDoAdapter.add(noValStr);
-                    break;
-            }
         }
+    }
 
-        lunchAdapter.notifyDataSetChanged();
-        toDoAdapter.notifyDataSetChanged();
-        slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+    private void setLunchVisibility(int visibility) {
+        lunchTitle.setVisibility(visibility);
+        lunchList.setVisibility(visibility);
+        lunchAdd.setVisibility(visibility);
+    }
+
+    private void setToDoVisibility(int visibility) {
+        dailyToDoTitle.setVisibility(visibility);
+        toDoList.setVisibility(visibility);
+        dailyToDoAdd.setVisibility(visibility);
     }
 
     private void findViewsById() {
         yearText = (TextView)findViewById(R.id.main_text_year);
         weekNumText = (TextView)findViewById(R.id.main_text_weekNum);
-        dayList = (ListView)findViewById(R.id.main_list_daily);
+        lunchTitle = (TextView)findViewById(R.id.main_text_lunchListTitle);
+        dailyToDoTitle = (TextView)findViewById(R.id.main_text_dailyToDoTitle);
+
+        lunchAdd = (Button)findViewById(R.id.main_butn_lunchAdd);
+        dailyToDoAdd = (Button)findViewById(R.id.main_butn_toDoAdd);
+
         slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding_layout);
-        toDoList = (ListView)findViewById(R.id.main_list_todo);
+
+        dayList = (ListView)findViewById(R.id.main_list_daily);
+        toDoList = (ListView)findViewById(R.id.main_list_dailyToDo);
         lunchList = (ListView)findViewById(R.id.main_list_lunch);
     }
 
@@ -154,4 +220,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toDoAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, dailyToDoStr);
         toDoList.setAdapter(toDoAdapter);
     }
+
+
 }
