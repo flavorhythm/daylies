@@ -59,7 +59,8 @@ public class PickerDialogFragment extends DialogFragment implements View.OnClick
 				break;
 			case R.id.dialog_butn_submit:
 				WeekPickerActivity activity = (WeekPickerActivity)getActivity();
-				activity.selectedYear(yearPicker.getValue());
+				activity.displaySelectedYear(yearPicker.getValue());
+
 				getDialog().dismiss();
 				break;
 		}

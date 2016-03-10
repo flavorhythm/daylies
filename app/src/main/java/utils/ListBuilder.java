@@ -40,22 +40,4 @@ public class ListBuilder {
 
 		return week;
 	}
-
-    public static List<WeeksInYear> buildWeeksInYear(int year) {
-        final int weekNumInYear = 52;
-
-        List<WeeksInYear> weeksInYear = new ArrayList<>();
-
-        for(int i = 1; i <= weekNumInYear; i++) {
-            WeeksInYear week = new WeeksInYear();
-            Calendar cal = DateCalcs.getDateOfWeek(year, i);
-
-            week.setWeekNum(i);
-            week.setDate(cal.getTimeInMillis());
-
-            weeksInYear.add(week);
-        }
-
-        return weeksInYear;
-    }
 }

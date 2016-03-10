@@ -4,60 +4,45 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.zyuki.daylies.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import models.ToDo;
 import models.WeeksInYear;
 import utils.DateCalcs;
 
 /**
  * Created by zyuki on 2/26/2016.
  */
-public class PickerAdapter extends ArrayAdapter<WeeksInYear> {
-    private Activity activity;
-    private int layoutRes;
-    private List<WeeksInYear> weeksList;
+public class PickerAdapter extends BaseAdapter {
+    private static final int WEEKS_IN_YEAR = 52;
 
-    public PickerAdapter(Activity activity, int layoutRes, List<WeeksInYear> weeksList) {
-        super(activity, layoutRes, weeksList);
+    private LayoutInflater inflater;
+    private List<WeeksInYear> weeksList = new ArrayList<>();
 
-        this.activity = activity;
-        this.layoutRes = layoutRes;
-        this.weeksList = weeksList;
-    }
+    public PickerAdapter(Activity activity) {inflater = LayoutInflater.from(activity);}
 
     @Override
-    public int getCount() {
-        return weeksList.size();
-    }
+    public int getCount() {return weeksList.size();}
 
     @Override
-    public WeeksInYear getItem(int position) {
-        return super.getItem(position);
-    }
+    public WeeksInYear getItem(int position) {return weeksList.get(position);}
 
     @Override
-    public int getPosition(WeeksInYear item) {
-        return super.getPosition(item);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
-    }
+    public long getItemId(int position) {return position;}
 
     @Override
     public View getView(int position, View row, ViewGroup parent) {
+        int layoutRes = R.layout.picker_row;
         ViewHolder viewHolder;
 
         if(row == null || row.getTag() == null) {
-            row = LayoutInflater.from(activity).inflate(layoutRes, parent, false);
+            row = inflater.inflate(layoutRes, parent, false);
             viewHolder = new ViewHolder();
 
             viewHolder.weekNum = (TextView)row.findViewById(R.id.pickerRow_text_weekNum);
@@ -74,7 +59,22 @@ public class PickerAdapter extends ArrayAdapter<WeeksInYear> {
         return row;
     }
 
-    class ViewHolder {
+    public void buildWeeksInYear(int year) {
+        weeksList.clear();
+
+        for(int i = 1; i <= WEEKS_IN_YEAR; i++) {
+            WeeksInYear week = new WeeksInYear();
+            Calendar cal = DateCalcs.getDateOfWeek(year, i);
+
+            week.setWeekNum(i);
+            week.setDate(cal.getTimeInMillis());
+
+            weeksList.add(week);
+            notifyDataSetChanged();
+        }
+    }
+
+    private static class ViewHolder {
         TextView weekNum;
         TextView date;
     }

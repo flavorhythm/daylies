@@ -20,8 +20,7 @@ import utils.DateCalcs;
 import utils.ListBuilder;
 
 public class WeekPickerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    private List<WeeksInYear> weeksInYear;
-    private ListView weekList;
+    private PickerAdapter adapter;
     private int year;
 
     @Override
@@ -29,17 +28,26 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_picker);
 
-        weekList = (ListView)findViewById(R.id.picker_list_week);
+        ListView weekList = (ListView)findViewById(R.id.picker_list_week);
 
         year = DateCalcs.getCurrentYear();
-        selectedYear(year);
+
+        adapter = new PickerAdapter(WeekPickerActivity.this);
+        displaySelectedYear(year);
+        weekList.setAdapter(adapter);
 
         weekList.setOnItemClickListener(this);
     }
 
+    public void displaySelectedYear(int year) {
+        this.year = year;
+
+        adapter.buildWeeksInYear(year);
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        WeeksInYear week = weeksInYear.get(position);
+        WeeksInYear week = adapter.getItem(position);
 
         Intent intent = new Intent(WeekPickerActivity.this, MainActivity.class);
         intent.putExtra(DateCalcs.YEAR_KEY, year);
@@ -70,13 +78,5 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void selectedYear(int year) {
-        this.year = year;
-        weeksInYear = ListBuilder.buildWeeksInYear(year);
-
-        PickerAdapter adapter = new PickerAdapter(WeekPickerActivity.this, R.layout.picker_row, weeksInYear);
-        weekList.setAdapter(adapter);
     }
 }
