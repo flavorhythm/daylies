@@ -3,25 +3,20 @@ package com.example.zyuki.daylies;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import adapters.PickerAdapter;
 import fragments.DialogRouter;
 import models.WeeksInYear;
 import utils.DateCalcs;
-import utils.ListBuilder;
 
 public class WeekPickerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private PickerAdapter adapter;
-    private int year;
+    private int displayYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +25,19 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
 
         ListView weekList = (ListView)findViewById(R.id.picker_list_week);
 
-        year = DateCalcs.getCurrentYear();
+        displayYear = DateCalcs.getCurrentYear();
 
         adapter = new PickerAdapter(WeekPickerActivity.this);
-        displaySelectedYear(year);
+        displaySelectedYear(displayYear);
         weekList.setAdapter(adapter);
 
         weekList.setOnItemClickListener(this);
     }
 
-    public void displaySelectedYear(int year) {
-        this.year = year;
+    public void displaySelectedYear(int displayYear) {
+        this.displayYear = displayYear;
 
-        adapter.buildWeeksInYear(year);
+        adapter.buildWeeksInYear(displayYear);
     }
 
     @Override
@@ -50,7 +45,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
         WeeksInYear week = adapter.getItem(position);
 
         Intent intent = new Intent(WeekPickerActivity.this, MainActivity.class);
-        intent.putExtra(DateCalcs.YEAR_KEY, year);
+        intent.putExtra(DateCalcs.YEAR_KEY, displayYear);
         intent.putExtra(DateCalcs.WEEK_NUM_KEY, week.getWeekNum());
 
         startActivity(intent);
@@ -73,7 +68,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.select_year) {
-            DialogRouter.instantiatePickerDialog(WeekPickerActivity.this, year);
+            DialogRouter.instantiatePickerDialog(WeekPickerActivity.this, displayYear);
             return true;
         }
 

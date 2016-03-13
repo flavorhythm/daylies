@@ -4,8 +4,9 @@ package models;
  * Created by zyuki on 2/29/2016.
  */
 public class ToDo {
-    public static final int TODO_TYPE = 0;
-    public static final int LUNCH_TYPE = 1;
+    public static final int TYPE_TODO = 0;
+    public static final int TYPE_LUNCH = 1;
+    public static final int TYPE_HEADER = 2;
 
     private String yearWeekDay;
     private int type;
@@ -13,7 +14,14 @@ public class ToDo {
 
     public ToDo() {}
 
+    public ToDo(String yearWeekDay, int type, String item) {
+        this.yearWeekDay = yearWeekDay;
+        this.type = type;
+        this.item = item;
+    }
+
     public ToDo(int type, String item) {
+        this.yearWeekDay = null;
         this.type = type;
         this.item = item;
     }

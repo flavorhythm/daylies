@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import models.DayName;
+
 import static java.util.Calendar.*;
 
 /**
@@ -17,7 +19,7 @@ public class DateCalcs {
     public static final String YEAR_KEY = "year";
     public static final String WEEK_NUM_KEY = "weekNum";
 
-    private static final int daysInWeek = 7;
+    private static final int DAYS_IN_WEEK = 7;
 
     private DateCalcs() {}
 
@@ -70,9 +72,13 @@ public class DateCalcs {
 
         Calendar firstOfYear = findFirstDate(current);
 
-        firstOfYear.add(DAY_OF_YEAR, (week - 1) * daysInWeek);
+        firstOfYear.add(DAY_OF_YEAR, (week - 1) * DAYS_IN_WEEK);
 
         return firstOfYear;
+    }
+
+    public static final String buildDateString(int year, int weekNum, DayName day) {
+        return String.valueOf(year) + String.valueOf(weekNum) + String.valueOf(day.ordinal());
     }
 
     private static final int getWeek(Calendar cal) {
@@ -81,7 +87,7 @@ public class DateCalcs {
         int weekNum = 0;
         while(cal.compareTo(firstOfYear) == 1) {
             weekNum++;
-            firstOfYear.add(DAY_OF_MONTH, daysInWeek);
+            firstOfYear.add(DAY_OF_MONTH, DAYS_IN_WEEK);
         }
 
         return weekNum;

@@ -29,7 +29,11 @@ public class Day {
 
 	private List<ToDo> toDoList = new ArrayList<>();
 
+	//TODO: need to figure out how to store data - here or through ToDo?
 	public List<ToDo> getToDoList() {return toDoList;}
 	public void setToDoList(List<ToDo> toDoList) {this.toDoList = toDoList;}
-	public void addToDo(int type, String item) {toDoList.add(new ToDo(type, item));}
+	public void addToDo(int type, String item) {
+		String yearWeekDay = String.valueOf(year) + String.valueOf(weekNum) + String.valueOf(day.ordinal());
+		toDoList.add(new ToDo(yearWeekDay, type, item));
+	}
 }
