@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
 
                 //TODO: need a way to allow the user to select the type of todo
+                //Use a snackbar?
                 dataAccess.putToDoItem(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
                 displayAdapter.buildToDoList(currentYear, currentWeek, currentDay);
 

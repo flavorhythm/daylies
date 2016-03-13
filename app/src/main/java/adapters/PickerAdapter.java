@@ -1,6 +1,8 @@
 package adapters;
 
 import android.app.Activity;
+import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,14 +49,27 @@ public class PickerAdapter extends BaseAdapter {
 
             viewHolder.weekNum = (TextView)row.findViewById(R.id.pickerRow_text_weekNum);
             viewHolder.date = (TextView)row.findViewById(R.id.pickerRow_text_date);
+            viewHolder.current = (TextView)row.findViewById(R.id.pickerRow_text_current);
 
             row.setTag(viewHolder);
         } else {viewHolder = (ViewHolder)row.getTag();}
 
         WeeksInYear week = getItem(position);
 
+		int weekNum = week.getWeekNum();
+		Log.v("week", String.valueOf(weekNum));
+
         viewHolder.weekNum.setText(DateCalcs.addZeroToNum(week.getWeekNum()));
         viewHolder.date.setText(DateCalcs.formatDate(week.getDate()));
+
+		//need to explicitly declare if/else statements because the view is recycled so properties
+		//set to previous views will randomly be recycled into future views
+		//Changed from setting view to gone/visible to changing text content
+        if(DateCalcs.isCurrentYearWeek(week.getWeekNum(), week.getDate())) {
+            viewHolder.current.setText("(current)");
+        } else {
+            viewHolder.current.setText("");
+        }
 
         return row;
     }
@@ -77,5 +92,6 @@ public class PickerAdapter extends BaseAdapter {
     private static class ViewHolder {
         TextView weekNum;
         TextView date;
+        TextView current;
     }
 }

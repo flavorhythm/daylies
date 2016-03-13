@@ -1,5 +1,7 @@
 package utils;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +21,7 @@ public class DateCalcs {
     public static final String YEAR_KEY = "year";
     public static final String WEEK_NUM_KEY = "weekNum";
 
+	private static final int WEEKS_IN_YEAR = 52;
     private static final int DAYS_IN_WEEK = 7;
 
     private DateCalcs() {}
@@ -54,25 +57,35 @@ public class DateCalcs {
         return getWeek(current);
     }
 
-    public static final Map<String, Integer> getThisWeek(long dateInMillis) {
-        Map<String, Integer> yearWeek = new HashMap<>();
+    public static final boolean isCurrentYearWeek(int weekNum, long dateInMillis) {
 
-        Calendar current = Calendar.getInstance();
-        current.setTimeInMillis(dateInMillis);
+        int currentYear = getCurrentYear();
+        int currentWeek = getCurrentWeek(currentYear);
 
-        yearWeek.put(YEAR_KEY, current.get(YEAR));
-        yearWeek.put(WEEK_NUM_KEY, getWeek(current));
+        Calendar compareDate = Calendar.getInstance();
+        compareDate.setTimeInMillis(dateInMillis);
 
-        return yearWeek;
+        int compareYear = compareDate.get(YEAR);
+        int compareWeek = getWeekTest(compareDate);
+		//int compareWeek = weekNum;
+
+        if(currentYear == compareYear) {
+            return currentWeek == compareWeek;
+        } else {return false;}
     }
 
     public static final Calendar getDateOfWeek(int year, int week) {
+		final int weekOffset = 1;
+
         Calendar current = Calendar.getInstance();
         current.set(YEAR, year);
 
+		//TODO:change the code so it doedsn't run 52 times
         Calendar firstOfYear = findFirstDate(current);
 
-        firstOfYear.add(DAY_OF_YEAR, (week - 1) * DAYS_IN_WEEK);
+		if(week > weekOffset) {
+			firstOfYear.add(DAY_OF_YEAR, (week - weekOffset) * DAYS_IN_WEEK);
+		}
 
         return firstOfYear;
     }
@@ -82,27 +95,52 @@ public class DateCalcs {
     }
 
     private static final int getWeek(Calendar cal) {
+		//TODO: when the very first date is passed into here,
+		//the one that starts on the year prior to the displayed year
+		//it is counted as the last date.
         Calendar firstOfYear = findFirstDate(cal);
 
         int weekNum = 0;
-        while(cal.compareTo(firstOfYear) == 1) {
+
+        while(cal.compareTo(firstOfYear) == 1 || cal.compareTo(firstOfYear) == 0) {
             weekNum++;
-            firstOfYear.add(DAY_OF_MONTH, DAYS_IN_WEEK);
+			int daysInMillis = DAYS_IN_WEEK * 24 * 60 * 60 * 1000;
+            firstOfYear.add(MILLISECOND, daysInMillis);
         }
 
         return weekNum;
     }
 
-    private static final Calendar findFirstDate(Calendar cal) {
+	//TODO: need to accept year instead o calendar
+	private static final int getWeekTest(Calendar cal) {
+		Calendar firstOfYear = findFirstDate(cal.get(YEAR));
+
+		int weekNum = 0;
+
+		while(cal.compareTo(firstOfYear) == 1 || cal.compareTo(firstOfYear) == 0) {
+			Log.v("Date", "firstofyear: " + formatDate(firstOfYear.getTimeInMillis()));
+			Log.v("Date", "current: " + formatDate(cal.getTimeInMillis()));
+			weekNum++;
+			int daysInMillis = DAYS_IN_WEEK * 24 * 60 * 60 * 1000;
+			firstOfYear.add(MILLISECOND, daysInMillis);
+		}
+
+		return weekNum;
+	}
+
+    private static final Calendar findFirstDate(int year) {
         final int firstMonth = 0;
         final int firstDay = 1;
-        final int dayOffset = 2;
+        final int dayOffset = 2; //
 
         Calendar firstOfYear = Calendar.getInstance();
-        firstOfYear.set(cal.get(YEAR), firstMonth, firstDay);
+        firstOfYear.set(year, firstMonth, firstDay);
 
-        int startOfWeek = firstOfYear.get(DAY_OF_WEEK) - dayOffset;
-        firstOfYear.add(DAY_OF_MONTH, -1 * startOfWeek);
+        int startOfWeek = firstOfYear.get(DAY_OF_WEEK) > 2 ?
+				firstOfYear.get(DAY_OF_WEEK) - dayOffset :
+				DAYS_IN_WEEK - firstOfYear.get(DAY_OF_WEEK) - dayOffset; //Monday = 2
+
+        firstOfYear.add(DAY_OF_YEAR, -1 * startOfWeek);
 
         return firstOfYear;
     }
