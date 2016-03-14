@@ -30,6 +30,8 @@ import models.ToDo;
 import utils.DateCalcs;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    public static final int PICK_WEEK_REQUEST = 1;
+
     private int currentYear;
     private int currentWeek;
     private DayName currentDay;
@@ -59,10 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         setUpAdapters();
 
-        buildWeek();
-
-        yearText.setText(String.valueOf(currentYear));
-        weekNumText.setText(DateCalcs.addZeroToNum(currentWeek));
+        buildWeek(DateCalcs.getCurrentYear(), DateCalcs.getCurrentWeek());
 
         dayList.setOnItemClickListener(this);
 
@@ -76,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 //Use a snackbar?
                 dataAccess.putToDoItem(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
                 displayAdapter.buildToDoList(currentYear, currentWeek, currentDay);
+                displayAdapter.notifyDataSetChanged();
 
                 toDoNewItem.setText("");
             }
@@ -98,8 +98,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.go_to_picker) {
-            startActivity(new Intent(MainActivity.this, WeekPickerActivity.class));
-            finish();
+
+            //TODO: WITH RESULT
+            startActivityForResult(
+                    new Intent(MainActivity.this, WeekPickerActivity.class),
+                    PICK_WEEK_REQUEST
+            );
+
+            slider.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+
             return true;
         }
 
@@ -111,8 +118,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toDoNew.setVisibility(View.VISIBLE);
         Day day = mainAdapter.getItem(position);
 
-        currentYear = day.getYear();
-        currentWeek = day.getWeekNum();
         currentDay = day.getDay();
 
         displayAdapter.buildToDoList(currentYear, currentWeek, currentDay);
@@ -138,26 +143,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toDoList = (ListView)findViewById(R.id.slider_list_toDoList);
     }
 
-    private void buildWeek() {
-        Bundle extras = getIntent().getExtras();
+    private void buildWeek(int year, int week) {
+        yearText.setText(String.valueOf(year));
+        weekNumText.setText(DateCalcs.addZeroToNum(week));
 
-        if(extras == null || extras.isEmpty()) {
-            currentYear = DateCalcs.getCurrentYear();
-            currentWeek = DateCalcs.getCurrentWeek();
-        } else {
-            currentYear = extras.getInt(DateCalcs.YEAR_KEY);
-            currentWeek = extras.getInt(DateCalcs.WEEK_NUM_KEY);
-        }
-
-		mainAdapter.finishBuildingWeek(currentYear, currentWeek);
+		mainAdapter.finishBuildingWeek(year, week);
     }
 
     private void setUpAdapters() {
         mainAdapter = new MainAdapter(MainActivity.this);
         dayList.setAdapter(mainAdapter);
 
-        displayAdapter = new DisplayAdapter(getApplicationContext());
+        displayAdapter = new DisplayAdapter(MainActivity.this, getApplicationContext());
         toDoList.setAdapter(displayAdapter);
         toDoList.setEmptyView(emptyList);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == PICK_WEEK_REQUEST) {
+            if(resultCode == RESULT_OK) {
+                Bundle extras = data.getExtras();
+
+                currentYear = extras.getInt(DateCalcs.YEAR_KEY);
+                currentWeek = extras.getInt(DateCalcs.WEEK_NUM_KEY);
+            } else {
+                currentYear = DateCalcs.getCurrentYear();
+                currentWeek = DateCalcs.getCurrentWeek();
+            }
+        }
+
+        buildWeek(currentYear, currentWeek);
     }
 }

@@ -48,7 +48,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
         intent.putExtra(DateCalcs.YEAR_KEY, displayYear);
         intent.putExtra(DateCalcs.WEEK_NUM_KEY, week.getWeekNum());
 
-        startActivity(intent);
+        setResult(RESULT_OK, intent);
         finish();
     }
 

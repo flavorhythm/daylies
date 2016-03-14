@@ -21,7 +21,8 @@
         android:dividerHeight="0dp"
         android:divider="#ffffff"
         android:layout_below="@+id/slider_text_title"
-        android:layout_above="@+id/slider_rel_toDoNew"/>
+        android:layout_above="@+id/slider_rel_toDoNew"
+        style="@style/ListStyle"/>
     <RelativeLayout
         android:id="@+id/slider_rel_toDoNew"
         android:layout_width="match_parent"

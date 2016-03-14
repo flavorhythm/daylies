@@ -10,7 +10,6 @@ import data.DataAccessObject;
  * Created by zyuki on 3/1/2016.
  */
 public class ApplicationDatabase extends Application {
-
     public DataAccessObject dataAccess;
 
     @Override

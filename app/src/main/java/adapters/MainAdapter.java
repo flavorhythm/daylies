@@ -1,6 +1,7 @@
 package adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,9 @@ public class MainAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Day> dayList = new ArrayList<>();
 
-    public MainAdapter(Activity activity) {inflater = LayoutInflater.from(activity);}
+    public MainAdapter(Activity activity) {
+        inflater = LayoutInflater.from(activity);
+    }
 
     @Override
     public int getCount() {return dayList.size();}

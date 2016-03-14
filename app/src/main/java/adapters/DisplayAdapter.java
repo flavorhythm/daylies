@@ -1,5 +1,6 @@
 package adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +32,8 @@ public class DisplayAdapter extends BaseAdapter {
 
     private DataAccessObject dataAccess;
 
-    public DisplayAdapter(Context context) {
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+    public DisplayAdapter(Activity activity, Context context) {
+        inflater = LayoutInflater.from(activity);
         dataAccess = ((ApplicationDatabase)context).dataAccess;
     }
 
