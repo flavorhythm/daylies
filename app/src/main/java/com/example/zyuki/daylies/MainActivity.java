@@ -98,15 +98,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.go_to_picker) {
-
-            //TODO: WITH RESULT
             startActivityForResult(
                     new Intent(MainActivity.this, WeekPickerActivity.class),
                     PICK_WEEK_REQUEST
             );
 
             slider.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-
             return true;
         }
 
