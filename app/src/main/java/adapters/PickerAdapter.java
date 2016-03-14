@@ -27,7 +27,9 @@ public class PickerAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<WeeksInYear> weeksList = new ArrayList<>();
 
-    public PickerAdapter(Activity activity) {inflater = LayoutInflater.from(activity);}
+    public PickerAdapter(Activity activity) {
+        inflater = LayoutInflater.from(activity);
+    }
 
     @Override
     public int getCount() {return weeksList.size();}
@@ -56,16 +58,13 @@ public class PickerAdapter extends BaseAdapter {
 
         WeeksInYear week = getItem(position);
 
-		int weekNum = week.getWeekNum();
-		Log.v("week", String.valueOf(weekNum));
-
         viewHolder.weekNum.setText(DateCalcs.addZeroToNum(week.getWeekNum()));
         viewHolder.date.setText(DateCalcs.formatDate(week.getDate()));
 
 		//need to explicitly declare if/else statements because the view is recycled so properties
 		//set to previous views will randomly be recycled into future views
 		//Changed from setting view to gone/visible to changing text content
-        if(DateCalcs.isCurrentYearWeek(week.getWeekNum(), week.getDate())) {
+        if(DateCalcs.isCurrentYearWeek(week.getDate())) {
             viewHolder.current.setText("(current)");
         } else {
             viewHolder.current.setText("");
@@ -74,15 +73,22 @@ public class PickerAdapter extends BaseAdapter {
         return row;
     }
 
-    public void buildWeeksInYear(int year) {
+    public void buildWeeksInYear(int displayYear) {
         weeksList.clear();
 
-        for(int i = 1; i <= WEEKS_IN_YEAR; i++) {
-            WeeksInYear week = new WeeksInYear();
-            Calendar cal = DateCalcs.getDateOfWeek(year, i);
+        Calendar thisYear = Calendar.getInstance();
+        thisYear.set(Calendar.YEAR, displayYear);
 
-            week.setWeekNum(i);
-            week.setDate(cal.getTimeInMillis());
+        for(int weekOfYear = 1; weekOfYear <= WEEKS_IN_YEAR; weekOfYear++) {
+            WeeksInYear week = new WeeksInYear();
+            thisYear.set(Calendar.WEEK_OF_YEAR, weekOfYear);
+
+            week.setWeekNum(weekOfYear);
+            week.setDate(thisYear.getTimeInMillis());
+
+            if(thisYear.get(Calendar.YEAR) != displayYear) {
+                thisYear.set(Calendar.YEAR, displayYear);
+            }
 
             weeksList.add(week);
             notifyDataSetChanged();

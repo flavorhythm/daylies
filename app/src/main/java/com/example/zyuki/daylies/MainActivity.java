@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private MainAdapter mainAdapter;
     private DisplayAdapter displayAdapter;
 
+    private RelativeLayout toDoNew;
     private TextView yearText, weekNumText, emptyList;
     private EditText toDoNewItem;
     private ListView dayList, toDoList;
@@ -106,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        toDoNew.setVisibility(View.VISIBLE);
         Day day = mainAdapter.getItem(position);
 
         currentYear = day.getYear();
@@ -123,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         weekNumText = (TextView)findViewById(R.id.main_text_weekNum);
         emptyList = (TextView)findViewById(R.id.slider_text_emptyList);
 
+        toDoNew = (RelativeLayout)findViewById(R.id.slider_rel_toDoNew);
+
         toDoAdd = (Button)findViewById(R.id.slider_butn_toDoAdd);
 
         toDoNewItem = (EditText)findViewById(R.id.slider_edit_toDoNewItem);
@@ -138,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         if(extras == null || extras.isEmpty()) {
             currentYear = DateCalcs.getCurrentYear();
-            currentWeek = DateCalcs.getCurrentWeek(currentYear);
+            currentWeek = DateCalcs.getCurrentWeek();
         } else {
             currentYear = extras.getInt(DateCalcs.YEAR_KEY);
             currentWeek = extras.getInt(DateCalcs.WEEK_NUM_KEY);

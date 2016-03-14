@@ -68,11 +68,15 @@ public class MainAdapter extends BaseAdapter {
     public void finishBuildingWeek(int year, int weekNum) {
         dayList.clear();
 
-        Calendar firstDateOfWeek;
-        firstDateOfWeek = DateCalcs.getDateOfWeek(year, weekNum);
+        Calendar firstDateOfWeek = Calendar.getInstance();
+        firstDateOfWeek.clear();
+        firstDateOfWeek.set(Calendar.YEAR, year);
+        firstDateOfWeek.set(Calendar.WEEK_OF_YEAR, weekNum);
 
         for(int i = 0; i < DAYS_IN_WEEK; i++) {
             Day day = new Day();
+
+            firstDateOfWeek.add(Calendar.DAY_OF_YEAR, 1);
 
             day.setDate(firstDateOfWeek.getTimeInMillis());
             day.setYear(year);
@@ -81,8 +85,6 @@ public class MainAdapter extends BaseAdapter {
 
             dayList.add(day);
             notifyDataSetChanged();
-
-            firstDateOfWeek.add(Calendar.DAY_OF_YEAR, 1);
         }
     }
 
