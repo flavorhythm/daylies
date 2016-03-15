@@ -25,7 +25,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
 
         ListView weekList = (ListView)findViewById(R.id.picker_list_week);
 
-        displayYear = DateCalcs.getCurrentYear();
+        findDisplayYear();
 
         adapter = new PickerAdapter(WeekPickerActivity.this);
         displaySelectedYear(displayYear);
@@ -38,6 +38,16 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
         this.displayYear = displayYear;
 
         adapter.buildWeeksInYear(displayYear);
+    }
+
+    private void findDisplayYear() {
+        Bundle extras = getIntent().getExtras();
+
+        if(extras == null || extras.isEmpty()) {
+            displayYear = DateCalcs.getCurrentYear();
+        } else {
+            displayYear = extras.getInt(DateCalcs.YEAR_KEY);
+        }
     }
 
     @Override

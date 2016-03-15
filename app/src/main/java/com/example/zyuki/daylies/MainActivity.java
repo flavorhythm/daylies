@@ -24,6 +24,7 @@ import java.util.List;
 import adapters.DisplayAdapter;
 import adapters.MainAdapter;
 import data.DataAccessObject;
+import data.TblToDo;
 import fragments.DialogRouter;
 import models.Day;
 import models.DayName;
@@ -62,15 +63,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         setUpAdapters();
 
-        buildWeek(DateCalcs.getCurrentYear(), DateCalcs.getCurrentWeek());
+        currentYear = DateCalcs.getCurrentYear();
+        currentWeek = DateCalcs.getCurrentWeek();
+        buildWeek(currentYear, currentWeek);
 
         dayList.setOnItemClickListener(this);
 
         toDoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch(currentDay) {
-                    case MON:case TUE:case WED:case THU:case FRI:
+                switch (currentDay) {
+                    case MON: case TUE: case WED: case THU: case FRI:
                         DialogRouter.instantiateInputDialog(MainActivity.this);
                         break;
                     case SAT: case SUN:
@@ -104,6 +107,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
+    public void onBackPressed() {
+        if(slider.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            slider.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else {super.onBackPressed();}
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -119,8 +129,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.go_to_picker) {
+            Intent intent = new Intent(MainActivity.this, WeekPickerActivity.class);
+            intent.putExtra(DateCalcs.YEAR_KEY, currentYear);
+
             startActivityForResult(
-                    new Intent(MainActivity.this, WeekPickerActivity.class),
+                    intent,
                     PICK_WEEK_REQUEST
             );
 
@@ -150,9 +163,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         emptyList = (TextView)findViewById(R.id.slider_text_emptyList);
 
         toDoNew = (RelativeLayout)findViewById(R.id.slider_rel_toDoNew);
-
         toDoAdd = (Button)findViewById(R.id.slider_butn_toDoAdd);
-
         toDoNewItem = (EditText)findViewById(R.id.slider_edit_toDoNewItem);
 
         slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding_layout);
