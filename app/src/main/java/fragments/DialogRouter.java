@@ -20,10 +20,10 @@ public class DialogRouter {
 		pickerDialog.show(fragTransaction, DIALOG);
 	}
 
-	public static void instantiateInputDialog(Activity activity, int toDoType) {
+	public static void instantiateInputDialog(Activity activity) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
-		InputDialogFragment inputDialog = InputDialogFragment.newInstance(toDoType);
+		InputDialogFragment inputDialog = InputDialogFragment.newInstance();
 		inputDialog.show(fragTransaction, DIALOG);
 	}
 

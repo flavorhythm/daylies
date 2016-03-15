@@ -24,6 +24,7 @@ import java.util.List;
 import adapters.DisplayAdapter;
 import adapters.MainAdapter;
 import data.DataAccessObject;
+import fragments.DialogRouter;
 import models.Day;
 import models.DayName;
 import models.ToDo;
@@ -68,18 +69,38 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toDoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newToDo = toDoNewItem.getText().toString();
-                String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
-
-                //TODO: need a way to allow the user to select the type of todo
-                //Use a snackbar?
-                dataAccess.putToDoItem(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
-                displayAdapter.buildToDoList(currentYear, currentWeek, currentDay);
-                displayAdapter.notifyDataSetChanged();
-
-                toDoNewItem.setText("");
+                switch(currentDay) {
+                    case MON:case TUE:case WED:case THU:case FRI:
+                        DialogRouter.instantiateInputDialog(MainActivity.this);
+                        break;
+                    case SAT: case SUN:
+                        putDailyItem();
+                        break;
+                }
             }
         });
+    }
+
+    public void putLunchItem() {
+        String newToDo = toDoNewItem.getText().toString();
+        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
+
+        dataAccess.putToDoItem(new ToDo(yearWeekNum, ToDo.TYPE_LUNCH, newToDo));
+        displayAdapter.buildToDoList(currentYear, currentWeek, currentDay);
+        displayAdapter.notifyDataSetChanged();
+
+        toDoNewItem.setText("");
+    }
+
+    public void putDailyItem() {
+        String newToDo = toDoNewItem.getText().toString();
+        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
+
+        dataAccess.putToDoItem(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
+        displayAdapter.buildToDoList(currentYear, currentWeek, currentDay);
+        displayAdapter.notifyDataSetChanged();
+
+        toDoNewItem.setText("");
     }
 
     @Override
