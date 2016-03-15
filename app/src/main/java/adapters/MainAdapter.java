@@ -27,8 +27,6 @@ import utils.DateCalcs;
  * Created by zyuki on 2/26/2016.
  */
 public class MainAdapter extends BaseAdapter {
-    private static final int DAYS_IN_WEEK = 7;
-
     private LayoutInflater inflater;
     private List<Day> dayList = new ArrayList<>();
 
@@ -54,7 +52,8 @@ public class MainAdapter extends BaseAdapter {
             row = inflater.inflate(layoutRes, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.date = (TextView)row.findViewById(R.id.mainRow_text_date);
+            viewHolder.month = (TextView)row.findViewById(R.id.mainRow_text_month);
+            viewHolder.dayOfMonth = (TextView)row.findViewById(R.id.mainRow_text_dayOfMonth);
             viewHolder.dayOfWeek = (TextView)row.findViewById(R.id.mainRow_text_dayOfWeek);
 
             row.setTag(viewHolder);
@@ -62,7 +61,8 @@ public class MainAdapter extends BaseAdapter {
 
         Day day = getItem(position);
 
-        viewHolder.date.setText(DateCalcs.formatDate(day.getDate()));
+        viewHolder.month.setText(DateCalcs.formatDate(DateCalcs.MONTH, day.getDate()));
+        viewHolder.dayOfMonth.setText(DateCalcs.formatDate(DateCalcs.DAY_OF_MONTH, day.getDate()));
         viewHolder.dayOfWeek.setText(day.getDay().toString());
 
         return row;
@@ -71,12 +71,14 @@ public class MainAdapter extends BaseAdapter {
     public void finishBuildingWeek(int year, int weekNum) {
         dayList.clear();
 
+        final int daysInWeek = 7;
+
         Calendar firstDateOfWeek = Calendar.getInstance();
         firstDateOfWeek.clear();
         firstDateOfWeek.set(Calendar.YEAR, year);
         firstDateOfWeek.set(Calendar.WEEK_OF_YEAR, weekNum);
 
-        for(int i = 0; i < DAYS_IN_WEEK; i++) {
+        for(int i = 0; i < daysInWeek; i++) {
             Day day = new Day();
 
             firstDateOfWeek.add(Calendar.DAY_OF_YEAR, 1);
@@ -92,7 +94,8 @@ public class MainAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        TextView date;
+        TextView month;
+        TextView dayOfMonth;
         TextView dayOfWeek;
     }
 }

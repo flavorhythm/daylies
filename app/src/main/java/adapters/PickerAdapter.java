@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.zyuki.daylies.R;
@@ -23,8 +25,6 @@ import utils.DateCalcs;
  * Created by zyuki on 2/26/2016.
  */
 public class PickerAdapter extends BaseAdapter {
-    private static final int WEEKS_IN_YEAR = 52;
-
     private LayoutInflater inflater;
     private List<WeeksInYear> weeksList = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class PickerAdapter extends BaseAdapter {
         WeeksInYear week = getItem(position);
 
         viewHolder.weekNum.setText(DateCalcs.addZeroToNum(week.getWeekNum()));
-        viewHolder.date.setText(DateCalcs.formatDate(week.getDate()));
+        viewHolder.date.setText(DateCalcs.formatDate(DateCalcs.FULL_DATE, week.getDate()));
 
 		//need to explicitly declare if/else statements because the view is recycled so properties
 		//set to previous views will randomly be recycled into future views
@@ -74,25 +74,31 @@ public class PickerAdapter extends BaseAdapter {
         return row;
     }
 
+    //TODO: Need to prevent Week 53 from showing for some years
     public void buildWeeksInYear(int displayYear) {
         weeksList.clear();
 
+        final int daysInWeek = 7;
+        int weekOfYear = 1;
+        int currentYear = 0;
+
         Calendar thisYear = Calendar.getInstance();
         thisYear.set(Calendar.YEAR, displayYear);
+        thisYear.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        thisYear.set(Calendar.WEEK_OF_YEAR, weekOfYear);
 
-        for(int weekOfYear = 1; weekOfYear <= WEEKS_IN_YEAR; weekOfYear++) {
+        while(currentYear <= displayYear) {
             WeeksInYear week = new WeeksInYear();
-            thisYear.set(Calendar.WEEK_OF_YEAR, weekOfYear);
 
             week.setWeekNum(weekOfYear);
             week.setDate(thisYear.getTimeInMillis());
 
-            if(thisYear.get(Calendar.YEAR) != displayYear) {
-                thisYear.set(Calendar.YEAR, displayYear);
-            }
-
             weeksList.add(week);
             notifyDataSetChanged();
+
+            weekOfYear++;
+            thisYear.add(Calendar.DAY_OF_YEAR, daysInWeek);
+            currentYear = thisYear.get(Calendar.YEAR);
         }
     }
 
