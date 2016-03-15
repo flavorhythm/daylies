@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:paddingEnd="10dp">
+        <TextView
+            android:id="@+id/mainRow_text_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="date"/>
+        <TextView
+            android:id="@+id/mainRow_text_dayOfMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textSize="30sp"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/mainRow_text_dayOfWeek"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="day of week"/>
-    <TextView
-        android:id="@+id/mainRow_text_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="date"/>
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:gravity="bottom"
+        android:textSize="30dp"/>
 </LinearLayout>

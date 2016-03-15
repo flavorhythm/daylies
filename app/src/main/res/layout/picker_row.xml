@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
     <LinearLayout
+        android:id="@+id/pickerRow_linear_weekNum"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -15,15 +17,16 @@
             android:id="@+id/pickerRow_text_weekNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="start"/>
+            android:gravity="start"
+            android:textSize="30sp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/pickerRow_text_current"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
     <TextView
         android:id="@+id/pickerRow_text_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"/>
+        android:layout_height="match_parent"
+        android:gravity="end|center_vertical"/>
 </LinearLayout>
