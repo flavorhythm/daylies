@@ -2,11 +2,14 @@ package adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.zyuki.daylies.ApplicationDatabase;
@@ -30,8 +33,11 @@ public class MainAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Day> dayList = new ArrayList<>();
 
-    public MainAdapter(Activity activity) {
+    private Context context;
+
+    public MainAdapter(Activity activity, Context context) {
         inflater = LayoutInflater.from(activity);
+        this.context = context;
     }
 
     @Override
@@ -52,7 +58,7 @@ public class MainAdapter extends BaseAdapter {
             row = inflater.inflate(layoutRes, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.month = (TextView)row.findViewById(R.id.mainRow_text_month);
+            viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.mainRow_linear_entireRow);
             viewHolder.dayOfMonth = (TextView)row.findViewById(R.id.mainRow_text_dayOfMonth);
             viewHolder.dayOfWeek = (TextView)row.findViewById(R.id.mainRow_text_dayOfWeek);
 
@@ -61,9 +67,22 @@ public class MainAdapter extends BaseAdapter {
 
         Day day = getItem(position);
 
-        viewHolder.month.setText(DateCalcs.formatDate(DateCalcs.MONTH, day.getDate()));
-        viewHolder.dayOfMonth.setText(DateCalcs.formatDate(DateCalcs.DAY_OF_MONTH, day.getDate()));
+        viewHolder.dayOfMonth.setText(DateCalcs.formatDate(Calendar.DAY_OF_MONTH, day.getDate()));
         viewHolder.dayOfWeek.setText(day.getDay().toString());
+
+        if(DateCalcs.isCurrentDay(day.getDay())) {
+            int whiteTextColor = ContextCompat.getColor(context, R.color.whiteText);
+
+            viewHolder.entireRow.setBackgroundResource(R.color.colorPrimary);
+            viewHolder.dayOfMonth.setTextColor(whiteTextColor);
+            viewHolder.dayOfWeek.setTextColor(whiteTextColor);
+        } else {
+            int blackTextColor = ContextCompat.getColor(context, R.color.darkText);
+
+            viewHolder.entireRow.setBackgroundColor(Color.TRANSPARENT);
+            viewHolder.dayOfMonth.setTextColor(blackTextColor);
+            viewHolder.dayOfWeek.setTextColor(blackTextColor);
+        }
 
         return row;
     }
@@ -94,7 +113,7 @@ public class MainAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        TextView month;
+        LinearLayout entireRow;
         TextView dayOfMonth;
         TextView dayOfWeek;
     }

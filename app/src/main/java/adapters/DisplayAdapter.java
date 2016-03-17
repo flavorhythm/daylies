@@ -5,10 +5,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.zyuki.daylies.ApplicationDatabase;
+import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
 import java.util.ArrayList;
@@ -27,14 +30,21 @@ public class DisplayAdapter extends BaseAdapter {
     public static final int TYPE_DIVIDER = 0;
     public static final int TYPE_CONTENT = 1;
 
-    private List<ToDo> toDoList = new ArrayList<>();
+    private List<ToDo> toDoList;
     private LayoutInflater inflater;
-
     private DataAccessObject dataAccess;
 
+    private Activity activity;
+
+    private int currentYear, currentWeek;
+    private DayName currentDay;
+
     public DisplayAdapter(Activity activity, Context context) {
-        inflater = LayoutInflater.from(activity);
+        this.activity = activity;
         dataAccess = ((ApplicationDatabase)context).dataAccess;
+        inflater = LayoutInflater.from(activity);
+
+        toDoList = new ArrayList<>();
     }
 
     @Override
@@ -55,7 +65,7 @@ public class DisplayAdapter extends BaseAdapter {
     public long getItemId(int position) {return position;}
 
     @Override
-    public View getView(int position, View row, ViewGroup parent) {
+    public View getView(final int position, View row, ViewGroup parent) {
         int headerLayoutRes = R.layout.display_header_row;
         int contentLayoutRes = R.layout.display_content_row;
 
@@ -68,10 +78,12 @@ public class DisplayAdapter extends BaseAdapter {
                 case TYPE_DIVIDER:
                     row = inflater.inflate(headerLayoutRes, parent, false);
                     viewHolder.textItem = (TextView)row.findViewById(R.id.display_text_header);
+                    viewHolder.textItem.setClickable(false);
                     break;
                 case TYPE_CONTENT:
                     row = inflater.inflate(contentLayoutRes, parent, false);
                     viewHolder.textItem = (TextView)row.findViewById(R.id.display_text_content);
+                    viewHolder.deleteBtn = (Button)row.findViewById(R.id.display_butn_delete);
                     break;
             }
 
@@ -83,10 +95,49 @@ public class DisplayAdapter extends BaseAdapter {
 
         viewHolder.textItem.setText(item.getItem());
 
+        final int itemId = item.getId();
+        if(getItemViewType(position) == TYPE_CONTENT) {
+            viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeItem(itemId, position);
+                }
+            });
+        }
+
         return row;
     }
 
-    public void buildToDoList(int year, int weekNum, DayName day) {
+    public void add(ToDo item) {
+        dataAccess.putToDoItem(item);
+        buildList(currentYear, currentWeek, currentDay);
+    }
+
+    public void removeItem(final int dbId, final int listPos) {
+        dataAccess.deleteToDoItem(dbId);
+        toDoList.remove(listPos);
+
+        final int maxHeaderCount = 2;
+        int headerCount = 0;
+        if(toDoList.size() <= maxHeaderCount) {
+            for(ToDo item : toDoList) {
+                if(item.getType() == ToDo.TYPE_HEADER) {
+                    headerCount++;
+                }
+            }
+        }
+
+        if(headerCount == toDoList.size()) {
+            toDoList.clear();
+        }
+
+        ((MainActivity)activity).notifyDisplayAdapter();
+    }
+
+    public void buildList(int year, int weekNum, DayName day) {
+        this.currentYear = year;
+        this.currentWeek = weekNum;
+        this.currentDay = day;
         toDoList.clear();
 
         switch(day) {
@@ -97,6 +148,8 @@ public class DisplayAdapter extends BaseAdapter {
                 buildWeekEndList(dataAccess.getToDoList(DateCalcs.buildDateString(year, weekNum, day)));
                 break;
         }
+
+        ((MainActivity)activity).notifyDisplayAdapter();
     }
 
     private void buildWeekDayList(List<ToDo> toDosFromDb) {
@@ -143,5 +196,6 @@ public class DisplayAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         TextView textItem;
+        TextView deleteBtn;
     }
 }

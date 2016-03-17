@@ -2,7 +2,9 @@ package adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +30,11 @@ public class PickerAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<WeeksInYear> weeksList = new ArrayList<>();
 
-    public PickerAdapter(Activity activity) {
+    private Context context;
+
+    public PickerAdapter(Activity activity, Context context) {
         inflater = LayoutInflater.from(activity);
+        this.context = context;
     }
 
     @Override
@@ -50,9 +55,10 @@ public class PickerAdapter extends BaseAdapter {
             row = inflater.inflate(layoutRes, parent, false);
             viewHolder = new ViewHolder();
 
+            viewHolder.weekText = (TextView)row.findViewById(R.id.pickerRow_text_weekText);
             viewHolder.weekNum = (TextView)row.findViewById(R.id.pickerRow_text_weekNum);
             viewHolder.date = (TextView)row.findViewById(R.id.pickerRow_text_date);
-            viewHolder.current = (TextView)row.findViewById(R.id.pickerRow_text_current);
+            viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.pickerRow_linear_entireRow);
 
             row.setTag(viewHolder);
         } else {viewHolder = (ViewHolder)row.getTag();}
@@ -66,16 +72,26 @@ public class PickerAdapter extends BaseAdapter {
 		//set to previous views will randomly be recycled into future views
 		//Changed from setting view to gone/visible to changing text content
         if(DateCalcs.isCurrentYearWeek(week.getDate())) {
-            viewHolder.current.setText("(current)");
+            int whiteTextColor = ContextCompat.getColor(context, R.color.whiteText);
+
+            viewHolder.entireRow.setBackgroundResource(R.color.colorPrimary);
+            viewHolder.weekText.setTextColor(whiteTextColor);
+            viewHolder.weekNum.setTextColor(whiteTextColor);
+            viewHolder.date.setTextColor(whiteTextColor);
         } else {
-            viewHolder.current.setText("");
+            int blackTextColor = ContextCompat.getColor(context, R.color.darkText);
+
+            viewHolder.entireRow.setBackgroundColor(Color.TRANSPARENT);
+            viewHolder.weekText.setTextColor(blackTextColor);
+            viewHolder.weekNum.setTextColor(blackTextColor);
+            viewHolder.date.setTextColor(blackTextColor);
         }
 
         return row;
     }
 
     //TODO: Need to prevent Week 53 from showing for some years
-    public void buildWeeksInYear(int displayYear) {
+    public void buildWeeksInYear(Calendar endOfLastYear, int displayYear) {
         weeksList.clear();
 
         final int daysInWeek = 7;
@@ -86,6 +102,11 @@ public class PickerAdapter extends BaseAdapter {
         thisYear.set(Calendar.YEAR, displayYear);
         thisYear.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         thisYear.set(Calendar.WEEK_OF_YEAR, weekOfYear);
+
+        if(thisYear.before(endOfLastYear)) {
+            final int addOneWeek = 1;
+            thisYear.add(Calendar.WEEK_OF_YEAR, addOneWeek);
+        }
 
         while(currentYear <= displayYear) {
             WeeksInYear week = new WeeksInYear();
@@ -98,13 +119,15 @@ public class PickerAdapter extends BaseAdapter {
 
             weekOfYear++;
             thisYear.add(Calendar.DAY_OF_YEAR, daysInWeek);
+
             currentYear = thisYear.get(Calendar.YEAR);
         }
     }
 
     private static class ViewHolder {
+        TextView weekText;
         TextView weekNum;
         TextView date;
-        TextView current;
+        LinearLayout entireRow;
     }
 }
