@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/mainRow_linear_entireRow"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -9,24 +10,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="end"
+        android:paddingStart="10dp"
         android:paddingEnd="10dp">
         <TextView
             android:id="@+id/mainRow_text_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="date"/>
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/mainRow_text_dayOfMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:textSize="30sp"/>
+            android:textSize="40sp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/mainRow_text_dayOfWeek"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:gravity="bottom"
-        android:textSize="30dp"/>
+        android:textSize="40dp"/>
 </LinearLayout>

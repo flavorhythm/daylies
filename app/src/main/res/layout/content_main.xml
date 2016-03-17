@@ -14,7 +14,8 @@
         android:id="@+id/main_sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom">
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="70dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,30 +23,37 @@
             <LinearLayout
                 android:id="@+id/main_linear_weekYear"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:background="@color/colorPrimary"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:gravity="end">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Year"
-                    android:textSize="20dp"/>
+                    android:textColor="@color/whiteText"
+                    android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/main_text_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30dp"/>
+                    android:textColor="@color/whiteText"
+                    android:textSize="45sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Week"
-                    android:textSize="20dp"/>
+                    android:textColor="@color/whiteText"
+                    android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/main_text_weekNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="52"
-                    android:textSize="30dp"/>
+                    android:textColor="@color/whiteText"
+                    android:textSize="45sp"/>
             </LinearLayout>
             <ListView
                 android:id="@+id/main_list_daily"
@@ -54,9 +62,7 @@
                 android:dividerHeight="0dp"
                 android:divider="#ffffff"
                 android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/main_linear_weekYear"
-                android:layout_marginStart="50dp"
-                android:layout_marginBottom="50dp"/>
+                android:layout_toEndOf="@+id/main_linear_weekYear" />
         </RelativeLayout>
 
         <include layout="@layout/slider_main" />

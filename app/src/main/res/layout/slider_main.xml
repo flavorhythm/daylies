@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true">
+    android:layout_height="match_parent">
     <!--android:layout_weight="0.8"-->
 
     <TextView
         android:id="@+id/slider_text_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="To Do List"
-        android:layout_alignParentTop="true"/>
+        android:textSize="40sp"
+        android:textColor="@color/whiteText"
+        android:background="@color/colorPrimary"
+        android:padding="10dp"
+        android:layout_alignParentTop="true"
+        android:gravity="bottom"/>
 
     <ListView
         android:id="@+id/slider_list_toDoList"
@@ -20,15 +23,16 @@
         android:layout_height="match_parent"
         android:dividerHeight="0dp"
         android:divider="#ffffff"
+        android:layout_margin="10dp"
         android:layout_below="@+id/slider_text_title"
-        android:layout_above="@+id/slider_rel_toDoNew"
-        style="@style/ListStyle"/>
+        android:layout_above="@+id/slider_rel_toDoNew"/>
     <RelativeLayout
         android:id="@+id/slider_rel_toDoNew"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_margin="10dp">
         <EditText
             android:id="@+id/slider_edit_toDoNewItem"
             android:layout_width="match_parent"
