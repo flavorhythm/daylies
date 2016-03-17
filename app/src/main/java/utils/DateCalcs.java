@@ -17,15 +17,13 @@ public class DateCalcs {
     public static final String WEEK_NUM_KEY = "weekNum";
 
     public static final int FULL_DATE = 0;
-    public static final int MONTH = Calendar.MONTH;
-    public static final int DAY_OF_MONTH = Calendar.DAY_OF_MONTH;
 
     private DateCalcs() {}
 
-    public static final String addZeroToNum(int weekNum) {
-        String weekNumStr = String.valueOf(weekNum);
+    public static final String addZeroToNum(int num) {
+        String numStr = String.valueOf(num);
 
-        return weekNum < 10 ? "0" + weekNumStr : weekNumStr;
+        return (num < 10) ? ("0" + numStr) : numStr;
     }
 
     public static final String formatDate(int returnType, long dateInMillis) {
@@ -40,7 +38,7 @@ public class DateCalcs {
             case MONTH:
                 return getMonthName(cal.get(MONTH));
             case DAY_OF_MONTH:
-                return String.valueOf(cal.get(DAY_OF_MONTH));
+                return addZeroToNum(cal.get(DAY_OF_MONTH));
             default:
                 return "Corrupt data";
         }
@@ -65,6 +63,8 @@ public class DateCalcs {
     public static final int getCurrentWeek() {
         Calendar current = Calendar.getInstance();
 
+
+
         return current.get(WEEK_OF_YEAR);
     }
 
@@ -83,7 +83,37 @@ public class DateCalcs {
         } else {return false;}
     }
 
+
+    public static final boolean isCurrentDay(DayName day) {
+        Calendar current = Calendar.getInstance();
+        int dayOffset = 2;
+        int currentDay = current.get(DAY_OF_WEEK) - dayOffset;
+
+        return day.ordinal() == currentDay;
+    }
+
     public static final String buildDateString(int year, int weekNum, DayName day) {
-        return String.valueOf(year) + String.valueOf(weekNum) + String.valueOf(day.ordinal());
+        return String.valueOf(year) + addZeroToNum(weekNum) + String.valueOf(day.ordinal());
+    }
+
+    public static final Calendar endOfLastYear(final int currentYear) {
+        final int daysInWeek = 7;
+        int previousYear = currentYear - 1;
+        int weekOfYear = 1;
+
+        Calendar counterCal = Calendar.getInstance();
+        counterCal.set(YEAR, previousYear);
+        counterCal.set(DAY_OF_WEEK, MONDAY);
+        counterCal.set(WEEK_OF_YEAR, weekOfYear);
+
+        while (currentYear != previousYear) {
+            counterCal.add(DAY_OF_YEAR, daysInWeek);
+            previousYear = counterCal.get(YEAR);
+        }
+
+        final int oneWeekOffset = -1;
+        counterCal.add(WEEK_OF_YEAR, oneWeekOffset);
+
+        return counterCal;
     }
 }

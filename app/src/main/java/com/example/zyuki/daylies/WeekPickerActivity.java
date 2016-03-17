@@ -27,7 +27,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
 
         findDisplayYear();
 
-        adapter = new PickerAdapter(WeekPickerActivity.this);
+        adapter = new PickerAdapter(WeekPickerActivity.this, getApplicationContext());
         displaySelectedYear(displayYear);
         weekList.setAdapter(adapter);
 
@@ -37,7 +37,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
     public void displaySelectedYear(int displayYear) {
         this.displayYear = displayYear;
 
-        adapter.buildWeeksInYear(displayYear);
+        adapter.buildWeeksInYear(DateCalcs.endOfLastYear(displayYear), displayYear);
     }
 
     private void findDisplayYear() {

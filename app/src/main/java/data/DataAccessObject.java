@@ -49,6 +49,7 @@ public class DataAccessObject {
             do {
                 ToDo item = new ToDo();
 
+                item.setId(cursor.getInt(cursor.getColumnIndex(TblToDo.KEY_ID.toString())));
                 item.setYearWeekDay(cursor.getString(cursor.getColumnIndex(TblToDo.YEAR_WEEK_DAY.toString())));
                 item.setType(cursor.getInt(cursor.getColumnIndex(TblToDo.TODO_TYPE.toString())));
                 item.setItem(cursor.getString(cursor.getColumnIndex(TblToDo.TODO_ITEM.toString())));
@@ -69,5 +70,12 @@ public class DataAccessObject {
         values.put(TblToDo.TODO_ITEM.toString(), item.getItem());
 
         return db.insert(TblToDo.TABLE_NAME.toString(), null, values);
+    }
+
+    public int deleteToDoItem(int id) {
+        return db.delete(TblToDo.TABLE_NAME.toString(),
+                TblToDo.KEY_ID + " =?",
+                new String[] {String.valueOf(id)}
+        );
     }
 }

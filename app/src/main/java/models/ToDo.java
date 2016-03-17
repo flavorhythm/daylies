@@ -8,6 +8,7 @@ public class ToDo {
     public static final int TYPE_LUNCH = 1;
     public static final int TYPE_HEADER = 2;
 
+    private int id;
     private String yearWeekDay;
     private int type;
     private String item;
@@ -26,10 +27,12 @@ public class ToDo {
         this.item = item;
     }
 
+    public int getId() {return id;}
     public String getYearWeekDay() {return yearWeekDay;}
     public int getType() {return type;}
     public String getItem() {return item;}
 
+    public void setId(int id) {this.id = id;}
     public void setYearWeekDay(String yearWeekDay) {this.yearWeekDay = yearWeekDay;}
     public void setType(int type) {this.type = type;}
     public void setItem(String item) {this.item = item;}

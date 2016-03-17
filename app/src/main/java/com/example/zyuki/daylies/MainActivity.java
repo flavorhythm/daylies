@@ -7,31 +7,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import adapters.DisplayAdapter;
 import adapters.MainAdapter;
 import data.DataAccessObject;
-import data.TblToDo;
 import fragments.DialogRouter;
 import models.Day;
 import models.DayName;
 import models.ToDo;
 import utils.DateCalcs;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ViewTreeObserver.OnGlobalLayoutListener {
     public static final int PICK_WEEK_REQUEST = 1;
 
     private int currentYear;
@@ -42,14 +37,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private DisplayAdapter displayAdapter;
 
     private RelativeLayout toDoNew;
-    private TextView yearText, weekNumText, emptyList;
+    private TextView yearText, weekNumText, emptyList, toDoTitle;
     private EditText toDoNewItem;
-    private ListView dayList, toDoList;
+    private ListView dayListView, toDoListView;
     private Button toDoAdd;
     private SlidingUpPanelLayout slider;
 
-    private DataAccessObject dataAccess;
-
+    //TODO: add and display Month somewhere on activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,17 +51,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        dataAccess = ((ApplicationDatabase)getApplicationContext()).dataAccess;
-
         findViewsById();
 
         setUpAdapters();
+
+        toDoTitle.getViewTreeObserver().addOnGlobalLayoutListener(this);
 
         currentYear = DateCalcs.getCurrentYear();
         currentWeek = DateCalcs.getCurrentWeek();
         buildWeek(currentYear, currentWeek);
 
-        dayList.setOnItemClickListener(this);
+        dayListView.setOnItemClickListener(this);
 
         toDoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,13 +78,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
+    public void notifyDisplayAdapter() {
+        displayAdapter.notifyDataSetChanged();
+    }
+
     public void putLunchItem() {
         String newToDo = toDoNewItem.getText().toString();
         String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
 
-        dataAccess.putToDoItem(new ToDo(yearWeekNum, ToDo.TYPE_LUNCH, newToDo));
-        displayAdapter.buildToDoList(currentYear, currentWeek, currentDay);
-        displayAdapter.notifyDataSetChanged();
+        displayAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_LUNCH, newToDo));
 
         toDoNewItem.setText("");
     }
@@ -99,11 +95,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String newToDo = toDoNewItem.getText().toString();
         String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
 
-        dataAccess.putToDoItem(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
-        displayAdapter.buildToDoList(currentYear, currentWeek, currentDay);
-        displayAdapter.notifyDataSetChanged();
+        displayAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
 
         toDoNewItem.setText("");
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        int width = toDoTitle.getWidth();
+        int widthAspect = 16;
+        int heightAspect = 9;
+
+        toDoTitle.setHeight(width * heightAspect / widthAspect);
+
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            toDoTitle.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        } else {
+            toDoTitle.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+        }
     }
 
     @Override
@@ -151,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         currentDay = day.getDay();
 
-        displayAdapter.buildToDoList(currentYear, currentWeek, currentDay);
+        displayAdapter.buildList(currentYear, currentWeek, currentDay);
         displayAdapter.notifyDataSetChanged();
 
         slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
@@ -161,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         yearText = (TextView)findViewById(R.id.main_text_year);
         weekNumText = (TextView)findViewById(R.id.main_text_weekNum);
         emptyList = (TextView)findViewById(R.id.slider_text_emptyList);
+        toDoTitle = (TextView)findViewById(R.id.slider_text_title);
 
         toDoNew = (RelativeLayout)findViewById(R.id.slider_rel_toDoNew);
         toDoAdd = (Button)findViewById(R.id.slider_butn_toDoAdd);
@@ -168,24 +178,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding_layout);
 
-        dayList = (ListView)findViewById(R.id.main_list_daily);
-        toDoList = (ListView)findViewById(R.id.slider_list_toDoList);
+        dayListView = (ListView)findViewById(R.id.main_list_daily);
+        toDoListView = (ListView)findViewById(R.id.slider_list_toDoList);
     }
 
     private void buildWeek(int year, int week) {
-        yearText.setText(String.valueOf(year));
+        yearText.setText(String.valueOf(year).substring(2, 4));
         weekNumText.setText(DateCalcs.addZeroToNum(week));
 
 		mainAdapter.finishBuildingWeek(year, week);
     }
 
     private void setUpAdapters() {
-        mainAdapter = new MainAdapter(MainActivity.this);
-        dayList.setAdapter(mainAdapter);
+        mainAdapter = new MainAdapter(MainActivity.this, getApplicationContext());
+        dayListView.setAdapter(mainAdapter);
 
         displayAdapter = new DisplayAdapter(MainActivity.this, getApplicationContext());
-        toDoList.setAdapter(displayAdapter);
-        toDoList.setEmptyView(emptyList);
+        toDoListView.setAdapter(displayAdapter);
+        toDoListView.setEmptyView(emptyList);
     }
 
     @Override
