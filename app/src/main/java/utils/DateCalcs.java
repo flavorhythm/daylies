@@ -84,12 +84,15 @@ public class DateCalcs {
     }
 
 
-    public static final boolean isCurrentDay(DayName day) {
+    public static final boolean isCurrentDay(long dateInMillis) {
         Calendar current = Calendar.getInstance();
-        int dayOffset = 2;
-        int currentDay = current.get(DAY_OF_WEEK) - dayOffset;
 
-        return day.ordinal() == currentDay;
+        Calendar checkDate = Calendar.getInstance();
+        checkDate.setTimeInMillis(dateInMillis);
+
+        if(checkDate.get(YEAR) == current.get(YEAR)) {
+            return checkDate.get(DAY_OF_YEAR) == current.get(DAY_OF_YEAR);
+        } else {return false;}
     }
 
     public static final String buildDateString(int year, int weekNum, DayName day) {

@@ -70,7 +70,7 @@ public class MainAdapter extends BaseAdapter {
         viewHolder.dayOfMonth.setText(DateCalcs.formatDate(Calendar.DAY_OF_MONTH, day.getDate()));
         viewHolder.dayOfWeek.setText(day.getDay().toString());
 
-        if(DateCalcs.isCurrentDay(day.getDay())) {
+        if(DateCalcs.isCurrentDay(day.getDate())) {
             int whiteTextColor = ContextCompat.getColor(context, R.color.whiteText);
 
             viewHolder.entireRow.setBackgroundResource(R.color.colorPrimary);
