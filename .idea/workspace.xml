@@ -32,17 +32,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12fc888c-573b-45b6-b841-a573863fac14" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/main_divider_row.xml" />
-      <change type="DELETED" beforePath="C:\Users\zyuki\AndroidStudioProjects\daylies\app\src\main\java\data\TblDaily.java" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\zyuki\AndroidStudioProjects\daylies\app\src\main\res\layout\display_header_row.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/display_divider_row.xml" />
-      <change type="MOVED" beforePath="C:\Users\zyuki\AndroidStudioProjects\daylies\app\src\main\res\layout\main_row.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/main_content_row.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/utils/DateCalcs.java" afterPath="$PROJECT_DIR$/app/src/main/java/utils/DateCalcs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/models/Day.java" afterPath="$PROJECT_DIR$/app/src/main/java/models/Day.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/adapters/DisplayAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/adapters/DisplayAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/adapters/MainAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/adapters/MainAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/adapters/PickerAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/adapters/PickerAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_1_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/design_23_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/design_23_1_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_23_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_23_1_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_1_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_23_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_23_1_1.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="daylies.iws" />
@@ -71,11 +67,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainAdapter.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/adapters/MainAdapter.java">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="136" column="57" selection-start-line="136" selection-start-column="57" selection-end-line="136" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.92537314">
+              <caret line="68" column="67" selection-start-line="68" selection-start-column="67" selection-end-line="68" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -1526,14 +1522,14 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/intellij/annotations/12.0/annotations-12.0-sources.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/intellij/annotations/12.0/annotations-12.0.jar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/23.1.0/appcompat-v7-23.1.0.aar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/design/23.1.0/design-23.1.0.aar" />
+                            <option value="E:/Android/extras/android/m2repository/com/android/support/appcompat-v7/23.1.0/appcompat-v7-23.1.0.aar" />
+                            <option value="E:/Android/extras/android/m2repository/com/android/support/design/23.1.0/design-23.1.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.melnykov/floatingactionbutton/1.3.0/c28a6453b8e47eeb0764f649b90cdd67f39c1893/floatingactionbutton-1.3.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sothree.slidinguppanel/library/3.2.1/216aeda6e0f8b27404034180ef8f90e3fba9ec37/library-3.2.1.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/recyclerview-v7/23.1.1/recyclerview-v7-23.1.1.aar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1.aar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar" />
+                            <option value="E:/Android/extras/android/m2repository/com/android/support/recyclerview-v7/23.1.1/recyclerview-v7-23.1.1.aar" />
+                            <option value="E:/Android/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1.aar" />
+                            <option value="E:/Android/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar" />
                           </list>
                         </option>
                         <option name="path" value="$PROJECT_DIR$/app" />
@@ -1719,8 +1715,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/main_content_row.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/utils/DateCalcs.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/main_divider_row.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/adapters/MainAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -1740,8 +1736,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -1766,7 +1762,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
@@ -1788,6 +1783,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane" />
     </panes>
@@ -1804,8 +1800,8 @@
     <property name="recentsLimit" value="5" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.101:5555" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="84B7N15A07006629" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_21_x86" />
     <property name="SearchEverywhereHistoryKey" value="year&#9;FILE&#9;file://C:/Users/Flavorhythm/AndroidStudioProjects/daylies/app/src/main/res/layout/year_picker_dialog.xml" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/java" />
     <property name="FullScreen" value="false" />
@@ -2002,10 +1998,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32814237" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2013,7 +2009,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34509805" sideWeight="0.50959486" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31632653" sideWeight="0.4904051" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31590655" sideWeight="0.4904051" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2021,7 +2017,8 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18078668" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18070363" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2034,7 +2031,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20628998" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2055,6 +2051,29 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/adapters/MainAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="136" column="57" selection-start-line="136" selection-start-column="57" selection-end-line="136" selection-end-column="57" />
+          <folding>
+            <marker date="1458609335961" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="/**...*/" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder=" { " />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder=" }" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2226,13 +2245,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/database/sqlite/SQLiteDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28428572">
-          <caret line="1490" column="27" selection-start-line="1490" selection-start-column="27" selection-end-line="1490" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DialogRouter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3002944">
@@ -2251,14 +2263,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29142857">
           <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323263">
-          <caret line="65" column="19" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2300,13 +2304,6 @@
       </provider>
       <provider selected="true" editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/util/Calendar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6663396">
-          <caret line="493" column="23" selection-start-line="493" selection-start-column="23" selection-end-line="493" selection-end-column="23" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/todo_input_dialog.xml">
@@ -2449,18 +2446,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/adapters/MainAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48706895">
-          <caret line="169" column="5" selection-start-line="169" selection-start-column="5" selection-end-line="169" selection-end-column="5" />
-          <folding />
+        <state vertical-scroll-proportion="0.79270315">
+          <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
+          <folding>
+            <marker date="1458609335961" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="/**...*/" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder=" { " />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder=" }" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1458609335961" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/adapters/MainAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="136" column="57" selection-start-line="136" selection-start-column="57" selection-end-line="136" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.92537314">
+          <caret line="68" column="67" selection-start-line="68" selection-start-column="67" selection-end-line="68" selection-end-column="67" />
           <folding />
         </state>
       </provider>

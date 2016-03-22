@@ -122,13 +122,19 @@ public class MainAdapter extends BaseAdapter {
         dayList.clear();
 
         final int daysInWeek = 7;
+		final int error = -1;
 
         Calendar firstDateOfWeek = Calendar.getInstance();
         firstDateOfWeek.clear();
         firstDateOfWeek.set(Calendar.YEAR, year);
         firstDateOfWeek.set(Calendar.WEEK_OF_YEAR, weekNum);
 
-        addMonth(firstDateOfWeek);
+		int dayOfMonth = firstDateOfWeek.get(Calendar.DAY_OF_MONTH);
+		int lengthOfMonth = lengthOfMonth(firstDateOfWeek.get(Calendar.MONTH));
+
+		if((lengthOfMonth != error) && (dayOfMonth != lengthOfMonth)) {
+			addMonth(firstDateOfWeek);
+		}
 
         for(int i = 0; i < daysInWeek; i++) {
             Day day = new Day();
@@ -149,17 +155,33 @@ public class MainAdapter extends BaseAdapter {
         }
     }
 
-    //TODO: find a way to only show the month once
+	private int lengthOfMonth(int month) {
+		final int error = -1;
+
+		if(month >= 0 && month <= 11) {
+			switch(month) {
+				case 1:
+					return 28;
+				case 3: case 5: case 8: case 10:
+					return 30;
+				case 0: case 2: case 4: case 6: case 7: case 9: case 11:
+					return 31;
+			}
+		}
+
+		return error;
+	}
+
     private void addMonth(Calendar theMonth) {
         Calendar nextDayCheck = Calendar.getInstance();
         nextDayCheck.add(Calendar.DAY_OF_YEAR, 1);
 
-        Day day = new Day();
+        Month month = new Month();
 
-        day.setType(TYPE_DIVIDER);
-        day.setDate(theMonth.getTimeInMillis());
+		month.setType(TYPE_DIVIDER);
+		month.setDate(theMonth.getTimeInMillis());
 
-        dayList.add(day);
+        dayList.add(month);
     }
 
     private static class ViewHolder {
@@ -169,4 +191,6 @@ public class MainAdapter extends BaseAdapter {
 
         TextView month;
     }
+
+	private static class Month extends Day {}
 }

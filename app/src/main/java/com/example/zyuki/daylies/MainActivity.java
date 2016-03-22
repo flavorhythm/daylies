@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private Button toDoAdd;
     private SlidingUpPanelLayout slider;
 
-    //TODO: add and display Month somewhere on activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
