@@ -2,4 +2,11 @@
     <string name="app_name">Daylies</string>
     <string name="go_to_picker">Pick Week</string>
     <string name="select_year">Select Year</string>
+    <string name="label_year">Year</string>
+    <string name="label_week">Week</string>
+    <string name="delete">Delete</string>
+    <string name="empty_todo_list">Nothing to do</string>
+    <string name="set_year_title">Set Year</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_set">Set</string>
 </resources>

@@ -9,7 +9,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Set Year"/>
+        android:text="@string/set_year_title"/>
 	<NumberPicker
 		android:id="@+id/dialog_year_picker"
 		android:layout_width="wrap_content"
@@ -21,12 +21,16 @@
 		android:orientation="horizontal"
 		android:layout_gravity="right">
 		<Button
+			style="?android:buttonBarButtonStyle"
 			android:id="@+id/dialog_butn_cancel"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"/>
+			android:layout_height="wrap_content"
+			android:text="@string/button_cancel"/>
 		<Button
+			style="?android:buttonBarButtonStyle"
 			android:id="@+id/dialog_butn_submit"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"/>
+			android:layout_height="wrap_content"
+			android:text="@string/button_set"/>
 	</LinearLayout>
 </LinearLayout>
