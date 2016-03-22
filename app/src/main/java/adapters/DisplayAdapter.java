@@ -116,18 +116,11 @@ public class DisplayAdapter extends BaseAdapter {
         dataAccess.deleteToDoItem(dbId);
         toDoList.remove(listPos);
 
-        final int maxHeaderCount = 2;
-        int headerCount = 0;
-        if(toDoList.size() <= maxHeaderCount) {
-            for(ToDo item : toDoList) {
-                if(item.getType() == ToDo.TYPE_HEADER) {
-                    headerCount++;
-                }
+        final int previousPos = listPos - 1;
+        if(listPos == getCount()) {
+            if(getItemViewType(previousPos) == TYPE_DIVIDER) {
+                toDoList.remove(previousPos);
             }
-        }
-
-        if(headerCount == toDoList.size()) {
-            toDoList.clear();
         }
 
         ((MainActivity)activity).notifyDisplayAdapter();
@@ -147,8 +140,6 @@ public class DisplayAdapter extends BaseAdapter {
                 buildWeekEndList(dataAccess.getToDoList(DateCalcs.buildDateString(year, weekNum, day)));
                 break;
         }
-
-        ((MainActivity)activity).notifyDisplayAdapter();
     }
 
     private void buildWeekDayList(List<ToDo> toDosFromDb) {
@@ -169,10 +160,14 @@ public class DisplayAdapter extends BaseAdapter {
         if(!lunchToDos.isEmpty()) {
             toDoList.add(buildHeader("Lunchtime"));
             toDoList.addAll(lunchToDos);
+
+            ((MainActivity)activity).notifyDisplayAdapter();
         }
         if(!dailyToDos.isEmpty()) {
             toDoList.add(buildHeader("After Work"));
             toDoList.addAll(dailyToDos);
+
+            ((MainActivity)activity).notifyDisplayAdapter();
         }
     }
 
@@ -186,6 +181,8 @@ public class DisplayAdapter extends BaseAdapter {
         if(!dailyToDos.isEmpty()) {
             toDoList.add(buildHeader("Daily To Dos"));
             toDoList.addAll(dailyToDos);
+
+            ((MainActivity)activity).notifyDisplayAdapter();
         }
     }
 
