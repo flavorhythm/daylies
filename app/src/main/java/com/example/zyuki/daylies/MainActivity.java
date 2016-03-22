@@ -155,15 +155,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        toDoNew.setVisibility(View.VISIBLE);
         Day day = mainAdapter.getItem(position);
 
-        currentDay = day.getDay();
+        if(day.getType() != MainAdapter.TYPE_DIVIDER) {
+            toDoNew.setVisibility(View.VISIBLE);
 
-        displayAdapter.buildList(currentYear, currentWeek, currentDay);
-        displayAdapter.notifyDataSetChanged();
+            currentDay = day.getDay();
 
-        slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            displayAdapter.buildList(currentYear, currentWeek, currentDay);
+            displayAdapter.notifyDataSetChanged();
+
+            slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        }
     }
 
     private void findViewsById() {

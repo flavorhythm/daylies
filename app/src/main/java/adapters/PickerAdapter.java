@@ -90,7 +90,6 @@ public class PickerAdapter extends BaseAdapter {
         return row;
     }
 
-    //TODO: Need to prevent Week 53 from showing for some years
     public void buildWeeksInYear(Calendar endOfLastYear, int displayYear) {
         weeksList.clear();
 

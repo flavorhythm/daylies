@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,9 +25,9 @@ import utils.DateCalcs;
  * Created by zyuki on 3/10/2016.
  */
 public class DisplayAdapter extends BaseAdapter {
-    public static final int TYPE_COUNT = 2;
-    public static final int TYPE_DIVIDER = 0;
-    public static final int TYPE_CONTENT = 1;
+    private static final int TYPE_COUNT = 2;
+    private static final int TYPE_DIVIDER = 0;
+    private static final int TYPE_CONTENT = 1;
 
     private List<ToDo> toDoList;
     private LayoutInflater inflater;
@@ -66,8 +65,8 @@ public class DisplayAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View row, ViewGroup parent) {
-        int headerLayoutRes = R.layout.display_header_row;
-        int contentLayoutRes = R.layout.display_content_row;
+        int dividerLayout = R.layout.display_divider_row;
+        int contentLayout = R.layout.display_content_row;
 
         ViewHolder viewHolder;
 
@@ -76,12 +75,12 @@ public class DisplayAdapter extends BaseAdapter {
 
             switch(getItemViewType(position)) {
                 case TYPE_DIVIDER:
-                    row = inflater.inflate(headerLayoutRes, parent, false);
+                    row = inflater.inflate(dividerLayout, parent, false);
                     viewHolder.textItem = (TextView)row.findViewById(R.id.display_text_header);
                     viewHolder.textItem.setClickable(false);
                     break;
                 case TYPE_CONTENT:
-                    row = inflater.inflate(contentLayoutRes, parent, false);
+                    row = inflater.inflate(contentLayout, parent, false);
                     viewHolder.textItem = (TextView)row.findViewById(R.id.display_text_content);
                     viewHolder.deleteBtn = (Button)row.findViewById(R.id.display_butn_delete);
                     break;

@@ -30,6 +30,10 @@ import utils.DateCalcs;
  * Created by zyuki on 2/26/2016.
  */
 public class MainAdapter extends BaseAdapter {
+    public static final int TYPE_COUNT = 2;
+    public static final int TYPE_DIVIDER = 0;
+    public static final int TYPE_CONTENT = 1;
+
     private LayoutInflater inflater;
     private List<Day> dayList = new ArrayList<>();
 
@@ -38,6 +42,14 @@ public class MainAdapter extends BaseAdapter {
     public MainAdapter(Activity activity, Context context) {
         inflater = LayoutInflater.from(activity);
         this.context = context;
+    }
+
+    @Override
+    public int getItemViewType(int position) {return getItem(position).getType();}
+
+    @Override
+    public int getViewTypeCount() {
+        return TYPE_COUNT;
     }
 
     @Override
@@ -51,37 +63,56 @@ public class MainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View row, ViewGroup parent) {
-        int layoutRes = R.layout.main_row;
+        int dividerLayout = R.layout.main_divider_row;
+        int contentLayout = R.layout.main_content_row;
+
         ViewHolder viewHolder;
 
         if(row == null || row.getTag() == null) {
-            row = inflater.inflate(layoutRes, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.mainRow_linear_entireRow);
-            viewHolder.dayOfMonth = (TextView)row.findViewById(R.id.mainRow_text_dayOfMonth);
-            viewHolder.dayOfWeek = (TextView)row.findViewById(R.id.mainRow_text_dayOfWeek);
+            switch(getItemViewType(position)) {
+                case TYPE_DIVIDER:
+                    row = inflater.inflate(dividerLayout, parent, false);
 
-            row.setTag(viewHolder);
+                    viewHolder.month = (TextView)row.findViewById(R.id.mainRow_text_month);
+                    break;
+                case TYPE_CONTENT:
+                    row = inflater.inflate(contentLayout, parent, false);
+
+                    viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.mainRow_linear_entireRow);
+                    viewHolder.dayOfMonth = (TextView)row.findViewById(R.id.mainRow_text_dayOfMonth);
+                    viewHolder.dayOfWeek = (TextView)row.findViewById(R.id.mainRow_text_dayOfWeek);
+
+                    row.setTag(viewHolder);
+                    break;
+            }
         } else {viewHolder = (ViewHolder)row.getTag();}
 
         Day day = getItem(position);
 
-        viewHolder.dayOfMonth.setText(DateCalcs.formatDate(Calendar.DAY_OF_MONTH, day.getDate()));
-        viewHolder.dayOfWeek.setText(day.getDay().toString());
+        switch(getItemViewType(position)) {
+            case TYPE_DIVIDER:
+                viewHolder.month.setText(DateCalcs.formatDate(Calendar.MONTH, day.getDate()));
+                break;
+            case TYPE_CONTENT:
+                viewHolder.dayOfMonth.setText(DateCalcs.formatDate(Calendar.DAY_OF_MONTH, day.getDate()));
+                viewHolder.dayOfWeek.setText(day.getDay().toString());
 
-        if(DateCalcs.isCurrentDay(day.getDate())) {
-            int whiteTextColor = ContextCompat.getColor(context, R.color.whiteText);
+                if(DateCalcs.isCurrentDay(day.getDate())) {
+                    int whiteTextColor = ContextCompat.getColor(context, R.color.whiteText);
 
-            viewHolder.entireRow.setBackgroundResource(R.color.colorPrimary);
-            viewHolder.dayOfMonth.setTextColor(whiteTextColor);
-            viewHolder.dayOfWeek.setTextColor(whiteTextColor);
-        } else {
-            int blackTextColor = ContextCompat.getColor(context, R.color.darkText);
+                    viewHolder.entireRow.setBackgroundResource(R.color.colorPrimary);
+                    viewHolder.dayOfMonth.setTextColor(whiteTextColor);
+                    viewHolder.dayOfWeek.setTextColor(whiteTextColor);
+                } else {
+                    int blackTextColor = ContextCompat.getColor(context, R.color.darkText);
 
-            viewHolder.entireRow.setBackgroundColor(Color.TRANSPARENT);
-            viewHolder.dayOfMonth.setTextColor(blackTextColor);
-            viewHolder.dayOfWeek.setTextColor(blackTextColor);
+                    viewHolder.entireRow.setBackgroundColor(Color.TRANSPARENT);
+                    viewHolder.dayOfMonth.setTextColor(blackTextColor);
+                    viewHolder.dayOfWeek.setTextColor(blackTextColor);
+                }
+                break;
         }
 
         return row;
@@ -97,24 +128,45 @@ public class MainAdapter extends BaseAdapter {
         firstDateOfWeek.set(Calendar.YEAR, year);
         firstDateOfWeek.set(Calendar.WEEK_OF_YEAR, weekNum);
 
+        addMonth(firstDateOfWeek);
+
         for(int i = 0; i < daysInWeek; i++) {
             Day day = new Day();
 
+            int monthBefore = firstDateOfWeek.get(Calendar.MONTH);
             firstDateOfWeek.add(Calendar.DAY_OF_YEAR, 1);
+            int monthAfter = firstDateOfWeek.get(Calendar.MONTH);
 
+            day.setType(TYPE_CONTENT);
             day.setDate(firstDateOfWeek.getTimeInMillis());
             day.setYear(year);
-            day.setWeekNum(weekNum);
             day.setDay(DayName.values()[i]);
+
+            if(monthBefore != monthAfter) {addMonth(firstDateOfWeek);}
 
             dayList.add(day);
             notifyDataSetChanged();
         }
     }
 
+    //TODO: find a way to only show the month once
+    private void addMonth(Calendar theMonth) {
+        Calendar nextDayCheck = Calendar.getInstance();
+        nextDayCheck.add(Calendar.DAY_OF_YEAR, 1);
+
+        Day day = new Day();
+
+        day.setType(TYPE_DIVIDER);
+        day.setDate(theMonth.getTimeInMillis());
+
+        dayList.add(day);
+    }
+
     private static class ViewHolder {
         LinearLayout entireRow;
         TextView dayOfMonth;
         TextView dayOfWeek;
+
+        TextView month;
     }
 }

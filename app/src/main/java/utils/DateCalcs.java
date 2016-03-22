@@ -47,7 +47,7 @@ public class DateCalcs {
     private static final String getMonthName(int monthNum) {
         String month = "month";
         DateFormatSymbols formatSymbols = new DateFormatSymbols();
-        String[] months = formatSymbols.getShortMonths();
+        String[] months = formatSymbols.getMonths();
 
         if(monthNum >= 0 && monthNum <= 11) {month = months[monthNum];}
 
@@ -62,8 +62,6 @@ public class DateCalcs {
 
     public static final int getCurrentWeek() {
         Calendar current = Calendar.getInstance();
-
-
 
         return current.get(WEEK_OF_YEAR);
     }
@@ -82,7 +80,6 @@ public class DateCalcs {
             return currentWeek == compareWeek;
         } else {return false;}
     }
-
 
     public static final boolean isCurrentDay(long dateInMillis) {
         Calendar current = Calendar.getInstance();
