@@ -139,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.go_to_picker) {
+            slider.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+
             Intent intent = new Intent(MainActivity.this, WeekPickerActivity.class);
             intent.putExtra(DateCalcs.YEAR_KEY, currentYear);
 
@@ -147,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     PICK_WEEK_REQUEST
             );
 
-            slider.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             return true;
         }
 

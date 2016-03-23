@@ -63,7 +63,9 @@
         android:id="@+id/slider_text_emptyList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/empty_todo_list"/>
+        android:text="@string/empty_todo_list"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/slider_rel_header"/>
 
 </RelativeLayout>
