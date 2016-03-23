@@ -129,11 +129,17 @@ public class MainAdapter extends BaseAdapter {
         firstDateOfWeek.set(Calendar.YEAR, year);
         firstDateOfWeek.set(Calendar.WEEK_OF_YEAR, weekNum);
 
+        int month = firstDateOfWeek.get(Calendar.MONTH);
 		int dayOfMonth = firstDateOfWeek.get(Calendar.DAY_OF_MONTH);
 		int lengthOfMonth = lengthOfMonth(firstDateOfWeek.get(Calendar.MONTH));
 
-		if((lengthOfMonth != error) && (dayOfMonth != lengthOfMonth)) {
-			addMonth(firstDateOfWeek);
+		if(lengthOfMonth != error) {
+            if(dayOfMonth != lengthOfMonth) {
+                addMonth(firstDateOfWeek);
+            }
+			if(month == Calendar.FEBRUARY && dayOfMonth == 28) {
+                addMonth(firstDateOfWeek);
+            }
 		}
 
         for(int i = 0; i < daysInWeek; i++) {

@@ -9,4 +9,6 @@
     <string name="set_year_title">Set Year</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_set">Set</string>
+    <string name="button_add">Add</string>
+    <string name="title_ToDoList">To Do List</string>
 </resources>

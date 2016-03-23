@@ -8,5 +8,5 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:textSize="40sp"
-        android:gravity="center"/>
+        android:textAlignment="textEnd"/>
 </LinearLayout>

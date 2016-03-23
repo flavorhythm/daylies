@@ -4,18 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--android:layout_weight="0.8"-->
-
-    <TextView
-        android:id="@+id/slider_text_title"
+    <RelativeLayout
+        android:id="@+id/slider_rel_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To Do List"
-        android:textSize="40sp"
-        android:textColor="@color/whiteText"
+        android:gravity="bottom"
         android:background="@color/colorPrimary"
-        android:padding="10dp"
-        android:layout_alignParentTop="true"
-        android:gravity="bottom"/>
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/slider_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_ToDoList"
+            android:textSize="40sp"
+            android:textColor="@color/whiteText"/>
+        <TextView
+            android:id="@+id/slider_text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/slider_text_title"
+            android:layout_alignBaseline="@id/slider_text_title"
+            android:gravity="end"
+            android:textColor="@color/whiteText"/>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/slider_list_toDoList"
@@ -24,7 +36,7 @@
         android:dividerHeight="0dp"
         android:divider="#ffffff"
         android:layout_margin="10dp"
-        android:layout_below="@+id/slider_text_title"
+        android:layout_below="@+id/slider_rel_header"
         android:layout_above="@+id/slider_rel_toDoNew"/>
     <RelativeLayout
         android:id="@+id/slider_rel_toDoNew"
@@ -39,9 +51,11 @@
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/slider_butn_toDoAdd"/>
         <Button
+            style="?android:buttonBarButtonStyle"
             android:id="@+id/slider_butn_toDoAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/button_add"
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 

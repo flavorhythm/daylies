@@ -68,7 +68,7 @@ public class DisplayAdapter extends BaseAdapter {
         int dividerLayout = R.layout.display_divider_row;
         int contentLayout = R.layout.display_content_row;
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if(row == null || row.getTag() == null) {
             viewHolder = new ViewHolder();
@@ -77,7 +77,6 @@ public class DisplayAdapter extends BaseAdapter {
                 case TYPE_DIVIDER:
                     row = inflater.inflate(dividerLayout, parent, false);
                     viewHolder.textItem = (TextView)row.findViewById(R.id.display_text_header);
-                    viewHolder.textItem.setClickable(false);
                     break;
                 case TYPE_CONTENT:
                     row = inflater.inflate(contentLayout, parent, false);
@@ -94,12 +93,25 @@ public class DisplayAdapter extends BaseAdapter {
 
         viewHolder.textItem.setText(item.getItem());
 
-        final int itemId = item.getId();
-        if(getItemViewType(position) == TYPE_CONTENT) {
-            viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+        if(getItemViewType(position) != TYPE_DIVIDER) {
+            final int itemId = item.getId();
+            if(getItemViewType(position) == TYPE_CONTENT) {
+                viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeItem(itemId, position);
+                    }
+                });
+            }
+
+            row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    removeItem(itemId, position);
+                    if(viewHolder.deleteBtn.getVisibility() == View.INVISIBLE) {
+                        viewHolder.deleteBtn.setVisibility(View.VISIBLE);
+                    } else {
+                        viewHolder.deleteBtn.setVisibility(View.INVISIBLE);
+                    }
                 }
             });
         }
@@ -120,6 +132,14 @@ public class DisplayAdapter extends BaseAdapter {
         if(listPos == getCount()) {
             if(getItemViewType(previousPos) == TYPE_DIVIDER) {
                 toDoList.remove(previousPos);
+            }
+        }
+
+        if(!toDoList.isEmpty()) {
+            final int firstItem = 0;
+            final int secondItem = 1;
+            if(getItemViewType(secondItem) == TYPE_DIVIDER) {
+                toDoList.remove(firstItem);
             }
         }
 

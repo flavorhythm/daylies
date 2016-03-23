@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private MainAdapter mainAdapter;
     private DisplayAdapter displayAdapter;
 
-    private RelativeLayout toDoNew;
-    private TextView yearText, weekNumText, emptyList, toDoTitle;
+    private RelativeLayout toDoNew, sliderHeader;
+    private TextView yearText, weekNumText, emptyList, toDoDate;
     private EditText toDoNewItem;
     private ListView dayListView, toDoListView;
     private Button toDoAdd;
@@ -54,13 +54,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         setUpAdapters();
 
-        toDoTitle.getViewTreeObserver().addOnGlobalLayoutListener(this);
+        sliderHeader.getViewTreeObserver().addOnGlobalLayoutListener(this);
 
         currentYear = DateCalcs.getCurrentYear();
         currentWeek = DateCalcs.getCurrentWeek();
         buildWeek(currentYear, currentWeek);
 
         dayListView.setOnItemClickListener(this);
+
+        toDoListView.setOnItemClickListener(this);
 
         toDoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,16 +103,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onGlobalLayout() {
-        int width = toDoTitle.getWidth();
+        int width = sliderHeader.getWidth();
         int widthAspect = 16;
         int heightAspect = 9;
 
-        toDoTitle.setHeight(width * heightAspect / widthAspect);
+        sliderHeader.setMinimumHeight(width * heightAspect / widthAspect);
 
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            toDoTitle.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            sliderHeader.getViewTreeObserver().removeOnGlobalLayoutListener(this);
         } else {
-            toDoTitle.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            sliderHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
         }
     }
 
@@ -153,18 +155,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Day day = mainAdapter.getItem(position);
+    public void onItemClick(AdapterView<?> parent, View row, int position, long id) {
+        switch(parent.getId()) {
+            case R.id.main_list_daily:
+                Day day = mainAdapter.getItem(position);
 
-        if(day.getType() != MainAdapter.TYPE_DIVIDER) {
-            toDoNew.setVisibility(View.VISIBLE);
+                if(day.getType() != MainAdapter.TYPE_DIVIDER) {
+                    toDoNew.setVisibility(View.VISIBLE);
 
-            currentDay = day.getDay();
+                    toDoDate.setText(DateCalcs.formatDate(DateCalcs.FULL_DATE, day.getDate()));
 
-            displayAdapter.buildList(currentYear, currentWeek, currentDay);
-            displayAdapter.notifyDataSetChanged();
+                    currentDay = day.getDay();
 
-            slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                    displayAdapter.buildList(currentYear, currentWeek, currentDay);
+                    displayAdapter.notifyDataSetChanged();
+
+                    slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                }
+                break;
+            case R.id.slider_list_toDoList:
+
+                break;
         }
     }
 
@@ -172,13 +183,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         yearText = (TextView)findViewById(R.id.main_text_year);
         weekNumText = (TextView)findViewById(R.id.main_text_weekNum);
         emptyList = (TextView)findViewById(R.id.slider_text_emptyList);
-        toDoTitle = (TextView)findViewById(R.id.slider_text_title);
+        toDoDate = (TextView)findViewById(R.id.slider_text_date);
 
         toDoNew = (RelativeLayout)findViewById(R.id.slider_rel_toDoNew);
         toDoAdd = (Button)findViewById(R.id.slider_butn_toDoAdd);
         toDoNewItem = (EditText)findViewById(R.id.slider_edit_toDoNewItem);
 
         slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding_layout);
+
+        sliderHeader = (RelativeLayout)findViewById(R.id.slider_rel_header);
 
         dayListView = (ListView)findViewById(R.id.main_list_daily);
         toDoListView = (ListView)findViewById(R.id.slider_list_toDoList);
