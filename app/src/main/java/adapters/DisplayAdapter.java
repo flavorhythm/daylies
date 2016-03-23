@@ -104,16 +104,16 @@ public class DisplayAdapter extends BaseAdapter {
                 });
             }
 
-            row.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(viewHolder.deleteBtn.getVisibility() == View.INVISIBLE) {
-                        viewHolder.deleteBtn.setVisibility(View.VISIBLE);
-                    } else {
-                        viewHolder.deleteBtn.setVisibility(View.INVISIBLE);
-                    }
-                }
-            });
+//            row.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(viewHolder.deleteBtn.getVisibility() == View.INVISIBLE) {
+//                        viewHolder.deleteBtn.setVisibility(View.VISIBLE);
+//                    } else {
+//                        viewHolder.deleteBtn.setVisibility(View.INVISIBLE);
+//                    }
+//                }
+//            });
         }
 
         return row;

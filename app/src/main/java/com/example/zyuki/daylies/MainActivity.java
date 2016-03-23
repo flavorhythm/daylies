@@ -29,6 +29,8 @@ import utils.DateCalcs;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ViewTreeObserver.OnGlobalLayoutListener {
     public static final int PICK_WEEK_REQUEST = 1;
 
+    private static final int RESULT_FIRST_RUN = RESULT_FIRST_USER;
+
     private int currentYear;
     private int currentWeek;
     private DayName currentDay;
@@ -56,12 +58,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         sliderHeader.getViewTreeObserver().addOnGlobalLayoutListener(this);
 
-        currentYear = DateCalcs.getCurrentYear();
-        currentWeek = DateCalcs.getCurrentWeek();
-        buildWeek(currentYear, currentWeek);
+        onActivityResult(PICK_WEEK_REQUEST, RESULT_FIRST_RUN, null);
 
         dayListView.setOnItemClickListener(this);
-
         toDoListView.setOnItemClickListener(this);
 
         toDoAdd.setOnClickListener(new View.OnClickListener() {
@@ -156,27 +155,46 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View row, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch(parent.getId()) {
             case R.id.main_list_daily:
-                Day day = mainAdapter.getItem(position);
-
-                if(day.getType() != MainAdapter.TYPE_DIVIDER) {
-                    toDoNew.setVisibility(View.VISIBLE);
-
-                    toDoDate.setText(DateCalcs.formatDate(DateCalcs.FULL_DATE, day.getDate()));
-
-                    currentDay = day.getDay();
-
-                    displayAdapter.buildList(currentYear, currentWeek, currentDay);
-                    displayAdapter.notifyDataSetChanged();
-
-                    slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                }
+                getToDoList(position);
                 break;
             case R.id.slider_list_toDoList:
+                //TODO: find a way to select delete for only one item
+                int lastPos = parent.getCount();
 
+                for(int i = 0; i < lastPos; i++) {
+                    View itemRow = parent.getChildAt(i);
+
+                    if(itemRow != null) {
+                        Button eachBtn = (Button)itemRow.findViewById(R.id.display_butn_delete);
+                        if(eachBtn != null) {
+                            eachBtn.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+
+                Button thisBtn = (Button)parent.getChildAt(position).findViewById(R.id.display_butn_delete);
+                thisBtn.setVisibility(View.VISIBLE);
                 break;
+        }
+    }
+
+    private void getToDoList(int position) {
+        Day day = mainAdapter.getItem(position);
+
+        if(day.getType() != MainAdapter.TYPE_DIVIDER) {
+            toDoNew.setVisibility(View.VISIBLE);
+
+            toDoDate.setText(DateCalcs.formatDate(DateCalcs.FULL_DATE, day.getDate()));
+
+            currentDay = day.getDay();
+
+            displayAdapter.buildList(currentYear, currentWeek, currentDay);
+            displayAdapter.notifyDataSetChanged();
+
+            slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         }
     }
 
