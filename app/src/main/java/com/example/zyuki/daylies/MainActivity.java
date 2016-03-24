@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         DialogRouter.instantiateInputDialog(MainActivity.this);
                         break;
                     case SAT: case SUN:
-                        putDailyItem();
+                        putDailyItem(toDoNewItem.getText().toString());
                         break;
                 }
             }
@@ -82,8 +82,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         displayAdapter.notifyDataSetChanged();
     }
 
-    public void putLunchItem() {
-        String newToDo = toDoNewItem.getText().toString();
+    public void putLunchItem(String newToDo) {
         String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
 
         displayAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_LUNCH, newToDo));
@@ -91,8 +90,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toDoNewItem.setText("");
     }
 
-    public void putDailyItem() {
-        String newToDo = toDoNewItem.getText().toString();
+    public void putDailyItem(String newToDo) {
         String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
 
         displayAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
@@ -161,22 +159,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 getToDoList(position);
                 break;
             case R.id.slider_list_toDoList:
-                //TODO: find a way to select delete for only one item
-                int lastPos = parent.getCount();
-
-                for(int i = 0; i < lastPos; i++) {
-                    View itemRow = parent.getChildAt(i);
-
-                    if(itemRow != null) {
-                        Button eachBtn = (Button)itemRow.findViewById(R.id.display_butn_delete);
-                        if(eachBtn != null) {
-                            eachBtn.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                }
-
-                Button thisBtn = (Button)parent.getChildAt(position).findViewById(R.id.display_butn_delete);
-                thisBtn.setVisibility(View.VISIBLE);
+//                //TODO: find a way to select delete for only one item
+//                int truePos = position - toDoListView.getFirstVisiblePosition();
+//
+//                Button thisBtn = (Button)parent.getChildAt(truePos).findViewById(R.id.display_butn_delete);
+//                thisBtn.setVisibility(View.VISIBLE);
                 break;
         }
     }

@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="darkText">#000000</color>
     <color name="whiteText">#FFFFFF</color>
+    <color name="hint_color">#FF4081</color>
 </resources>

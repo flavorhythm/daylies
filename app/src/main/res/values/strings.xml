@@ -11,4 +11,7 @@
     <string name="button_set">Set</string>
     <string name="button_add">Add</string>
     <string name="title_ToDoList">To Do List</string>
+    <string name="hint_text">Things to do</string>
+    <string name="afterWork">After Work</string>
+    <string name="lunchToDo">At Lunch</string>
 </resources>

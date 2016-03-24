@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import data.DataAccessObject;
+import fragments.DialogRouter;
 import models.DayName;
 import models.ToDo;
 import utils.DateCalcs;
@@ -34,6 +35,7 @@ public class DisplayAdapter extends BaseAdapter {
     private DataAccessObject dataAccess;
 
     private Activity activity;
+//    private List<Button> buttonList;
 
     private int currentYear, currentWeek;
     private DayName currentDay;
@@ -43,6 +45,7 @@ public class DisplayAdapter extends BaseAdapter {
         dataAccess = ((ApplicationDatabase)context).dataAccess;
         inflater = LayoutInflater.from(activity);
 
+//        buttonList = new ArrayList<>();
         toDoList = new ArrayList<>();
     }
 
@@ -81,7 +84,9 @@ public class DisplayAdapter extends BaseAdapter {
                 case TYPE_CONTENT:
                     row = inflater.inflate(contentLayout, parent, false);
                     viewHolder.textItem = (TextView)row.findViewById(R.id.display_text_content);
-                    viewHolder.deleteBtn = (Button)row.findViewById(R.id.display_butn_delete);
+  //                  viewHolder.deleteBtn = (Button)row.findViewById(R.id.display_butn_delete);
+
+ //                   buttonList.add(viewHolder.deleteBtn);
                     break;
             }
 
@@ -94,27 +99,35 @@ public class DisplayAdapter extends BaseAdapter {
         viewHolder.textItem.setText(item.getItem());
 
         if(getItemViewType(position) != TYPE_DIVIDER) {
-            final int itemId = item.getId();
-            if(getItemViewType(position) == TYPE_CONTENT) {
-                viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        removeItem(itemId, position);
-                    }
-                });
-            }
+            row.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    DialogRouter.instantiateInputDialog(activity);
+                    
+                    return true;
+                }
+            });
+//            final int itemId = item.getId();
+//            viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    removeItem(itemId, position);
+//                }
+//            });
 
 //            row.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
-//                    if(viewHolder.deleteBtn.getVisibility() == View.INVISIBLE) {
-//                        viewHolder.deleteBtn.setVisibility(View.VISIBLE);
-//                    } else {
-//                        viewHolder.deleteBtn.setVisibility(View.INVISIBLE);
+//                    final int offsetPos = position - 1;
+//
+//                    for(Button button : buttonList) {
+//                       if(buttonList.indexOf(button) == offsetPos) {
+//                           button.setVisibility(View.VISIBLE);
+//                       } else {button.setVisibility(View.INVISIBLE);}
 //                    }
 //                }
 //            });
-        }
+        } else {row.setClickable(false);}
 
         return row;
     }
@@ -212,6 +225,6 @@ public class DisplayAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         TextView textItem;
-        TextView deleteBtn;
+//        Button deleteBtn;
     }
 }

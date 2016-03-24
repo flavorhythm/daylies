@@ -3,4 +3,33 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/alrt_TIL_odomWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText android:id="@+id/alrt_edt_odom"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/hint_color"
+            android:hint="@string/hint_text"
+            android:inputType="number"/>
+    </android.support.design.widget.TextInputLayout>
+    <LinearLayout android:id="@+id/alrt_LL_btnGroup"
+        style="?android:buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+        <Button android:id="@+id/alrt_btn_dismiss"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/afterWork"/>
+        <Button android:id="@+id/alrt_btn_submit"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lunchToDo"/>
+    </LinearLayout>
 </LinearLayout>
