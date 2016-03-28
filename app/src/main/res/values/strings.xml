@@ -12,6 +12,8 @@
     <string name="button_add">Add</string>
     <string name="title_ToDoList">To Do List</string>
     <string name="hint_text">Things to do</string>
-    <string name="afterWork">After Work</string>
-    <string name="lunchToDo">At Lunch</string>
+    <string name="afterWorkToDo">After work</string>
+    <string name="dailyToDo">Daily to do</string>
+    <string name="lunchToDo">At lunch</string>
+    <string name="title_inputDialog">What do you need to do?</string>
 </resources>

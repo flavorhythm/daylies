@@ -11,6 +11,11 @@ import android.support.v4.app.FragmentTransaction;
  */
 public class DialogRouter {
 	public static final String DIALOG = "dialog";
+
+	public static final String KEY_DAYTYPE = "dayType";
+	public static final int TYPE_WEEKDAY = 0;
+	public static final int TYPE_WEEKEND = 1;
+
 	private DialogRouter() {}
 
 	public static void instantiatePickerDialog(Activity activity, int year) {
@@ -20,14 +25,21 @@ public class DialogRouter {
 		pickerDialog.show(fragTransaction, DIALOG);
 	}
 
-	public static void instantiateInputDialog(Activity activity) {
+	public static void instantiateInputDialog(Activity activity, int dayType) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
-		InputDialogFragment inputDialog = InputDialogFragment.newInstance();
+		InputDialogFragment inputDialog = InputDialogFragment.newInstance(dayType);
 		inputDialog.show(fragTransaction, DIALOG);
 	}
 
-	public static FragmentTransaction clearFragments(Activity activity) {
+	public static void instantiateDeleteDialog(Activity activity) {
+		FragmentTransaction fragTransaction = clearFragments(activity);
+
+		DeleteDialogFragment deleteDialog = DeleteDialogFragment.newInstance();
+		deleteDialog.show(fragTransaction, DIALOG);
+	}
+
+	private static FragmentTransaction clearFragments(Activity activity) {
 		FragmentManager fragManager = ((FragmentActivity)activity).getSupportFragmentManager();
 		FragmentTransaction fragTransaction = fragManager.beginTransaction();
 

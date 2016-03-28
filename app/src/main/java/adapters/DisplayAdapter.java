@@ -98,37 +98,6 @@ public class DisplayAdapter extends BaseAdapter {
 
         viewHolder.textItem.setText(item.getItem());
 
-        if(getItemViewType(position) != TYPE_DIVIDER) {
-            row.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    DialogRouter.instantiateInputDialog(activity);
-                    
-                    return true;
-                }
-            });
-//            final int itemId = item.getId();
-//            viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    removeItem(itemId, position);
-//                }
-//            });
-
-//            row.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    final int offsetPos = position - 1;
-//
-//                    for(Button button : buttonList) {
-//                       if(buttonList.indexOf(button) == offsetPos) {
-//                           button.setVisibility(View.VISIBLE);
-//                       } else {button.setVisibility(View.INVISIBLE);}
-//                    }
-//                }
-//            });
-        } else {row.setClickable(false);}
-
         return row;
     }
 

@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_inputDialog"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"/>
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/alrt_TIL_odomWrapper"
+        android:id="@+id/inputDialog_textWrap_newItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <EditText android:id="@+id/alrt_edt_odom"
+        <EditText
+            android:id="@+id/inputDialog_edit_newItem"
             style="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/hint_color"
-            android:hint="@string/hint_text"
-            android:inputType="number"/>
+            android:hint="@string/hint_text" />
     </android.support.design.widget.TextInputLayout>
-    <LinearLayout android:id="@+id/alrt_LL_btnGroup"
+    <LinearLayout
+        android:id="@+id/inputDialog_linear_buttonBar"
         style="?android:buttonBarStyle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="end"
+        android:layout_gravity="right"
         android:orientation="horizontal">
-        <Button android:id="@+id/alrt_btn_dismiss"
+        <Button
+            android:id="@+id/inputDialog_btn_cancel"
             style="?android:buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/afterWork"/>
-        <Button android:id="@+id/alrt_btn_submit"
+            android:text="@string/button_cancel"/>
+        <Button
+            android:id="@+id/inputDialog_btn_daily"
             style="?android:buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lunchToDo"/>
+            android:text="@string/dailyToDo"/>
+        <Button
+            android:id="@+id/inputDialog_btn_lunch"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lunchToDo" />
     </LinearLayout>
 </LinearLayout>

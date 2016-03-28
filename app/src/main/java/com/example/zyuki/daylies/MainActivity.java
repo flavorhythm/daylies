@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private RelativeLayout toDoNew, sliderHeader;
     private TextView yearText, weekNumText, emptyList, toDoDate;
-    private EditText toDoNewItem;
     private ListView dayListView, toDoListView;
     private Button toDoAdd;
     private SlidingUpPanelLayout slider;
@@ -61,17 +60,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         onActivityResult(PICK_WEEK_REQUEST, RESULT_FIRST_RUN, null);
 
         dayListView.setOnItemClickListener(this);
-        toDoListView.setOnItemClickListener(this);
+
+        toDoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO: write code here to open dialog to delete each item
+
+                return true;
+            }
+        });
 
         toDoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (currentDay) {
                     case MON: case TUE: case WED: case THU: case FRI:
-                        DialogRouter.instantiateInputDialog(MainActivity.this);
+                        DialogRouter.instantiateInputDialog(MainActivity.this, DialogRouter.TYPE_WEEKDAY);
                         break;
                     case SAT: case SUN:
-                        putDailyItem(toDoNewItem.getText().toString());
+                        DialogRouter.instantiateInputDialog(MainActivity.this, DialogRouter.TYPE_WEEKEND);
                         break;
                 }
             }
@@ -86,16 +93,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
 
         displayAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_LUNCH, newToDo));
-
-        toDoNewItem.setText("");
     }
 
     public void putDailyItem(String newToDo) {
         String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
 
         displayAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
-
-        toDoNewItem.setText("");
     }
 
     @Override
@@ -158,13 +161,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case R.id.main_list_daily:
                 getToDoList(position);
                 break;
-            case R.id.slider_list_toDoList:
-//                //TODO: find a way to select delete for only one item
-//                int truePos = position - toDoListView.getFirstVisiblePosition();
-//
-//                Button thisBtn = (Button)parent.getChildAt(truePos).findViewById(R.id.display_butn_delete);
-//                thisBtn.setVisibility(View.VISIBLE);
-                break;
         }
     }
 
@@ -172,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Day day = mainAdapter.getItem(position);
 
         if(day.getType() != MainAdapter.TYPE_DIVIDER) {
-            toDoNew.setVisibility(View.VISIBLE);
+            toDoAdd.setVisibility(View.VISIBLE);
 
             toDoDate.setText(DateCalcs.formatDate(DateCalcs.FULL_DATE, day.getDate()));
 
@@ -191,9 +187,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         emptyList = (TextView)findViewById(R.id.slider_text_emptyList);
         toDoDate = (TextView)findViewById(R.id.slider_text_date);
 
-        toDoNew = (RelativeLayout)findViewById(R.id.slider_rel_toDoNew);
         toDoAdd = (Button)findViewById(R.id.slider_butn_toDoAdd);
-        toDoNewItem = (EditText)findViewById(R.id.slider_edit_toDoNewItem);
 
         slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding_layout);
 
