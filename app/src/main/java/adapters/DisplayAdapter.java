@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.zyuki.daylies.ApplicationDatabase;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import data.DataAccessObject;
-import fragments.DialogRouter;
 import models.DayName;
 import models.ToDo;
 import utils.DateCalcs;

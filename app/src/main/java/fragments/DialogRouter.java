@@ -1,10 +1,10 @@
 package fragments;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 
 /**
  * Created by Flavorhythm on 3/3/2016.
@@ -42,7 +42,7 @@ public class DialogRouter {
 	}
 
 	private static FragmentTransaction clearFragments(Activity activity) {
-		FragmentManager fragManager = ((FragmentActivity)activity).getSupportFragmentManager();
+		FragmentManager fragManager = ((FragmentActivity)activity).getFragmentManager();
 		FragmentTransaction fragTransaction = fragManager.beginTransaction();
 
 		Fragment previousFrag = fragManager.findFragmentByTag(DIALOG);
