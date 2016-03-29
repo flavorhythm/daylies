@@ -16,4 +16,6 @@
     <string name="dailyToDo">Daily to do</string>
     <string name="lunchToDo">At lunch</string>
     <string name="title_inputDialog">What do you need to do?</string>
+    <string name="title_deleteDialog">Delete item?</string>
+    <string name="button_delete">Delete</string>
 </resources>

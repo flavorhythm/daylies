@@ -1,13 +1,17 @@
 package com.example.zyuki.daylies;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private MainAdapter mainAdapter;
     private DisplayAdapter displayAdapter;
 
-    private RelativeLayout toDoNew, sliderHeader;
+    private RelativeLayout sliderHeader;
     private TextView yearText, weekNumText, emptyList, toDoDate;
     private ListView dayListView, toDoListView;
     private Button toDoAdd;
@@ -52,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setSupportActionBar(toolbar);
 
         findViewsById();
-
         setUpAdapters();
 
         sliderHeader.getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -64,8 +67,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toDoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: write code here to open dialog to delete each item
-
+                if(displayAdapter.getItem(position).getType() != ToDo.TYPE_HEADER) {
+                    DialogRouter.instantiateDeleteDialog(MainActivity.this, position);
+                }
                 return true;
             }
         });
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toDoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (currentDay) {
+                switch(currentDay) {
                     case MON: case TUE: case WED: case THU: case FRI:
                         DialogRouter.instantiateInputDialog(MainActivity.this, DialogRouter.TYPE_WEEKDAY);
                         break;
@@ -101,13 +105,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         displayAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
     }
 
+    public void deleteItem(int position) {
+        displayAdapter.removeItem(position);
+    }
+
     @Override
     public void onGlobalLayout() {
         int width = sliderHeader.getWidth();
         int widthAspect = 16;
         int heightAspect = 9;
 
-        sliderHeader.setMinimumHeight(width * heightAspect / widthAspect);
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            sliderHeader.setMinimumHeight(width * heightAspect / widthAspect);
+        }
 
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             sliderHeader.getViewTreeObserver().removeOnGlobalLayoutListener(this);
