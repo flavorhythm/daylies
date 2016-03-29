@@ -106,7 +106,9 @@ public class DisplayAdapter extends BaseAdapter {
         buildList(currentYear, currentWeek, currentDay);
     }
 
-    public void removeItem(final int dbId, final int listPos) {
+    public void removeItem(final int listPos) {
+        int dbId = getItem(listPos).getId();
+
         dataAccess.deleteToDoItem(dbId);
         toDoList.remove(listPos);
 

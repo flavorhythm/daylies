@@ -1,8 +1,10 @@
 package fragments;
 
+import android.app.Dialog;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +21,6 @@ import static fragments.DialogRouter.*;
  * Created by zyuki on 3/8/2016.
  */
 public class InputDialogFragment extends DialogFragment implements View.OnClickListener {
-    //TODO: finish inputdialogfragment with onCreateView
-    //TODO: create another dialog to edit/delete item
     private View customLayout;
 
     private Button lunchToDoBtn, dailyToDoBtn, cancelBtn;
@@ -38,14 +38,27 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        Dialog dialog = getDialog();
+
+        if(dialog != null) {
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         int layoutRes = R.layout.todo_input_dialog;
         customLayout = inflater.inflate(layoutRes, container, false);
 
         findViewByIds();
         setListeners();
-
-        adjustButtons();
+        showHideButtons();
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -58,20 +71,25 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
 
         switch(v.getId()) {
             case R.id.inputDialog_btn_lunch:
-                itemText = newToDoItem.getText().toString();
+                if(!TextUtils.isEmpty(newToDoItem.getText())) {
+                    itemText = newToDoItem.getText().toString();
+                    ((MainActivity)getActivity()).putLunchItem(itemText);
 
-                ((MainActivity)getActivity()).putLunchItem(itemText);
+                    getDialog().dismiss();
+                } else {newItemWrapper.setError("cannot be blank");}
                 break;
             case R.id.inputDialog_btn_daily:
-                itemText = newToDoItem.getText().toString();
+                if(!TextUtils.isEmpty(newToDoItem.getText())) {
+                    itemText = newToDoItem.getText().toString();
+                    ((MainActivity)getActivity()).putDailyItem(itemText);
 
-                ((MainActivity)getActivity()).putDailyItem(itemText);
+                    getDialog().dismiss();
+                } else {newItemWrapper.setError("cannot be blank");}
                 break;
             case R.id. inputDialog_btn_cancel:
+                getDialog().dismiss();
                 break;
         }
-
-        getDialog().dismiss();
     }
 
     private void findViewByIds() {
@@ -89,7 +107,7 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
         cancelBtn.setOnClickListener(this);
     }
 
-    private void adjustButtons() {
+    private void showHideButtons() {
         int type = getArguments().getInt(KEY_DAYTYPE);
 
         if(type == TYPE_WEEKEND) {

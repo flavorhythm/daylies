@@ -1,5 +1,6 @@
 package fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import utils.DateCalcs;
 public class PickerDialogFragment extends DialogFragment implements View.OnClickListener {
 	private NumberPicker yearPicker;
 
+	//TODO: develop custom picker and replace numberpicker
 	public static PickerDialogFragment newInstance(int year) {
         Bundle args = new Bundle();
         args.putInt(DateCalcs.YEAR_KEY, year);
@@ -31,7 +33,23 @@ public class PickerDialogFragment extends DialogFragment implements View.OnClick
     }
 
 	@Override
+	public void onResume() {
+		super.onResume();
+
+		Dialog dialog = getDialog();
+
+		if(dialog != null) {
+			dialog.getWindow().setLayout(
+					ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT
+			);
+		}
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		final int dateRange = 5;
+
 		int layoutRes = R.layout.year_picker_dialog;
 		View customLayout = inflater.inflate(layoutRes, container, false);
 
@@ -40,7 +58,7 @@ public class PickerDialogFragment extends DialogFragment implements View.OnClick
 		Button submitBtn = (Button)customLayout.findViewById(R.id.dialog_butn_submit);
 
 		yearPicker.setMinValue(DateCalcs.getCurrentYear());
-		yearPicker.setMaxValue(DateCalcs.getCurrentYear() + 30);
+		yearPicker.setMaxValue(DateCalcs.getCurrentYear() + dateRange);
         yearPicker.setValue(getArguments().getInt(DateCalcs.YEAR_KEY));
 
 		cancelBtn.setOnClickListener(this);
