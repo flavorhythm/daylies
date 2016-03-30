@@ -23,7 +23,7 @@ import utils.DateCalcs;
 /**
  * Created by zyuki on 3/10/2016.
  */
-public class DisplayAdapter extends BaseAdapter {
+public class ToDoAdapter extends BaseAdapter {
     private static final int TYPE_COUNT = 2;
     private static final int TYPE_DIVIDER = 0;
     private static final int TYPE_CONTENT = 1;
@@ -38,7 +38,7 @@ public class DisplayAdapter extends BaseAdapter {
     private int currentYear, currentWeek;
     private DayName currentDay;
 
-    public DisplayAdapter(Activity activity, Context context) {
+    public ToDoAdapter(Activity activity, Context context) {
         this.activity = activity;
         dataAccess = ((ApplicationDatabase)context).dataAccess;
         inflater = LayoutInflater.from(activity);
@@ -125,7 +125,7 @@ public class DisplayAdapter extends BaseAdapter {
             }
         }
 
-        ((MainActivity)activity).notifyDisplayAdapter();
+//        ((MainActivity)activity).notifyDisplayAdapter();
     }
 
     public void buildList(int year, int weekNum, DayName day) {
@@ -163,13 +163,13 @@ public class DisplayAdapter extends BaseAdapter {
             toDoList.add(buildHeader("Lunchtime"));
             toDoList.addAll(lunchToDos);
 
-            ((MainActivity)activity).notifyDisplayAdapter();
+//            ((MainActivity)activity).notifyDisplayAdapter();
         }
         if(!dailyToDos.isEmpty()) {
             toDoList.add(buildHeader("After Work"));
             toDoList.addAll(dailyToDos);
 
-            ((MainActivity)activity).notifyDisplayAdapter();
+//            ((MainActivity)activity).notifyDisplayAdapter();
         }
     }
 
@@ -184,7 +184,7 @@ public class DisplayAdapter extends BaseAdapter {
             toDoList.add(buildHeader("Daily To Dos"));
             toDoList.addAll(dailyToDos);
 
-            ((MainActivity)activity).notifyDisplayAdapter();
+//            ((MainActivity)activity).notifyDisplayAdapter();
         }
     }
 

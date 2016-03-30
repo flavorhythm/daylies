@@ -24,7 +24,7 @@ import utils.DateCalcs;
 /**
  * Created by zyuki on 2/26/2016.
  */
-public class MainAdapter extends BaseAdapter {
+public class DaysAdapter extends BaseAdapter {
     public static final int TYPE_COUNT = 2;
     public static final int TYPE_DIVIDER = 0;
     public static final int TYPE_CONTENT = 1;
@@ -34,7 +34,7 @@ public class MainAdapter extends BaseAdapter {
 
     private Context context;
 
-    public MainAdapter(Activity activity, Context context) {
+    public DaysAdapter(Activity activity, Context context) {
         inflater = LayoutInflater.from(activity);
         this.context = context;
     }
@@ -58,8 +58,8 @@ public class MainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View row, ViewGroup parent) {
-        int dividerLayout = R.layout.main_divider_row;
-        int contentLayout = R.layout.main_content_row;
+        int dividerLayout = R.layout.row_days_divider;
+        int contentLayout = R.layout.row_days_content;
 
         ViewHolder viewHolder;
 
@@ -75,9 +75,9 @@ public class MainAdapter extends BaseAdapter {
                 case TYPE_CONTENT:
                     row = inflater.inflate(contentLayout, parent, false);
 
-                    viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.mainRow_linear_entireRow);
-                    viewHolder.dayOfMonth = (TextView)row.findViewById(R.id.mainRow_text_dayOfMonth);
-                    viewHolder.dayOfWeek = (TextView)row.findViewById(R.id.mainRow_text_dayOfWeek);
+                    viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.rowDays_linear_entireRow);
+                    viewHolder.dayOfMonth = (TextView)row.findViewById(R.id.rowDays_text_dayOfMonth);
+                    viewHolder.dayOfWeek = (TextView)row.findViewById(R.id.rowDays_text_dayOfWeek);
 
                     row.setTag(viewHolder);
                     break;

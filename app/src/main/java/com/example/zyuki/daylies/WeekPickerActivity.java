@@ -9,13 +9,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import adapters.PickerAdapter;
+import adapters.WeeksAdapter;
 import fragments.DialogRouter;
 import models.WeeksInYear;
 import utils.DateCalcs;
 
 public class WeekPickerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    private PickerAdapter adapter;
+    private WeeksAdapter adapter;
     private int displayYear;
 
     @Override
@@ -27,7 +27,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
 
         findDisplayYear();
 
-        adapter = new PickerAdapter(WeekPickerActivity.this, getApplicationContext());
+        adapter = new WeeksAdapter(WeekPickerActivity.this, getApplicationContext());
         displaySelectedYear(displayYear);
         weekList.setAdapter(adapter);
 
@@ -37,7 +37,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
     public void displaySelectedYear(int displayYear) {
         this.displayYear = displayYear;
 
-        adapter.buildWeeksInYear(DateCalcs.endOfLastYear(displayYear), displayYear);
+        adapter.buildWeeksInYear(displayYear);
     }
 
     private void findDisplayYear() {

@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.zenoyuki.flavorhythm.daily.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="com.zenoyuki.flavorhythm.daily.MainActivity">
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         xmlns:sothree="http://schemas.android.com/apk/res-auto"
@@ -55,14 +54,6 @@
                     android:textColor="@color/whiteText"
                     android:textSize="45sp"/>
             </LinearLayout>
-            <ListView
-                android:id="@+id/main_list_daily"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:dividerHeight="0dp"
-                android:divider="#ffffff"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/main_linear_weekYear" />
         </RelativeLayout>
 
         <include layout="@layout/slider_main" />

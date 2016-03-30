@@ -18,4 +18,6 @@
     <string name="title_inputDialog">What do you need to do?</string>
     <string name="title_deleteDialog">Delete item?</string>
     <string name="button_delete">Delete</string>
+    <string name="daysFragTitle">Days</string>
+    <string name="weeksFragTitle">Weeks</string>
 </resources>

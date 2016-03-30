@@ -23,13 +23,13 @@ import utils.DateCalcs;
 /**
  * Created by zyuki on 2/26/2016.
  */
-public class PickerAdapter extends BaseAdapter {
+public class WeeksAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<WeeksInYear> weeksList = new ArrayList<>();
 
     private Context context;
 
-    public PickerAdapter(Activity activity, Context context) {
+    public WeeksAdapter(Activity activity, Context context) {
         inflater = LayoutInflater.from(activity);
         this.context = context;
     }
@@ -45,17 +45,17 @@ public class PickerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View row, ViewGroup parent) {
-        int layoutRes = R.layout.picker_row;
+        int layoutRes = R.layout.row_weeks;
         ViewHolder viewHolder;
 
         if(row == null || row.getTag() == null) {
             row = inflater.inflate(layoutRes, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.weekText = (TextView)row.findViewById(R.id.pickerRow_text_weekText);
-            viewHolder.weekNum = (TextView)row.findViewById(R.id.pickerRow_text_weekNum);
-            viewHolder.date = (TextView)row.findViewById(R.id.pickerRow_text_date);
-            viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.pickerRow_linear_entireRow);
+            viewHolder.weekText = (TextView)row.findViewById(R.id.rowWeeks_text_weekText);
+            viewHolder.weekNum = (TextView)row.findViewById(R.id.rowWeeks_text_weekNum);
+            viewHolder.date = (TextView)row.findViewById(R.id.rowWeeks_text_date);
+            viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.rowWeeks_linear_entireRow);
 
             row.setTag(viewHolder);
         } else {viewHolder = (ViewHolder)row.getTag();}
@@ -87,12 +87,14 @@ public class PickerAdapter extends BaseAdapter {
         return row;
     }
 
-    public void buildWeeksInYear(Calendar endOfLastYear, int displayYear) {
+    public void buildWeeksInYear(int displayYear) {
         weeksList.clear();
 
         final int daysInWeek = 7;
         int weekOfYear = 1;
         int currentYear = 0;
+
+        Calendar endOfLastYear = DateCalcs.endOfLastYear(displayYear);
 
         Calendar thisYear = Calendar.getInstance();
         thisYear.set(Calendar.YEAR, displayYear);
@@ -107,6 +109,7 @@ public class PickerAdapter extends BaseAdapter {
         while(currentYear <= displayYear) {
             WeeksInYear week = new WeeksInYear();
 
+            week.setYear(displayYear);
             week.setWeekNum(weekOfYear);
             week.setDate(thisYear.getTimeInMillis());
 

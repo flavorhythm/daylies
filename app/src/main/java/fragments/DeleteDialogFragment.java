@@ -54,7 +54,7 @@ public class DeleteDialogFragment extends DialogFragment implements DialogInterf
         switch(which) {
             case Dialog.BUTTON_POSITIVE:
                 int position = getArguments().getInt(DialogRouter.KEY_ITEMPOS);
-                ((MainActivity)getActivity()).deleteItem(position);
+//                ((MainActivity)getActivity()).deleteItem(position);
 
                 dialog.dismiss();
                 break;
