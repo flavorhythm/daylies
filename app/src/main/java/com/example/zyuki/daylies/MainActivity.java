@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +52,11 @@ public class MainActivity extends AppCompatActivity implements WeeksDisplayFragm
         viewPager.setAdapter(pagerAdapter);
     }
 
-    //TODO: tab text highlight doesn't change
     public void changePage(int goToThisTitle) {
         int position = pagerAdapter.getPosition(goToThisTitle);
-        viewPager.setCurrentItem(position);
+        TabLayout.Tab goToTab = tabLayout.getTabAt(position);
+
+        if(goToTab != null) {goToTab.select();}
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
