@@ -24,7 +24,7 @@ public class PickerDialogFragment extends DialogFragment implements View.OnClick
 	//TODO: develop custom picker and replace numberpicker
 	public static PickerDialogFragment newInstance(int year) {
         Bundle args = new Bundle();
-        args.putInt(DateCalcs.YEAR_KEY, year);
+        args.putInt(DateCalcs.KEY_YEAR, year);
 
         PickerDialogFragment fragment = new PickerDialogFragment();
         fragment.setArguments(args);
@@ -59,7 +59,7 @@ public class PickerDialogFragment extends DialogFragment implements View.OnClick
 
 		yearPicker.setMinValue(DateCalcs.getCurrentYear());
 		yearPicker.setMaxValue(DateCalcs.getCurrentYear() + dateRange);
-        yearPicker.setValue(getArguments().getInt(DateCalcs.YEAR_KEY));
+        yearPicker.setValue(getArguments().getInt(DateCalcs.KEY_YEAR));
 
 		cancelBtn.setOnClickListener(this);
 		submitBtn.setOnClickListener(this);

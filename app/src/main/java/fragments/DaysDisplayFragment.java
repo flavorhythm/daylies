@@ -16,6 +16,7 @@ import com.example.zyuki.daylies.R;
 
 import adapters.DaysAdapter;
 import models.Day;
+import models.DayName;
 import utils.DateCalcs;
 
 /**
@@ -37,8 +38,6 @@ public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemC
 //    private Button toDoAdd;
 //    private SlidingUpPanelLayout slider;
 
-    private int currDispYear, currDispWeek;
-
     public DaysDisplayFragment() {}
 
     //Runs before onCreateView
@@ -48,9 +47,12 @@ public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemC
 
         daysAdapter = new DaysAdapter(getActivity(), getContext());
 
-        int year = DateCalcs.getCurrentYear();
-        int week = DateCalcs.getCurrentWeek();
-        buildWeek(year, week);
+        if(!getArguments().isEmpty()) {
+            buildWeek(
+                    getArguments().getInt(DateCalcs.KEY_YEAR),
+                    getArguments().getInt(DateCalcs.KEY_WEEK)
+            );
+        }
 
 //        findViewsById();
 //        setUpAdapters();
@@ -105,7 +107,7 @@ public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemC
         Day day = daysAdapter.getItem(position);
 
         if(day.getType() != DaysAdapter.TYPE_DIVIDER) {
-            ((MainActivity)getActivity()).showToDoList(day.getDate());
+            ((MainActivity)getActivity()).showToDoList(day.getDay());
         }
     }
 
@@ -195,9 +197,6 @@ public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemC
 //        yearText.setText(String.valueOf(year).substring(2, 4));
 //        weekNumText.setText(DateCalcs.addZeroToNum(week));
 
-        currDispYear = currentYear;
-        currDispWeek = currentWeek;
-
         daysAdapter.finishBuildingWeek(currentYear, currentWeek);
     }
 //
@@ -216,8 +215,8 @@ public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemC
 //            if(resultCode == RESULT_OK) {
 //                Bundle extras = data.getExtras();
 //
-//                currentYear = extras.getInt(DateCalcs.YEAR_KEY);
-//                currentWeek = extras.getInt(DateCalcs.WEEK_NUM_KEY);
+//                currentYear = extras.getInt(DateCalcs.KEY_YEAR);
+//                currentWeek = extras.getInt(DateCalcs.KEY_WEEK);
 //            } else {
 //                currentYear = DateCalcs.getCurrentYear();
 //                currentWeek = DateCalcs.getCurrentWeek();
@@ -226,4 +225,5 @@ public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemC
 //
 //        buildWeek(currentYear, currentWeek);
 //    }
+
 }

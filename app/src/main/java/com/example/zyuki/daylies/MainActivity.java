@@ -1,7 +1,7 @@
 package com.example.zyuki.daylies;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,31 +10,48 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ViewTreeObserver;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import adapters.ToDoAdapter;
 import fragments.DaysDisplayFragment;
+import fragments.DialogRouter;
 import fragments.WeeksDisplayFragment;
+import models.DayName;
+import models.ToDo;
+import utils.DateCalcs;
 
 public class MainActivity extends AppCompatActivity
-        implements /*ViewTreeObserver.OnGlobalLayoutListener, */WeeksDisplayFragment.OnDataPass {
+        implements /*ViewTreeObserver.OnGlobalLayoutListener, */WeeksDisplayFragment.DataFromWeeks, View.OnClickListener {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter pagerAdapter;
 
     private SlidingUpPanelLayout slider;
+    private FloatingActionButton fab;
+    private ListView todoList;
+    private ToDoAdapter todoAdapter;
 
-    //TODO: need to implement drag-up panel
+    private int currentYear, currentWeek;
+    private DayName currentDay;
+
     //TODO: increase header size
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        currentYear = DateCalcs.getCurrentYear();
+        currentWeek = DateCalcs.getCurrentWeek();
 
         findViewByIds();
 
@@ -44,6 +61,22 @@ public class MainActivity extends AppCompatActivity
 
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
+
+        todoAdapter = new ToDoAdapter(MainActivity.this, getApplicationContext());
+        todoList.setAdapter(todoAdapter);
+        todoList.setEmptyView(findViewById(R.id.slider_text_emptyList));
+
+        todoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (todoAdapter.getItem(position).getType() != ToDo.TYPE_HEADER) {
+                    DialogRouter.instantiateDeleteDialog(MainActivity.this, position);
+                }
+                return true;
+            }
+        });
+
+        fab.setOnClickListener(this);
     }
 
 //    @Override
@@ -68,18 +101,44 @@ public class MainActivity extends AppCompatActivity
 //        }
 //    }
 
+    @Override
+    public void onClick(View v) {
+        if(currentDay != null) {
+            switch(currentDay) {
+                case MON: case TUE: case WED: case THU: case FRI:
+                    DialogRouter.instantiateInputDialog(MainActivity.this, DialogRouter.TYPE_WEEKDAY);
+                    break;
+                case SAT: case SUN:
+                    DialogRouter.instantiateInputDialog(MainActivity.this, DialogRouter.TYPE_WEEKEND);
+                    break;
+            }
+        }
+    }
+
     private void findViewByIds() {
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         viewPager = (ViewPager)findViewById(R.id.main_viewPager);
         tabLayout = (TabLayout)findViewById(R.id.main_tabLayout);
 
         slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding);
+        fab = (FloatingActionButton)findViewById(R.id.slider_fab_addNewItem);
+        todoList = (ListView)findViewById(R.id.slider_list_toDoList);
     }
 
     private void setupViewPager() {
+        Bundle args = new Bundle();
+        DaysDisplayFragment daysFrag = new DaysDisplayFragment();
+        WeeksDisplayFragment weeksFrag = new WeeksDisplayFragment();
+
+        args.putInt(DateCalcs.KEY_YEAR, currentYear);
+        args.putInt(DateCalcs.KEY_WEEK, currentWeek);
+
+        daysFrag.setArguments(args);
+
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(R.string.daysFragTitle, new DaysDisplayFragment());
-        pagerAdapter.addFragment(R.string.weeksFragTitle, new WeeksDisplayFragment());
+
+        pagerAdapter.addFragment(R.string.daysFragTitle, daysFrag);
+        pagerAdapter.addFragment(R.string.weeksFragTitle, weeksFrag);
 
         viewPager.setAdapter(pagerAdapter);
     }
@@ -91,8 +150,32 @@ public class MainActivity extends AppCompatActivity
         if(goToTab != null) {goToTab.select();}
     }
 
-    public void showToDoList(long dateOfList) {
+    public void showToDoList(DayName currentDay) {
+        this.currentDay = currentDay;
+
+        todoAdapter.buildList(currentYear, currentWeek, currentDay);
+        todoAdapter.notifyDataSetChanged();
+
         slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+    }
+
+    public void putLunchItem(String newToDo) {
+        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
+
+        todoAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_LUNCH, newToDo));
+        todoAdapter.notifyDataSetChanged();
+    }
+
+    public void putDailyItem(String newToDo) {
+        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
+
+        todoAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
+        todoAdapter.notifyDataSetChanged();
+    }
+
+    public void removeItem(int position) {
+        todoAdapter.removeItem(position);
+        todoAdapter.notifyDataSetChanged();
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -133,7 +216,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDataPass(int year, int week) {
+    public void dataFromWeeks(int year, int week) {
+        currentYear = year;
+        currentWeek = week;
+
         ((DaysDisplayFragment)pagerAdapter.getItem(0)).buildWeek(year, week);
     }
 }
@@ -163,13 +249,7 @@ public class MainActivity extends AppCompatActivity
 //        dayListView.setOnItemClickListener(this);
 //
 //        toDoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                if(displayAdapter.getItem(position).getType() != ToDo.TYPE_HEADER) {
-//                    DialogRouter.instantiateDeleteDialog(getActivity(), position);
-//                }
-//                return true;
-//            }
+
 //        });
 //
 //        toDoAdd.setOnClickListener(new View.OnClickListener() {
@@ -185,26 +265,6 @@ public class MainActivity extends AppCompatActivity
 //                }
 //            }
 //        });
-//    }
-
-//    public void notifyDisplayAdapter() {
-//        displayAdapter.notifyDataSetChanged();
-//    }
-//
-//    public void putLunchItem(String newToDo) {
-//        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
-//
-//        displayAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_LUNCH, newToDo));
-//    }
-//
-//    public void putDailyItem(String newToDo) {
-//        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
-//
-//        displayAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
-//    }
-//
-//    public void deleteItem(int position) {
-//        displayAdapter.removeItem(position);
 //    }
 //
 //    @Override
@@ -289,8 +349,8 @@ public class MainActivity extends AppCompatActivity
 //            if(resultCode == RESULT_OK) {
 //                Bundle extras = data.getExtras();
 //
-//                currentYear = extras.getInt(DateCalcs.YEAR_KEY);
-//                currentWeek = extras.getInt(DateCalcs.WEEK_NUM_KEY);
+//                currentYear = extras.getInt(DateCalcs.KEY_YEAR);
+//                currentWeek = extras.getInt(DateCalcs.KEY_WEEK);
 //            } else {
 //                currentYear = DateCalcs.getCurrentYear();
 //                currentWeek = DateCalcs.getCurrentWeek();

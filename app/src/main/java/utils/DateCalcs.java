@@ -13,8 +13,8 @@ import static java.util.Calendar.*;
  * Created by zyuki on 2/29/2016.
  */
 public class DateCalcs {
-    public static final String YEAR_KEY = "year";
-    public static final String WEEK_NUM_KEY = "weekNum";
+    public static final String KEY_YEAR = "year";
+    public static final String KEY_WEEK = "weekNum";
 
     public static final int FULL_DATE = 0;
 

@@ -32,18 +32,13 @@ public class ToDoAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private DataAccessObject dataAccess;
 
-    private Activity activity;
-//    private List<Button> buttonList;
-
     private int currentYear, currentWeek;
     private DayName currentDay;
 
     public ToDoAdapter(Activity activity, Context context) {
-        this.activity = activity;
         dataAccess = ((ApplicationDatabase)context).dataAccess;
         inflater = LayoutInflater.from(activity);
 
-//        buttonList = new ArrayList<>();
         toDoList = new ArrayList<>();
     }
 
@@ -82,9 +77,6 @@ public class ToDoAdapter extends BaseAdapter {
                 case TYPE_CONTENT:
                     row = inflater.inflate(contentLayout, parent, false);
                     viewHolder.textItem = (TextView)row.findViewById(R.id.display_text_content);
-  //                  viewHolder.deleteBtn = (Button)row.findViewById(R.id.display_butn_delete);
-
- //                   buttonList.add(viewHolder.deleteBtn);
                     break;
             }
 
@@ -124,8 +116,6 @@ public class ToDoAdapter extends BaseAdapter {
                 toDoList.remove(firstItem);
             }
         }
-
-//        ((MainActivity)activity).notifyDisplayAdapter();
     }
 
     public void buildList(int year, int weekNum, DayName day) {
@@ -162,14 +152,10 @@ public class ToDoAdapter extends BaseAdapter {
         if(!lunchToDos.isEmpty()) {
             toDoList.add(buildHeader("Lunchtime"));
             toDoList.addAll(lunchToDos);
-
-//            ((MainActivity)activity).notifyDisplayAdapter();
         }
         if(!dailyToDos.isEmpty()) {
             toDoList.add(buildHeader("After Work"));
             toDoList.addAll(dailyToDos);
-
-//            ((MainActivity)activity).notifyDisplayAdapter();
         }
     }
 
@@ -183,8 +169,6 @@ public class ToDoAdapter extends BaseAdapter {
         if(!dailyToDos.isEmpty()) {
             toDoList.add(buildHeader("Daily To Dos"));
             toDoList.addAll(dailyToDos);
-
-//            ((MainActivity)activity).notifyDisplayAdapter();
         }
     }
 
@@ -194,6 +178,5 @@ public class ToDoAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         TextView textItem;
-//        Button deleteBtn;
     }
 }

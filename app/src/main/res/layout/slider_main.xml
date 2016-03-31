@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--android:layout_weight="0.8"-->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/slider_rel_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:gravity="bottom"
         android:background="@color/colorPrimary"
         android:padding="10dp">
@@ -22,13 +23,16 @@
             android:id="@+id/slider_text_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/slider_text_title"
-            android:layout_alignBaseline="@id/slider_text_title"
-            android:gravity="end"
             android:textColor="@color/whiteText"/>
-    </RelativeLayout>
-
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/slider_fab_addNewItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="55dp"/>
     <ListView
         android:id="@+id/slider_list_toDoList"
         android:layout_width="match_parent"

@@ -73,7 +73,7 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
             case R.id.inputDialog_btn_lunch:
                 if(!TextUtils.isEmpty(newToDoItem.getText())) {
                     itemText = newToDoItem.getText().toString();
-//                    ((MainActivity)getActivity()).putLunchItem(itemText);
+                    ((MainActivity)getActivity()).putLunchItem(itemText);
 
                     getDialog().dismiss();
                 } else {newItemWrapper.setError("cannot be blank");}
@@ -81,7 +81,7 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
             case R.id.inputDialog_btn_daily:
                 if(!TextUtils.isEmpty(newToDoItem.getText())) {
                     itemText = newToDoItem.getText().toString();
-//                    ((MainActivity)getActivity()).putDailyItem(itemText);
+                    ((MainActivity)getActivity()).putDailyItem(itemText);
 
                     getDialog().dismiss();
                 } else {newItemWrapper.setError("cannot be blank");}

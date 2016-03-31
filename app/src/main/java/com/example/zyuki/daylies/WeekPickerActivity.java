@@ -46,7 +46,7 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
         if(extras == null || extras.isEmpty()) {
             displayYear = DateCalcs.getCurrentYear();
         } else {
-            displayYear = extras.getInt(DateCalcs.YEAR_KEY);
+            displayYear = extras.getInt(DateCalcs.KEY_YEAR);
         }
     }
 
@@ -55,8 +55,8 @@ public class WeekPickerActivity extends AppCompatActivity implements AdapterView
         WeeksInYear week = adapter.getItem(position);
 
         Intent intent = new Intent(WeekPickerActivity.this, MainActivity.class);
-        intent.putExtra(DateCalcs.YEAR_KEY, displayYear);
-        intent.putExtra(DateCalcs.WEEK_NUM_KEY, week.getWeekNum());
+        intent.putExtra(DateCalcs.KEY_YEAR, displayYear);
+        intent.putExtra(DateCalcs.KEY_WEEK, week.getWeekNum());
 
         setResult(RESULT_OK, intent);
         finish();

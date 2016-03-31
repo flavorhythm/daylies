@@ -24,7 +24,7 @@ public class WeeksDisplayFragment extends Fragment implements AdapterView.OnItem
     private ListView weeksList;
     private WeeksAdapter weeksAdapter;
 
-    private OnDataPass dataPass;
+    private DataFromWeeks dataPass;
 
     public WeeksDisplayFragment() {}
 
@@ -32,7 +32,7 @@ public class WeeksDisplayFragment extends Fragment implements AdapterView.OnItem
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        dataPass = (OnDataPass)context;
+        dataPass = (DataFromWeeks)context;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class WeeksDisplayFragment extends Fragment implements AdapterView.OnItem
         int year = weeksInYear.getYear();
         int week = weeksInYear.getWeekNum();
 
-        dataPass.onDataPass(year, week);
+        dataPass.dataFromWeeks(year, week);
 
         ((MainActivity)getActivity()).changePage(R.string.daysFragTitle);
     }
@@ -72,7 +72,7 @@ public class WeeksDisplayFragment extends Fragment implements AdapterView.OnItem
         weeksAdapter.buildWeeksInYear(2016);
     }
 
-    public interface OnDataPass {
-        void onDataPass(int year, int week);
+    public interface DataFromWeeks {
+        void dataFromWeeks(int year, int week);
     }
 }
