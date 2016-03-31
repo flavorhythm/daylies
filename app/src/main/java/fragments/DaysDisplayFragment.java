@@ -8,18 +8,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
 import adapters.DaysAdapter;
+import models.Day;
 import utils.DateCalcs;
 
 /**
  * Created by zyuki on 3/29/2016.
  */
-public class DaysDisplayFragment extends Fragment /*implements AdapterView.OnItemClickListener, ViewTreeObserver.OnGlobalLayoutListener*/ {
+public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemClickListener/*AdapterView.OnItemClickListener, ViewTreeObserver.OnGlobalLayoutListener*/ {
 //    public static final int PICK_WEEK_REQUEST = 1;
 //
 //    private int currentYear;
@@ -34,6 +36,8 @@ public class DaysDisplayFragment extends Fragment /*implements AdapterView.OnIte
     private ListView dayListView;
 //    private Button toDoAdd;
 //    private SlidingUpPanelLayout slider;
+
+    private int currDispYear, currDispWeek;
 
     public DaysDisplayFragment() {}
 
@@ -91,8 +95,20 @@ public class DaysDisplayFragment extends Fragment /*implements AdapterView.OnIte
         dayListView = (ListView)customView.findViewById(R.id.fragDays_list);
         dayListView.setAdapter(daysAdapter);
 
+        dayListView.setOnItemClickListener(this);
+
         return customView;
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Day day = daysAdapter.getItem(position);
+
+        if(day.getType() != DaysAdapter.TYPE_DIVIDER) {
+            ((MainActivity)getActivity()).showToDoList(day.getDate());
+        }
+    }
+
 
     //    public void notifyDisplayAdapter() {
 //        displayAdapter.notifyDataSetChanged();
@@ -178,6 +194,9 @@ public class DaysDisplayFragment extends Fragment /*implements AdapterView.OnIte
     public void buildWeek(int currentYear, int currentWeek) {
 //        yearText.setText(String.valueOf(year).substring(2, 4));
 //        weekNumText.setText(DateCalcs.addZeroToNum(week));
+
+        currDispYear = currentYear;
+        currDispWeek = currentWeek;
 
         daysAdapter.finishBuildingWeek(currentYear, currentWeek);
     }

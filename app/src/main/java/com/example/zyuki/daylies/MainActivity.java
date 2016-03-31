@@ -1,5 +1,6 @@
 package com.example.zyuki.daylies;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ViewTreeObserver;
+
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +20,14 @@ import java.util.List;
 import fragments.DaysDisplayFragment;
 import fragments.WeeksDisplayFragment;
 
-public class MainActivity extends AppCompatActivity implements WeeksDisplayFragment.OnDataPass {
+public class MainActivity extends AppCompatActivity
+        implements /*ViewTreeObserver.OnGlobalLayoutListener, */WeeksDisplayFragment.OnDataPass {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter pagerAdapter;
+
+    private SlidingUpPanelLayout slider;
 
     //TODO: need to implement drag-up panel
     //TODO: increase header size
@@ -32,16 +39,41 @@ public class MainActivity extends AppCompatActivity implements WeeksDisplayFragm
         findViewByIds();
 
         setSupportActionBar(toolbar);
+//        toolbar.getViewTreeObserver().addOnGlobalLayoutListener(this);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
     }
 
+//    @Override
+//    public void onGlobalLayout() {
+//        int width = toolbar.getWidth();
+//        int widthAspect = 16;
+//        int heightAspect = 9;
+//
+//        Log.v("width", String.valueOf(width));
+//
+//        int orientation = getResources().getConfiguration().orientation;
+//        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            Log.v("height", String.valueOf(toolbar.getHeight()));
+//            toolbar.setMinimumHeight(width * heightAspect / widthAspect);
+//            Log.v("height", String.valueOf(toolbar.getHeight()));
+//        }
+//
+//        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//            toolbar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//        } else {
+//            toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//        }
+//    }
+
     private void findViewByIds() {
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         viewPager = (ViewPager)findViewById(R.id.main_viewPager);
         tabLayout = (TabLayout)findViewById(R.id.main_tabLayout);
+
+        slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding);
     }
 
     private void setupViewPager() {
@@ -57,6 +89,10 @@ public class MainActivity extends AppCompatActivity implements WeeksDisplayFragm
         TabLayout.Tab goToTab = tabLayout.getTabAt(position);
 
         if(goToTab != null) {goToTab.select();}
+    }
+
+    public void showToDoList(long dateOfList) {
+        slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
