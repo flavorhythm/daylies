@@ -23,21 +23,21 @@ public class DialogRouter {
 	public static void instantiatePickerDialog(Activity activity, int year) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
-		PickerDialogFragment pickerDialog = PickerDialogFragment.newInstance(year);
+		DialogYearPickFragment pickerDialog = DialogYearPickFragment.newInstance(year);
 		pickerDialog.show(fragTransaction, DIALOG);
 	}
 
 	public static void instantiateInputDialog(Activity activity, int dayType) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
-		InputDialogFragment inputDialog = InputDialogFragment.newInstance(dayType);
+		DialogInputFragment inputDialog = DialogInputFragment.newInstance(dayType);
 		inputDialog.show(fragTransaction, DIALOG);
 	}
 
 	public static void instantiateDeleteDialog(Activity activity, int itemPos) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
-		DeleteDialogFragment deleteDialog = DeleteDialogFragment.newInstance(itemPos);
+		DialogDeleteFragment deleteDialog = DialogDeleteFragment.newInstance(itemPos);
 		deleteDialog.show(fragTransaction, DIALOG);
 	}
 

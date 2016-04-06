@@ -1,6 +1,5 @@
 package fragments;
 
-import android.app.TabActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 
 import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
@@ -20,13 +19,13 @@ import models.WeeksInYear;
 /**
  * Created by zyuki on 3/29/2016.
  */
-public class WeeksDisplayFragment extends Fragment implements AdapterView.OnItemClickListener {
-    private ListView weeksList;
+public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItemClickListener {
+    private GridView weeksGrid;
     private WeeksAdapter weeksAdapter;
 
     private DataFromWeeks dataPass;
 
-    public WeeksDisplayFragment() {}
+    public DisplayWeeksFragment() {}
 
     @Override
     public void onAttach(Context context) {
@@ -49,10 +48,10 @@ public class WeeksDisplayFragment extends Fragment implements AdapterView.OnItem
         int layoutRes = R.layout.fragment_weeks;
         View customView = inflater.inflate(layoutRes, container, false);
 
-        weeksList = (ListView)customView.findViewById(R.id.fragWeeks_list);
-        weeksList.setAdapter(weeksAdapter);
+        weeksGrid = (GridView)customView.findViewById(R.id.fragWeeks_grid);
+        weeksGrid.setAdapter(weeksAdapter);
 
-        weeksList.setOnItemClickListener(this);
+        weeksGrid.setOnItemClickListener(this);
 
         return customView;
     }

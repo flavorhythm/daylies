@@ -6,13 +6,13 @@ package models;
 public class WeeksInYear {
     private int year;
     private int weekNum;
-    private long date;
+    private String month;
 
     public int getYear() {return year;}
     public int getWeekNum() {return weekNum;}
-    public long getDate() {return date;}
+    public String getMonth() {return month;}
 
     public void setYear(int year) {this.year = year;}
     public void setWeekNum(int weekNum) {this.weekNum = weekNum;}
-    public void setDate(long date) {this.date = date;}
+    public void setMonth(String month) {this.month = month;}
 }

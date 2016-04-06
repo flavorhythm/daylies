@@ -1,28 +1,25 @@
 package fragments;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 
 import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
 import adapters.DaysAdapter;
 import models.Day;
-import models.DayName;
 import utils.DateCalcs;
 
 /**
  * Created by zyuki on 3/29/2016.
  */
-public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemClickListener/*AdapterView.OnItemClickListener, ViewTreeObserver.OnGlobalLayoutListener*/ {
+public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemClickListener/*AdapterView.OnItemClickListener, ViewTreeObserver.OnGlobalLayoutListener*/ {
 //    public static final int PICK_WEEK_REQUEST = 1;
 //
 //    private int currentYear;
@@ -34,11 +31,11 @@ public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemC
 //
 //    private RelativeLayout sliderHeader;
 //    private TextView yearText, weekNumText, emptyList, toDoDate;
-    private ListView dayListView;
+    private GridView dayGridView;
 //    private Button toDoAdd;
 //    private SlidingUpPanelLayout slider;
 
-    public DaysDisplayFragment() {}
+    public DisplayDaysFragment() {}
 
     //Runs before onCreateView
     @Override
@@ -94,10 +91,10 @@ public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemC
         int layoutRes = R.layout.fragment_days;
         View customView = inflater.inflate(layoutRes, container, false);
 
-        dayListView = (ListView)customView.findViewById(R.id.fragDays_list);
-        dayListView.setAdapter(daysAdapter);
+        dayGridView = (GridView)customView.findViewById(R.id.fragDays_grid);
+        dayGridView.setAdapter(daysAdapter);
 
-        dayListView.setOnItemClickListener(this);
+        dayGridView.setOnItemClickListener(this);
 
         return customView;
     }
@@ -107,7 +104,7 @@ public class DaysDisplayFragment extends Fragment implements AdapterView.OnItemC
         Day day = daysAdapter.getItem(position);
 
         if(day.getType() != DaysAdapter.TYPE_DIVIDER) {
-            ((MainActivity)getActivity()).showToDoList(day.getDay());
+            ((MainActivity)getActivity()).showToDoList(day);
         }
     }
 

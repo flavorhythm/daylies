@@ -27,4 +27,8 @@
         <item name="android:fontFamily">"sans-serif-light"</item>
     </style>
 
+    <style name="TitleStyle" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">180sp</item>
+    </style>
+
 </resources>

@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import models.DayName;
+import models.WeeksInYear;
 
 import static java.util.Calendar.*;
 
@@ -66,19 +67,14 @@ public class DateCalcs {
         return current.get(WEEK_OF_YEAR);
     }
 
-    public static final boolean isCurrentYearWeek(long currentDateInMillis) {
+    public static final boolean isCurrentYearWeek(WeeksInYear thisWeek) {
         int currentYear = getCurrentYear();
         int currentWeek = getCurrentWeek();
 
-        Calendar compareDate = Calendar.getInstance();
-        compareDate.setTimeInMillis(currentDateInMillis);
+        int checkingYear = thisWeek.getYear();
+        int checkingWeek = thisWeek.getWeekNum();
 
-        int compareYear = compareDate.get(YEAR);
-        int compareWeek = compareDate.get(WEEK_OF_YEAR);
-
-        if(currentYear == compareYear) {
-            return currentWeek == compareWeek;
-        } else {return false;}
+        return (currentYear == checkingYear) && (currentWeek == checkingWeek);
     }
 
     public static final boolean isCurrentDay(long dateInMillis) {

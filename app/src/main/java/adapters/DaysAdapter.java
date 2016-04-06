@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.zyuki.daylies.R;
@@ -70,15 +71,15 @@ public class DaysAdapter extends BaseAdapter {
                 case TYPE_DIVIDER:
                     row = inflater.inflate(dividerLayout, parent, false);
 
-                    viewHolder.month = (TextView)row.findViewById(R.id.mainRow_text_month);
+                    viewHolder.month = (TextView)row.findViewById(R.id.rowDays_text_month);
+                    row.setTag(viewHolder);
                     break;
                 case TYPE_CONTENT:
                     row = inflater.inflate(contentLayout, parent, false);
 
-                    viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.rowDays_linear_entireRow);
+                    viewHolder.itemGroup = (RelativeLayout)row.findViewById(R.id.rowDays_relative_itemGroup);
                     viewHolder.dayOfMonth = (TextView)row.findViewById(R.id.rowDays_text_dayOfMonth);
                     viewHolder.dayOfWeek = (TextView)row.findViewById(R.id.rowDays_text_dayOfWeek);
-
                     row.setTag(viewHolder);
                     break;
             }
@@ -88,22 +89,24 @@ public class DaysAdapter extends BaseAdapter {
 
         switch(getItemViewType(position)) {
             case TYPE_DIVIDER:
-                viewHolder.month.setText(DateCalcs.formatDate(Calendar.MONTH, day.getDate()));
+                String month = DateCalcs.formatDate(Calendar.MONTH, day.getDate()).substring(0, 3);
+
+                viewHolder.month.setText(month);
                 break;
             case TYPE_CONTENT:
                 viewHolder.dayOfMonth.setText(DateCalcs.formatDate(Calendar.DAY_OF_MONTH, day.getDate()));
-                viewHolder.dayOfWeek.setText(day.getDay().toString());
+                viewHolder.dayOfWeek.setText(day.getDay().toString().substring(0, 3));
 
                 if(DateCalcs.isCurrentDay(day.getDate())) {
                     int whiteTextColor = ContextCompat.getColor(context, R.color.whiteText);
 
-                    viewHolder.entireRow.setBackgroundResource(R.color.colorPrimary);
+                    viewHolder.itemGroup.setBackgroundResource(R.color.colorPrimary);
                     viewHolder.dayOfMonth.setTextColor(whiteTextColor);
                     viewHolder.dayOfWeek.setTextColor(whiteTextColor);
                 } else {
                     int blackTextColor = ContextCompat.getColor(context, R.color.darkText);
 
-                    viewHolder.entireRow.setBackgroundColor(Color.TRANSPARENT);
+                    viewHolder.itemGroup.setBackgroundColor(Color.TRANSPARENT);
                     viewHolder.dayOfMonth.setTextColor(blackTextColor);
                     viewHolder.dayOfWeek.setTextColor(blackTextColor);
                 }
@@ -186,7 +189,7 @@ public class DaysAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        LinearLayout entireRow;
+        RelativeLayout itemGroup;
         TextView dayOfMonth;
         TextView dayOfWeek;
 

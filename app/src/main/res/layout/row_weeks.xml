@@ -1,32 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/rowWeeks_linear_entireRow"
+<RelativeLayout
+    android:id="@+id/rowWeeks_linear_itemGroup"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
-    <LinearLayout
-        android:id="@+id/rowWeeks_linear_weekNum"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/rowWeeks_text_weekText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_week"
-            android:gravity="start"/>
-        <TextView
-            android:id="@+id/rowWeeks_text_weekNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:textSize="30sp"/>
-    </LinearLayout>
+    android:layout_height="80dp"
+    android:gravity="center">
+
     <TextView
-        android:id="@+id/rowWeeks_text_date"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="end|center_vertical"/>
-</LinearLayout>
+        android:id="@+id/rowWeeks_text_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/rowWeeks_text_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/rowWeeks_text_month"/>
+    <TextView
+        android:id="@+id/rowWeeks_text_weekNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/rowWeeks_text_year"/>
+</RelativeLayout>

@@ -14,9 +14,9 @@ import com.example.zyuki.daylies.R;
 /**
  * Created by zyuki on 3/28/2016.
  */
-public class DeleteDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
-    public static DeleteDialogFragment newInstance(int itemPos) {
-        DeleteDialogFragment dialogFragment = new DeleteDialogFragment();
+public class DialogDeleteFragment extends DialogFragment implements DialogInterface.OnClickListener {
+    public static DialogDeleteFragment newInstance(int itemPos) {
+        DialogDeleteFragment dialogFragment = new DialogDeleteFragment();
         Bundle args = new Bundle();
 
         args.putInt(DialogRouter.KEY_ITEMPOS, itemPos);

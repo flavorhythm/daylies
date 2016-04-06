@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.zyuki.daylies.ApplicationDatabase;
-import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ import utils.DateCalcs;
  */
 public class ToDoAdapter extends BaseAdapter {
     private static final int TYPE_COUNT = 2;
+
     private static final int TYPE_DIVIDER = 0;
     private static final int TYPE_CONTENT = 1;
 
@@ -61,8 +61,8 @@ public class ToDoAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View row, ViewGroup parent) {
-        int dividerLayout = R.layout.display_divider_row;
-        int contentLayout = R.layout.display_content_row;
+        int dividerLayout = R.layout.row_todos_divider;
+        int contentLayout = R.layout.row_todos_content;
 
         final ViewHolder viewHolder;
 
@@ -93,6 +93,7 @@ public class ToDoAdapter extends BaseAdapter {
 
     public void add(ToDo item) {
         dataAccess.putToDoItem(item);
+
         buildList(currentYear, currentWeek, currentDay);
     }
 

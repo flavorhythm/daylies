@@ -9,8 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,19 +16,20 @@ import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import adapters.ToDoAdapter;
-import fragments.DaysDisplayFragment;
+import fragments.DisplayDaysFragment;
 import fragments.DialogRouter;
-import fragments.WeeksDisplayFragment;
+import fragments.DisplayWeeksFragment;
+import models.Day;
 import models.DayName;
 import models.ToDo;
 import utils.DateCalcs;
 
-public class MainActivity extends AppCompatActivity
-        implements /*ViewTreeObserver.OnGlobalLayoutListener, */WeeksDisplayFragment.DataFromWeeks, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements DisplayWeeksFragment.DataFromWeeks, View.OnClickListener {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -40,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab;
     private ListView todoList;
     private ToDoAdapter todoAdapter;
+    private TextView todoDate;
 
     private int currentYear, currentWeek;
     private DayName currentDay;
@@ -79,28 +79,6 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(this);
     }
 
-//    @Override
-//    public void onGlobalLayout() {
-//        int width = toolbar.getWidth();
-//        int widthAspect = 16;
-//        int heightAspect = 9;
-//
-//        Log.v("width", String.valueOf(width));
-//
-//        int orientation = getResources().getConfiguration().orientation;
-//        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            Log.v("height", String.valueOf(toolbar.getHeight()));
-//            toolbar.setMinimumHeight(width * heightAspect / widthAspect);
-//            Log.v("height", String.valueOf(toolbar.getHeight()));
-//        }
-//
-//        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-//            toolbar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//        } else {
-//            toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//        }
-//    }
-
     @Override
     public void onClick(View v) {
         if(currentDay != null) {
@@ -123,12 +101,13 @@ public class MainActivity extends AppCompatActivity
         slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding);
         fab = (FloatingActionButton)findViewById(R.id.slider_fab_addNewItem);
         todoList = (ListView)findViewById(R.id.slider_list_toDoList);
+        todoDate = (TextView)findViewById(R.id.slider_text_date);
     }
 
     private void setupViewPager() {
         Bundle args = new Bundle();
-        DaysDisplayFragment daysFrag = new DaysDisplayFragment();
-        WeeksDisplayFragment weeksFrag = new WeeksDisplayFragment();
+        DisplayDaysFragment daysFrag = new DisplayDaysFragment();
+        DisplayWeeksFragment weeksFrag = new DisplayWeeksFragment();
 
         args.putInt(DateCalcs.KEY_YEAR, currentYear);
         args.putInt(DateCalcs.KEY_WEEK, currentWeek);
@@ -150,8 +129,11 @@ public class MainActivity extends AppCompatActivity
         if(goToTab != null) {goToTab.select();}
     }
 
-    public void showToDoList(DayName currentDay) {
-        this.currentDay = currentDay;
+    public void showToDoList(Day day) {
+        this.currentDay = day.getDay();
+        String date = day.getDay().toString() + ", " + DateCalcs.formatDate(DateCalcs.FULL_DATE, day.getDate());
+
+        todoDate.setText(date);
 
         todoAdapter.buildList(currentYear, currentWeek, currentDay);
         todoAdapter.notifyDataSetChanged();
@@ -220,7 +202,7 @@ public class MainActivity extends AppCompatActivity
         currentYear = year;
         currentWeek = week;
 
-        ((DaysDisplayFragment)pagerAdapter.getItem(0)).buildWeek(year, week);
+        ((DisplayDaysFragment)pagerAdapter.getItem(0)).buildWeek(year, week);
     }
 }
 

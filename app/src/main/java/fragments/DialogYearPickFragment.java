@@ -18,15 +18,15 @@ import utils.DateCalcs;
 /**
  * Created by Flavorhythm on 3/3/2016.
  */
-public class PickerDialogFragment extends DialogFragment implements View.OnClickListener {
+public class DialogYearPickFragment extends DialogFragment implements View.OnClickListener {
 	private NumberPicker yearPicker;
 
 	//TODO: develop custom picker and replace numberpicker
-	public static PickerDialogFragment newInstance(int year) {
+	public static DialogYearPickFragment newInstance(int year) {
         Bundle args = new Bundle();
         args.putInt(DateCalcs.KEY_YEAR, year);
 
-        PickerDialogFragment fragment = new PickerDialogFragment();
+        DialogYearPickFragment fragment = new DialogYearPickFragment();
         fragment.setArguments(args);
 
         return fragment;

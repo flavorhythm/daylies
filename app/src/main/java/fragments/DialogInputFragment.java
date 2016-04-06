@@ -20,15 +20,15 @@ import static fragments.DialogRouter.*;
 /**
  * Created by zyuki on 3/8/2016.
  */
-public class InputDialogFragment extends DialogFragment implements View.OnClickListener {
+public class DialogInputFragment extends DialogFragment implements View.OnClickListener {
     private View customLayout;
 
     private Button lunchToDoBtn, dailyToDoBtn, cancelBtn;
     private EditText newToDoItem;
     private TextInputLayout newItemWrapper;
 
-    public static InputDialogFragment newInstance(int dayType) {
-        InputDialogFragment dialogFragment = new InputDialogFragment();
+    public static DialogInputFragment newInstance(int dayType) {
+        DialogInputFragment dialogFragment = new DialogInputFragment();
         Bundle args = new Bundle();
 
         args.putInt(KEY_DAYTYPE, dayType);

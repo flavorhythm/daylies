@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/rowDays_linear_entireRow"
+<RelativeLayout
+    android:id="@+id/rowDays_relative_itemGroup"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="80dp"
+    android:gravity="center">
+    <TextView
+        android:id="@+id/rowDays_text_dayOfWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
     <TextView
         android:id="@+id/rowDays_text_dayOfMonth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:textSize="40sp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"/>
-    <TextView
-        android:id="@+id/rowDays_text_dayOfWeek"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        android:gravity="bottom"
-        android:textSize="40sp"/>
-</LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/rowDays_text_dayOfWeek"/>
+</RelativeLayout>

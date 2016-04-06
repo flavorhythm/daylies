@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.zyuki.daylies.R;
@@ -52,36 +53,38 @@ public class WeeksAdapter extends BaseAdapter {
             row = inflater.inflate(layoutRes, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.weekText = (TextView)row.findViewById(R.id.rowWeeks_text_weekText);
+            viewHolder.itemGroup = (RelativeLayout)row.findViewById(R.id.rowWeeks_linear_itemGroup);
+
+            viewHolder.year = (TextView)row.findViewById(R.id.rowWeeks_text_year);
+            viewHolder.month = (TextView)row.findViewById(R.id.rowWeeks_text_month);
             viewHolder.weekNum = (TextView)row.findViewById(R.id.rowWeeks_text_weekNum);
-            viewHolder.date = (TextView)row.findViewById(R.id.rowWeeks_text_date);
-            viewHolder.entireRow = (LinearLayout)row.findViewById(R.id.rowWeeks_linear_entireRow);
 
             row.setTag(viewHolder);
         } else {viewHolder = (ViewHolder)row.getTag();}
 
         WeeksInYear week = getItem(position);
 
+        viewHolder.year.setText(String.valueOf(week.getYear()));
+        viewHolder.month.setText(week.getMonth().substring(0, 3));
         viewHolder.weekNum.setText(DateCalcs.addZeroToNum(week.getWeekNum()));
-        viewHolder.date.setText(DateCalcs.formatDate(DateCalcs.FULL_DATE, week.getDate()));
 
 		//need to explicitly declare if/else statements because the view is recycled so properties
 		//set to previous views will randomly be recycled into future views
 		//Changed from setting view to gone/visible to changing text content
-        if(DateCalcs.isCurrentYearWeek(week.getDate())) {
+        if(DateCalcs.isCurrentYearWeek(week)) {
             int whiteTextColor = ContextCompat.getColor(context, R.color.whiteText);
 
-            viewHolder.entireRow.setBackgroundResource(R.color.colorPrimary);
-            viewHolder.weekText.setTextColor(whiteTextColor);
+            viewHolder.itemGroup.setBackgroundResource(R.color.colorPrimary);
+            viewHolder.year.setTextColor(whiteTextColor);
+            viewHolder.month.setTextColor(whiteTextColor);
             viewHolder.weekNum.setTextColor(whiteTextColor);
-            viewHolder.date.setTextColor(whiteTextColor);
         } else {
             int blackTextColor = ContextCompat.getColor(context, R.color.darkText);
 
-            viewHolder.entireRow.setBackgroundColor(Color.TRANSPARENT);
-            viewHolder.weekText.setTextColor(blackTextColor);
+            viewHolder.itemGroup.setBackgroundColor(Color.TRANSPARENT);
+            viewHolder.year.setTextColor(blackTextColor);
+            viewHolder.month.setTextColor(blackTextColor);
             viewHolder.weekNum.setTextColor(blackTextColor);
-            viewHolder.date.setTextColor(blackTextColor);
         }
 
         return row;
@@ -111,7 +114,7 @@ public class WeeksAdapter extends BaseAdapter {
 
             week.setYear(displayYear);
             week.setWeekNum(weekOfYear);
-            week.setDate(thisYear.getTimeInMillis());
+            week.setMonth(DateCalcs.formatDate(Calendar.MONTH, thisYear.getTimeInMillis()));
 
             weeksList.add(week);
             notifyDataSetChanged();
@@ -124,9 +127,10 @@ public class WeeksAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        TextView weekText;
+        RelativeLayout itemGroup;
+
+        TextView year;
+        TextView month;
         TextView weekNum;
-        TextView date;
-        LinearLayout entireRow;
     }
 }
