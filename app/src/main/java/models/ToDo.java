@@ -4,6 +4,7 @@ package models;
  * Created by zyuki on 2/29/2016.
  */
 public class ToDo {
+    //TODO: aggregate constants
     public static final int DIVIDER_LUNCH = 1;
     public static final int DIVIDER_WORK = 2;
     public static final int DIVIDER_DAILY = 3;

@@ -36,6 +36,7 @@ public class DaysAdapter extends BaseAdapter {
      **********************************************************************************************/
     /**Public variables**/
     /**Used for differentiating content data and monthly divider data**/
+    //TODO: aggregate constants
     public static final int TYPE_COUNT = 2;
     public static final int TYPE_DIVIDER = 0;
     public static final int TYPE_CONTENT = 1;

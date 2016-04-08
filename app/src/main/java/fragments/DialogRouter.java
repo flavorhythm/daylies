@@ -9,6 +9,7 @@ import android.app.FragmentTransaction;
  * Created by Flavorhythm on 3/3/2016.
  */
 public class DialogRouter {
+	//TODO:aggregate constants
 	public static final String DIALOG = "dialog";
 
 	public static final String KEY_DAYTYPE = "dayType";
@@ -16,8 +17,6 @@ public class DialogRouter {
 	public static final int TYPE_WEEKEND = 1;
 
 	public static final String KEY_ITEMPOS = "itemPos";
-
-	private static final int ERROR = -1;
 
 	private DialogRouter() {}
 

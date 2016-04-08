@@ -1,7 +1,6 @@
 package com.example.zyuki.daylies;
 
 import android.os.Bundle;
-//import com.melnykov.fab.FloatingActionButton;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -32,6 +31,7 @@ import models.DayName;
 import models.ToDo;
 import utils.DateCalcs;
 
+//TODO: need to prevent slider from sliding when clicked
 public class MainActivity extends AppCompatActivity
         implements DisplayWeeksFragment.DataFromWeeks, View.OnClickListener, TabLayout.OnTabSelectedListener {
     /***********************************************************************************************
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPagerAdapter pagerAdapter;
 
     private SlidingUpPanelLayout slider;
-    private FloatingActionButton fab; //TODO: fab gets "stuck", stops clicking
+    private FloatingActionButton fab;
     private ListView todoList;
     private ToDoAdapter todoAdapter;
     private TextView todoDate;

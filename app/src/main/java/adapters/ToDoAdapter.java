@@ -32,7 +32,7 @@ public class ToDoAdapter extends BaseAdapter {
      * GLOBAL VARIABLES
      **********************************************************************************************/
     /**Private variables**/
-    //TODO: move to constants class
+    //TODO: aggregate constants
     private static final int TYPE_COUNT = 2;
 
     private static final int ERROR = -1;

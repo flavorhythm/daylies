@@ -14,7 +14,7 @@ import static java.util.Calendar.*;
  * Created by zyuki on 2/29/2016.
  */
 public class DateCalcs {
-    //TODO: aggregate static variables?
+    //TODO: aggregate constants
     public static final String KEY_YEAR = "year";
     public static final String KEY_WEEK = "weekNum";
 
