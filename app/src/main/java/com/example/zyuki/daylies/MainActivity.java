@@ -1,8 +1,8 @@
 package com.example.zyuki.daylies;
 
 import android.os.Bundle;
-import com.melnykov.fab.FloatingActionButton;
-//import android.support.design.widget.FloatingActionButton;
+//import com.melnykov.fab.FloatingActionButton;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity
 
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
-
-        slider.setTouchEnabled(false);
 
         todoAdapter = new ToDoAdapter(MainActivity.this, getApplicationContext());
         todoList.setAdapter(todoAdapter);

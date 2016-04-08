@@ -142,6 +142,13 @@ public class ToDoAdapter extends BaseAdapter {
         return row;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+
+        locateDividers();
+    }
+
     /***********************************************************************************************
      * PUBLIC METHODS
      **********************************************************************************************/
@@ -316,13 +323,13 @@ public class ToDoAdapter extends BaseAdapter {
                 toDoList.add(item);
             }
 
-            int newPos = dividerPos.get(dividerType) + 2;
-            dividerPos.put(dividerType, newPos);
+//            int newPos = dividerPos.get(dividerType) + 2;
+//            dividerPos.put(dividerType, newPos);
         } else {
             toDoList.add(dividerPos.get(dividerType), item);
 
-            int newPos = dividerPos.get(dividerType) + 1;
-            dividerPos.put(dividerType, newPos);
+//            int newPos = dividerPos.get(dividerType) + 1;
+//            dividerPos.put(dividerType, newPos);
         }
     }
 
@@ -341,6 +348,25 @@ public class ToDoAdapter extends BaseAdapter {
         }
 
 
+    }
+
+    //TODO: still not working
+    private void locateDividers() {
+        if(!toDoList.isEmpty()) {
+            for(int listPos = 0; listPos < toDoList.size(); listPos++) {
+                if(getItemViewType(listPos) == TYPE_DIVIDER) {
+                    int dividerType = getItem(listPos).getType();
+
+                    int listSize = listPos + 1;
+                    while((listSize < toDoList.size()) |
+                            (getItemViewType(listSize) != TYPE_DIVIDER)) {
+                        listSize++;
+                    }
+
+                    dividerPos.put(dividerType, listSize);
+                }
+            }
+        }
     }
 
     /***********************************************************************************************

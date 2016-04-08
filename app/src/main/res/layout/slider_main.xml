@@ -25,14 +25,15 @@
             android:layout_height="wrap_content"
             android:textColor="@color/whiteText"/>
     </LinearLayout>
-    <com.melnykov.fab.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/slider_fab_addNewItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="-30dp"
-        android:layout_below="@+id/slider_rel_header"/>
+        android:layout_below="@+id/slider_rel_header"
+        android:clickable="true"/>
     <ListView
         android:id="@+id/slider_list_toDoList"
         android:layout_width="match_parent"
@@ -41,17 +42,7 @@
         android:divider="#ffffff"
         android:layout_margin="10dp"
         android:layout_below="@+id/slider_rel_header"
-        android:layout_above="@+id/slider_butn_toDoAdd"/>
-    <Button
-        android:id="@+id/slider_butn_toDoAdd"
-        style="?android:buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_add"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone"/>
-
+        android:clickable="true"/>
     <TextView
         android:id="@+id/slider_text_emptyList"
         android:layout_width="wrap_content"
@@ -60,5 +51,4 @@
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/slider_rel_header"/>
-
 </RelativeLayout>
