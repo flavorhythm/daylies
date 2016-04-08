@@ -10,8 +10,16 @@ import data.DataAccessObject;
  * Created by zyuki on 3/1/2016.
  */
 public class ApplicationDatabase extends Application {
+    /***********************************************************************************************
+     * GLOBAL VARIABLES
+     **********************************************************************************************/
+    /**Public variables**/
     public DataAccessObject dataAccess;
 
+    /***********************************************************************************************
+     * OVERRIDE METHODS
+     **********************************************************************************************/
+    /****/
     @Override
     public void onCreate() {
         super.onCreate();
@@ -20,18 +28,23 @@ public class ApplicationDatabase extends Application {
         openAndTry();
     }
 
+    /****/
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+
+        dataAccess.close();
+    }
+
+    /***********************************************************************************************
+     * PRIVATE METHODS
+     **********************************************************************************************/
+    /****/
     private void openAndTry() {
         try {
             dataAccess.open();
         } catch(SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-
-        dataAccess.close();
     }
 }

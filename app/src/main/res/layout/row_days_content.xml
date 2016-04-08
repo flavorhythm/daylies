@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:gravity="center">
+    <ImageView
+        android:id="@+id/rowDays_image_hasTodos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_input_add"/>
     <TextView
         android:id="@+id/rowDays_text_dayOfWeek"
         android:layout_width="wrap_content"

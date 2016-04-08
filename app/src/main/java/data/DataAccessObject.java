@@ -9,7 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Day;
+import models.DayName;
 import models.ToDo;
+import utils.DateCalcs;
 
 /**
  * Created by zyuki on 2/26/2016.
@@ -61,7 +64,37 @@ public class DataAccessObject {
         return toDoList;
     }
 
-    public long putToDoItem(ToDo item) {
+    public boolean dayHasTodos(final String yearWeekDay) {
+        Cursor cursor = db.query(
+                TblToDo.TABLE_NAME.toString(),
+                TblToDo.ALL_COLUMNS,
+                TblToDo.YEAR_WEEK_DAY + " =?",
+                new String[] {yearWeekDay},
+                null,
+                null,
+                TblToDo.KEY_ID + " ASC"
+        );
+
+        boolean hasTodos = cursor.moveToFirst();
+        cursor.close();
+
+        return hasTodos;
+    }
+
+    public boolean weekHasTodos(int year, int week) {
+        final int daysInWeek = 7;
+
+        for(int i = 0; i < daysInWeek; i++) {
+            String yearWeekDay = DateCalcs.buildDateString(year, week, DayName.values()[i]);
+            if(dayHasTodos(yearWeekDay)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public long addToDoItem(ToDo item) {
         ContentValues values = new ContentValues();
         values.put(TblToDo.YEAR_WEEK_DAY.toString(), item.getYearWeekDay());
         values.put(TblToDo.TODO_TYPE.toString(), item.getType());

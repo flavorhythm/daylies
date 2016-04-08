@@ -2,7 +2,6 @@ package fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
@@ -18,12 +17,14 @@ public class DialogRouter {
 
 	public static final String KEY_ITEMPOS = "itemPos";
 
+	private static final int ERROR = -1;
+
 	private DialogRouter() {}
 
-	public static void instantiatePickerDialog(Activity activity, int year) {
+	public static void instantiatePickerDialog(Activity activity, int year, int week) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
-		DialogYearPickFragment pickerDialog = DialogYearPickFragment.newInstance(year);
+		DialogYearPickFragment pickerDialog = DialogYearPickFragment.newInstance(year, week);
 		pickerDialog.show(fragTransaction, DIALOG);
 	}
 
@@ -42,7 +43,7 @@ public class DialogRouter {
 	}
 
 	private static FragmentTransaction clearFragments(Activity activity) {
-		FragmentManager fragManager = ((FragmentActivity)activity).getFragmentManager();
+		FragmentManager fragManager = activity.getFragmentManager();
 		FragmentTransaction fragTransaction = fragManager.beginTransaction();
 
 		Fragment previousFrag = fragManager.findFragmentByTag(DIALOG);

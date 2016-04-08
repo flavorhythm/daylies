@@ -15,6 +15,8 @@ import android.widget.EditText;
 import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
+import models.ToDo;
+
 import static fragments.DialogRouter.*;
 
 /**
@@ -73,7 +75,7 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
             case R.id.inputDialog_btn_lunch:
                 if(!TextUtils.isEmpty(newToDoItem.getText())) {
                     itemText = newToDoItem.getText().toString();
-                    ((MainActivity)getActivity()).putLunchItem(itemText);
+                    ((MainActivity)getActivity()).addLunchItem(itemText);
 
                     getDialog().dismiss();
                 } else {newItemWrapper.setError("cannot be blank");}
@@ -81,7 +83,9 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
             case R.id.inputDialog_btn_daily:
                 if(!TextUtils.isEmpty(newToDoItem.getText())) {
                     itemText = newToDoItem.getText().toString();
-                    ((MainActivity)getActivity()).putDailyItem(itemText);
+                    int itemType = getArguments().getInt(KEY_DAYTYPE) == TYPE_WEEKDAY ?
+                            ToDo.CONTENT_WORK : ToDo.CONTENT_DAILY;
+                    ((MainActivity)getActivity()).addDailyItem(itemText, itemType);
 
                     getDialog().dismiss();
                 } else {newItemWrapper.setError("cannot be blank");}

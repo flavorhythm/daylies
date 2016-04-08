@@ -4,6 +4,13 @@ package models;
  * Created by zyuki on 2/29/2016.
  */
 public class ToDo {
+    public static final int DIVIDER_LUNCH = 1;
+    public static final int DIVIDER_WORK = 2;
+    public static final int DIVIDER_DAILY = 3;
+    public static final int CONTENT_LUNCH = 4;
+    public static final int CONTENT_WORK = 5;
+    public static final int CONTENT_DAILY = 6;
+
     public static final int TYPE_TODO = 0;
     public static final int TYPE_LUNCH = 1;
     public static final int TYPE_HEADER = 2;

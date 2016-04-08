@@ -8,42 +8,66 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.zyuki.daylies.ApplicationDatabase;
 import com.example.zyuki.daylies.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import data.DataAccessObject;
 import models.WeeksInYear;
 import utils.DateCalcs;
 
-/**
+/***************************************************************************************************
  * Created by zyuki on 2/26/2016.
- */
+ *
+ * Adapter class extending from BaseAdapter that is set to a GridView in DisplayWeeksFragment
+ * Also stores the current list of weeks within the year that is displayed
+ **************************************************************************************************/
 public class WeeksAdapter extends BaseAdapter {
+    /***********************************************************************************************
+     * GLOBAL VARIABLES
+     **********************************************************************************************/
+    /**Private variables**/
     private LayoutInflater inflater;
-    private List<WeeksInYear> weeksList = new ArrayList<>();
+    private List<WeeksInYear> weeksList;
 
     private Context context;
+    private DataAccessObject dataAccess;
 
+    /***********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
+    /****/
     public WeeksAdapter(Activity activity, Context context) {
         inflater = LayoutInflater.from(activity);
+        dataAccess = ((ApplicationDatabase)activity.getApplicationContext()).dataAccess;
+        weeksList = new ArrayList<>();
         this.context = context;
     }
 
+    /***********************************************************************************************
+     * OVERRIDE METHODS
+     **********************************************************************************************/
+    /****/
     @Override
     public int getCount() {return weeksList.size();}
 
+    /****/
     @Override
     public WeeksInYear getItem(int position) {return weeksList.get(position);}
 
+    /****/
     @Override
     public long getItemId(int position) {return position;}
 
+    /****/
     @Override
     public View getView(int position, View row, ViewGroup parent) {
         int layoutRes = R.layout.row_weeks;
@@ -55,6 +79,7 @@ public class WeeksAdapter extends BaseAdapter {
 
             viewHolder.itemGroup = (RelativeLayout)row.findViewById(R.id.rowWeeks_linear_itemGroup);
 
+            viewHolder.hasTodos = (ImageView)row.findViewById(R.id.rowWeeks_image_hasTodos);
             viewHolder.year = (TextView)row.findViewById(R.id.rowWeeks_text_year);
             viewHolder.month = (TextView)row.findViewById(R.id.rowWeeks_text_month);
             viewHolder.weekNum = (TextView)row.findViewById(R.id.rowWeeks_text_weekNum);
@@ -67,6 +92,10 @@ public class WeeksAdapter extends BaseAdapter {
         viewHolder.year.setText(String.valueOf(week.getYear()));
         viewHolder.month.setText(week.getMonth().substring(0, 3));
         viewHolder.weekNum.setText(DateCalcs.addZeroToNum(week.getWeekNum()));
+
+        if(week.getHasTodos()) {
+            viewHolder.hasTodos.setVisibility(View.VISIBLE);
+        } else {viewHolder.hasTodos.setVisibility(View.INVISIBLE);}
 
 		//need to explicitly declare if/else statements because the view is recycled so properties
 		//set to previous views will randomly be recycled into future views
@@ -90,10 +119,28 @@ public class WeeksAdapter extends BaseAdapter {
         return row;
     }
 
+    /***********************************************************************************************
+     * PUBLIC METHODS
+     **********************************************************************************************/
+    /****/
+    public int getPosByWeek(int week) {
+        final int error = -1;
+
+        for(int pos = 0; pos < getCount(); pos++) {
+            WeeksInYear thisWeek = getItem(pos);
+            if(thisWeek != null && week == thisWeek.getWeekNum()) {
+                return pos;
+            }
+        }
+
+        return error;
+    }
+
+    /****/
     public void buildWeeksInYear(int displayYear) {
         weeksList.clear();
 
-        final int daysInWeek = 7;
+        final int addOneWeek = 1;
         int weekOfYear = 1;
         int currentYear = 0;
 
@@ -105,30 +152,35 @@ public class WeeksAdapter extends BaseAdapter {
         thisYear.set(Calendar.WEEK_OF_YEAR, weekOfYear);
 
         if(thisYear.before(endOfLastYear)) {
-            final int addOneWeek = 1;
             thisYear.add(Calendar.WEEK_OF_YEAR, addOneWeek);
         }
 
         while(currentYear <= displayYear) {
             WeeksInYear week = new WeeksInYear();
 
-            week.setYear(displayYear);
+            week.setYear(thisYear.get(Calendar.YEAR));
             week.setWeekNum(weekOfYear);
             week.setMonth(DateCalcs.formatDate(Calendar.MONTH, thisYear.getTimeInMillis()));
 
+            week.setHasTodos(dataAccess.weekHasTodos(thisYear.get(Calendar.YEAR), weekOfYear));
+
             weeksList.add(week);
-            notifyDataSetChanged();
 
             weekOfYear++;
-            thisYear.add(Calendar.DAY_OF_YEAR, daysInWeek);
+            thisYear.add(Calendar.WEEK_OF_YEAR, addOneWeek);
 
             currentYear = thisYear.get(Calendar.YEAR);
         }
     }
 
+    /***********************************************************************************************
+     * INNER CLASSES
+     **********************************************************************************************/
+    /****/
     private static class ViewHolder {
         RelativeLayout itemGroup;
 
+        ImageView hasTodos;
         TextView year;
         TextView month;
         TextView weekNum;

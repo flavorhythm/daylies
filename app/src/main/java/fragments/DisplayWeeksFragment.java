@@ -15,12 +15,12 @@ import com.example.zyuki.daylies.R;
 
 import adapters.WeeksAdapter;
 import models.WeeksInYear;
+import utils.DateCalcs;
 
 /**
  * Created by zyuki on 3/29/2016.
  */
 public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItemClickListener {
-    private GridView weeksGrid;
     private WeeksAdapter weeksAdapter;
 
     private DataFromWeeks dataPass;
@@ -39,7 +39,7 @@ public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
 
         weeksAdapter = new WeeksAdapter(getActivity(), getContext());
-        buildYear();
+        buildYear(DateCalcs.getCurrentYear());
     }
 
     @Nullable
@@ -48,7 +48,7 @@ public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItem
         int layoutRes = R.layout.fragment_weeks;
         View customView = inflater.inflate(layoutRes, container, false);
 
-        weeksGrid = (GridView)customView.findViewById(R.id.fragWeeks_grid);
+        GridView weeksGrid = (GridView)customView.findViewById(R.id.fragWeeks_grid);
         weeksGrid.setAdapter(weeksAdapter);
 
         weeksGrid.setOnItemClickListener(this);
@@ -67,8 +67,19 @@ public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItem
         ((MainActivity)getActivity()).changePage(R.string.daysFragTitle);
     }
 
-    private void buildYear() {
-        weeksAdapter.buildWeeksInYear(2016);
+    public void notifyDataSetChanged(int week, boolean hasTodos) {
+        final int error = -1;
+        int position = weeksAdapter.getPosByWeek(week);
+
+        if(position != error) {
+            weeksAdapter.getItem(position).setHasTodos(hasTodos);
+            weeksAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void buildYear(int year) {
+        weeksAdapter.buildWeeksInYear(year);
+        weeksAdapter.notifyDataSetChanged();
     }
 
     public interface DataFromWeeks {

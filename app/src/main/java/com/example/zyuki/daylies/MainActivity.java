@@ -1,7 +1,8 @@
 package com.example.zyuki.daylies;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import com.melnykov.fab.FloatingActionButton;
+//import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,6 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,11 +19,11 @@ import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import adapters.ToDoAdapter;
+import data.DataAccessObject;
 import fragments.DisplayDaysFragment;
 import fragments.DialogRouter;
 import fragments.DisplayWeeksFragment;
@@ -29,22 +32,32 @@ import models.DayName;
 import models.ToDo;
 import utils.DateCalcs;
 
-public class MainActivity extends AppCompatActivity implements DisplayWeeksFragment.DataFromWeeks, View.OnClickListener {
+public class MainActivity extends AppCompatActivity
+        implements DisplayWeeksFragment.DataFromWeeks, View.OnClickListener, TabLayout.OnTabSelectedListener {
+    /***********************************************************************************************
+     * GLOBAL VARIABLES
+     **********************************************************************************************/
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter pagerAdapter;
 
     private SlidingUpPanelLayout slider;
-    private FloatingActionButton fab;
+    private FloatingActionButton fab; //TODO: fab gets "stuck", stops clicking
     private ListView todoList;
     private ToDoAdapter todoAdapter;
     private TextView todoDate;
 
+    private DisplayDaysFragment daysFrag;
+    private DisplayWeeksFragment weeksFrag;
+
     private int currentYear, currentWeek;
     private DayName currentDay;
 
-    //TODO: increase header size
+    /***********************************************************************************************
+     * OVERRIDE METHODS
+     **********************************************************************************************/
+    /****/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +69,11 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         findViewByIds();
 
         setSupportActionBar(toolbar);
-//        toolbar.getViewTreeObserver().addOnGlobalLayoutListener(this);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
+
+        slider.setTouchEnabled(false);
 
         todoAdapter = new ToDoAdapter(MainActivity.this, getApplicationContext());
         todoList.setAdapter(todoAdapter);
@@ -77,8 +90,40 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         });
 
         fab.setOnClickListener(this);
+        tabLayout.setOnTabSelectedListener(this);
     }
 
+    /**Creates the menu from layout >> menu_main.xml**/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+            return true;
+    }
+
+    /**Routes the selected item menu to its correct corresponding action**/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        // A switch to route the selected items to the correct action
+        switch(id) {
+            case R.id.select_year:
+                DialogRouter.instantiatePickerDialog(MainActivity.this, currentYear, currentWeek);
+                break;
+            default:
+                break;
+        }
+
+        // Returns the Super call of this method
+        return super.onOptionsItemSelected(item);
+    }
+
+    /****/
     @Override
     public void onClick(View v) {
         if(currentDay != null) {
@@ -93,6 +138,100 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         }
     }
 
+    /****/
+    @Override
+    public void dataFromWeeks(int year, int week) {
+        currentYear = year;
+        currentWeek = week;
+
+        daysFrag.buildWeek(year, week);
+        weeksFrag.buildYear(year);
+    }
+
+    /**Override method for when the back button is pressed**/
+    @Override
+    public void onBackPressed() {
+        //If the slider wasn't retracted, collapse when the back button is pressed
+        if(!retractSlider()) {super.onBackPressed();}
+    }
+
+    /**Override method to retract slider when tab is selected**/
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        //Retracts slider
+        retractSlider();
+        //Sets the viewPager's page (fragment) to the corresponding selected tab
+        viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    /**Override method required but not used here**/
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {}
+
+    /**Override method to retract slider when tab is reselected**/
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {retractSlider();}
+
+    /***********************************************************************************************
+     * PUBLIC METHODS
+     **********************************************************************************************/
+    /****/
+    public void changePage(int goToThisTitle) {
+        int position = pagerAdapter.getPosition(goToThisTitle);
+        TabLayout.Tab goToTab = tabLayout.getTabAt(position);
+
+        if(goToTab != null) {goToTab.select();}
+    }
+
+    /****/
+    public void showToDoList(Day day) {
+        this.currentDay = day.getDay();
+        String date = day.getDay().toString() + ", ";
+        date += DateCalcs.formatDate(DateCalcs.FULL_DATE, day.getDate());
+
+        todoDate.setText(date);
+
+        todoAdapter.buildList(currentYear, currentWeek, currentDay);
+        todoAdapter.notifyDataSetChanged();
+
+        slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+    }
+
+    /****/
+    public void addLunchItem(String newToDo) {
+        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
+
+        todoAdapter.add(new ToDo(yearWeekNum, ToDo.CONTENT_LUNCH, newToDo));
+        todoAdapter.notifyDataSetChanged();
+
+        notifyDaysFrag();
+        notifyWeeksFrag();
+    }
+
+    /****/
+    public void addDailyItem(String newToDo, int itemType) {
+        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
+
+        todoAdapter.add(new ToDo(yearWeekNum, itemType, newToDo));
+        todoAdapter.notifyDataSetChanged();
+
+        notifyDaysFrag();
+        notifyWeeksFrag();
+    }
+
+    /****/
+    public void removeItem(int position) {
+        todoAdapter.removeItem(position);
+        todoAdapter.notifyDataSetChanged();
+
+        notifyDaysFrag();
+        notifyWeeksFrag();
+    }
+
+    /***********************************************************************************************
+     * PRIVATE METHODS
+     **********************************************************************************************/
+    /****/
     private void findViewByIds() {
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         viewPager = (ViewPager)findViewById(R.id.main_viewPager);
@@ -104,10 +243,11 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         todoDate = (TextView)findViewById(R.id.slider_text_date);
     }
 
+    /****/
     private void setupViewPager() {
         Bundle args = new Bundle();
-        DisplayDaysFragment daysFrag = new DisplayDaysFragment();
-        DisplayWeeksFragment weeksFrag = new DisplayWeeksFragment();
+        daysFrag = new DisplayDaysFragment();
+        weeksFrag = new DisplayWeeksFragment();
 
         args.putInt(DateCalcs.KEY_YEAR, currentYear);
         args.putInt(DateCalcs.KEY_WEEK, currentWeek);
@@ -122,52 +262,77 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         viewPager.setAdapter(pagerAdapter);
     }
 
-    public void changePage(int goToThisTitle) {
-        int position = pagerAdapter.getPosition(goToThisTitle);
-        TabLayout.Tab goToTab = tabLayout.getTabAt(position);
-
-        if(goToTab != null) {goToTab.select();}
+    /****/
+    private void notifyDaysFrag() {
+        boolean hasTodos = todoAdapter.getCount() > 0;
+        daysFrag.notifyDataSetChanged(currentDay, hasTodos);
     }
 
-    public void showToDoList(Day day) {
-        this.currentDay = day.getDay();
-        String date = day.getDay().toString() + ", " + DateCalcs.formatDate(DateCalcs.FULL_DATE, day.getDate());
-
-        todoDate.setText(date);
-
-        todoAdapter.buildList(currentYear, currentWeek, currentDay);
-        todoAdapter.notifyDataSetChanged();
-
-        slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+    /****/
+    private void notifyWeeksFrag() {
+        DataAccessObject dataAccess = ((ApplicationDatabase)getApplicationContext()).dataAccess;
+        boolean hasTodos = dataAccess.weekHasTodos(currentYear, currentWeek);
+        weeksFrag.notifyDataSetChanged(currentWeek, hasTodos);
     }
 
-    public void putLunchItem(String newToDo) {
-        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
-
-        todoAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_LUNCH, newToDo));
-        todoAdapter.notifyDataSetChanged();
+    /**Private method that retracts slider if expanded.**/
+    /**Returns true if collapsed, false otherwise**/
+    /**Used in override methods: onBackPressed, onTabSelected, and onTabReselected**/
+    private boolean retractSlider() {
+        boolean expanded = slider.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED;
+        boolean dragging = slider.getPanelState() == SlidingUpPanelLayout.PanelState.DRAGGING;
+        //If the slider is expanded, collapse when the back button is pressed
+        if(expanded || dragging) {
+            //Sets the slider state to collapsed
+            slider.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            return true;
+            //If the panel is in any other state, run this method's Super
+        } else {return false;}
     }
 
-    public void putDailyItem(String newToDo) {
-        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
-
-        todoAdapter.add(new ToDo(yearWeekNum, ToDo.TYPE_TODO, newToDo));
-        todoAdapter.notifyDataSetChanged();
-    }
-
-    public void removeItem(int position) {
-        todoAdapter.removeItem(position);
-        todoAdapter.notifyDataSetChanged();
-    }
-
+    /***********************************************************************************************
+     * INNER CLASSES
+     **********************************************************************************************/
+    /****/
     class ViewPagerAdapter extends FragmentPagerAdapter {
+        /*******************************************************************************************
+         * GLOBAL VARIABLES
+         ******************************************************************************************/
+        /****/
         private final List<Fragment> fragList = new ArrayList<>();
         private final List<String> fragTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager fragManager) {
-            super(fragManager);
+        /*******************************************************************************************
+         * CONSTRUCTORS
+         ******************************************************************************************/
+        /****/
+        public ViewPagerAdapter(FragmentManager fragManager) {super(fragManager);}
+
+        /*******************************************************************************************
+         * OVERRIDE METHODS
+         ******************************************************************************************/
+        /****/
+        @Override
+        public Fragment getItem(int position) {
+            return fragList.get(position);
         }
 
+        /****/
+        @Override
+        public int getCount() {
+            return fragList.size();
+        }
+
+        /****/
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragTitleList.get(position);
+        }
+
+        /*******************************************************************************************
+         * PUBLIC METHODS
+         ******************************************************************************************/
+        /****/
         public void addFragment(int stringResId, Fragment fragment) {
             String title = getResources().getString(stringResId);
 
@@ -175,34 +340,12 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
             fragList.add(fragment);
         }
 
+        /****/
         public int getPosition(int fragTitleStrRes) {
             String title = getResources().getString(fragTitleStrRes);
 
             return fragTitleList.indexOf(title);
         }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragList.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return fragTitleList.get(position);
-        }
-    }
-
-    @Override
-    public void dataFromWeeks(int year, int week) {
-        currentYear = year;
-        currentWeek = week;
-
-        ((DisplayDaysFragment)pagerAdapter.getItem(0)).buildWeek(year, week);
     }
 }
 

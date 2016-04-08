@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
+import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 import com.example.zyuki.daylies.WeekPickerActivity;
 
@@ -22,9 +23,10 @@ public class DialogYearPickFragment extends DialogFragment implements View.OnCli
 	private NumberPicker yearPicker;
 
 	//TODO: develop custom picker and replace numberpicker
-	public static DialogYearPickFragment newInstance(int year) {
+	public static DialogYearPickFragment newInstance(int year, int week) {
         Bundle args = new Bundle();
         args.putInt(DateCalcs.KEY_YEAR, year);
+		args.putInt(DateCalcs.KEY_WEEK, week);
 
         DialogYearPickFragment fragment = new DialogYearPickFragment();
         fragment.setArguments(args);
@@ -76,8 +78,11 @@ public class DialogYearPickFragment extends DialogFragment implements View.OnCli
 				getDialog().dismiss();
 				break;
 			case R.id.dialog_butn_submit:
-				WeekPickerActivity activity = (WeekPickerActivity)getActivity();
-				activity.displaySelectedYear(yearPicker.getValue());
+				int year = yearPicker.getValue();
+				int week = getArguments().getInt(DateCalcs.KEY_WEEK);
+
+				MainActivity activity = (MainActivity)getActivity();
+				activity.dataFromWeeks(year, week);
 
 				getDialog().dismiss();
 				break;

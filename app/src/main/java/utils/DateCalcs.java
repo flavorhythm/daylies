@@ -14,6 +14,7 @@ import static java.util.Calendar.*;
  * Created by zyuki on 2/29/2016.
  */
 public class DateCalcs {
+    //TODO: aggregate static variables?
     public static final String KEY_YEAR = "year";
     public static final String KEY_WEEK = "weekNum";
 
@@ -21,7 +22,7 @@ public class DateCalcs {
 
     private DateCalcs() {}
 
-    public static final String addZeroToNum(int num) {
+    public static String addZeroToNum(int num) {
         String numStr = String.valueOf(num);
 
         return (num < 10) ? ("0" + numStr) : numStr;
@@ -43,16 +44,6 @@ public class DateCalcs {
             default:
                 return "Corrupt data";
         }
-    }
-
-    private static final String getMonthName(int monthNum) {
-        String month = "month";
-        DateFormatSymbols formatSymbols = new DateFormatSymbols();
-        String[] months = formatSymbols.getMonths();
-
-        if(monthNum >= 0 && monthNum <= 11) {month = months[monthNum];}
-
-        return month;
     }
 
     public static final int getCurrentYear() {
@@ -111,5 +102,15 @@ public class DateCalcs {
         counterCal.add(WEEK_OF_YEAR, oneWeekOffset);
 
         return counterCal;
+    }
+
+    private static final String getMonthName(int monthNum) {
+        String month = "month";
+        DateFormatSymbols formatSymbols = new DateFormatSymbols();
+        String[] months = formatSymbols.getMonths();
+
+        if(monthNum >= 0 && monthNum <= 11) {month = months[monthNum];}
+
+        return month;
     }
 }

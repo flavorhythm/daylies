@@ -15,7 +15,6 @@ public enum DayName {
 	String dayName;
 	DayName(String dayName) {this.dayName = dayName;}
 
-
 	@Override
 	public String toString() {
 		return this.dayName;
