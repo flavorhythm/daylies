@@ -25,8 +25,8 @@ public class Constant {
         public static final String BUNDLE_KEY_DAY_TYPE = "dayType";
         public static final String BUNDLE_KEY_ITEM_POS = "itemPos";
 
-        public static final int DAY_TYPE_WEEKDAY = 2001;
-        public static final int DAY_TYPE_WEEKEND = 2002;
+        public static final int DAY_TYPE_WEEKDAY = 1001;
+        public static final int DAY_TYPE_WEEKEND = 1002;
     }
 
     public class Model {

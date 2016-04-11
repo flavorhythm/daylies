@@ -54,7 +54,9 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-            <include layout="@layout/slider_main"/>
+
+
+            <!--<include layout="@layout/slider_main"/>-->
 
         </com.sothree.slidinguppanel.SlidingUpPanelLayout>
     </LinearLayout>

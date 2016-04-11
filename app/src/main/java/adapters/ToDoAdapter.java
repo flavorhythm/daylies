@@ -47,11 +47,11 @@ public class ToDoAdapter extends BaseAdapter {
      * CONSTRUCTORS
      **********************************************************************************************/
     /**One and only constructor**/
-    public ToDoAdapter(Activity activity, Context context) {
+    public ToDoAdapter(Activity activity) {
         //Inflates the layout from the passed activity variable
         inflater = LayoutInflater.from(activity);
         //Points the global variable to the open dataAccess variable in ApplicationDatabase
-        dataAccess = ((ApplicationDatabase)context).dataAccess;
+        dataAccess = ((ApplicationDatabase)activity.getApplicationContext()).dataAccess;
 
         //Sets activity param to the global variable activity
         this.activity = activity;

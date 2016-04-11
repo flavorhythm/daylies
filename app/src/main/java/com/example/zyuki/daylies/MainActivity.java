@@ -37,11 +37,13 @@ import utils.DateCalcs;
  * Class used to facilitate
  **************************************************************************************************/
 //TODO: need to prevent slider from sliding when clicked
+//TODO: move slider elements into it's own fragment?
 public class MainActivity extends AppCompatActivity
         implements DisplayWeeksFragment.DataFromWeeks, View.OnClickListener, TabLayout.OnTabSelectedListener {
     /***********************************************************************************************
      * GLOBAL VARIABLES
      **********************************************************************************************/
+    /**Private variables**/
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
 
-        todoAdapter = new ToDoAdapter(MainActivity.this, getApplicationContext());
+        todoAdapter = new ToDoAdapter(MainActivity.this);
         todoList.setAdapter(todoAdapter);
         todoList.setEmptyView(findViewById(R.id.slider_text_emptyList));
 
