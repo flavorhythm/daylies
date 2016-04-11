@@ -1,8 +1,10 @@
 package models;
 
-/**
- * Created by zyuki on 3/2/2016.
- */
+/***************************************************************************************************
+ * Created by zyuki on 2/26/2016.
+ *
+ * Class used to facilitate
+ **************************************************************************************************/
 public class WeeksInYear {
     private int year;
     private int weekNum;
