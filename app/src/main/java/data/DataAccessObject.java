@@ -14,25 +14,41 @@ import models.DayName;
 import models.ToDo;
 import utils.DateCalcs;
 
-/**
+/***************************************************************************************************
  * Created by zyuki on 2/26/2016.
- */
+ *
+ * Class used to facilitate
+ **************************************************************************************************/
 public class DataAccessObject {
+    /***********************************************************************************************
+     * GLOBAL VARIABLES
+     **********************************************************************************************/
+    /****/
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
 
+    /***********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
+    /****/
     public DataAccessObject(Context context) {
         dbHelper = DatabaseHelper.getInstance(context);
     }
 
+    /***********************************************************************************************
+     * PUBLIC METHODS
+     **********************************************************************************************/
+    /****/
     public void open() throws SQLException {
         db = dbHelper.getWritableDatabase();
     }
 
+    /****/
     public void close() {
         db.close();
     }
 
+    /****/
     public List<ToDo> getToDoList(final String yearWeekDay) {
         List<ToDo> toDoList = new ArrayList<>();
 
@@ -64,6 +80,7 @@ public class DataAccessObject {
         return toDoList;
     }
 
+    /****/
     public boolean dayHasTodos(final String yearWeekDay) {
         Cursor cursor = db.query(
                 TblToDo.TABLE_NAME.toString(),
@@ -81,6 +98,7 @@ public class DataAccessObject {
         return hasTodos;
     }
 
+    /****/
     public boolean weekHasTodos(int year, int week) {
         final int daysInWeek = 7;
 
@@ -94,6 +112,7 @@ public class DataAccessObject {
         return false;
     }
 
+    /****/
     public long addToDoItem(ToDo item) {
         ContentValues values = new ContentValues();
         values.put(TblToDo.YEAR_WEEK_DAY.toString(), item.getYearWeekDay());
@@ -103,6 +122,7 @@ public class DataAccessObject {
         return db.insert(TblToDo.TABLE_NAME.toString(), null, values);
     }
 
+    /****/
     public int deleteToDoItem(int id) {
         return db.delete(TblToDo.TABLE_NAME.toString(),
                 TblToDo.KEY_ID + " =?",

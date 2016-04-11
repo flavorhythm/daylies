@@ -15,30 +15,44 @@ import android.widget.EditText;
 import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
-import models.ToDo;
+import utils.Constant;
 
-import static fragments.DialogRouter.*;
+import static utils.Constant.Fragment.*;
 
-/**
- * Created by zyuki on 3/8/2016.
- */
+/***************************************************************************************************
+ * Created by zyuki on 2/26/2016.
+ *
+ * Class used to facilitate
+ **************************************************************************************************/
 public class DialogInputFragment extends DialogFragment implements View.OnClickListener {
+    /***********************************************************************************************
+     * GLOBAL VARIABLES
+     **********************************************************************************************/
+    /**Private Variables**/
     private View customLayout;
 
     private Button lunchToDoBtn, dailyToDoBtn, cancelBtn;
     private EditText newToDoItem;
     private TextInputLayout newItemWrapper;
 
+    /***********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
+    /****/
     public static DialogInputFragment newInstance(int dayType) {
         DialogInputFragment dialogFragment = new DialogInputFragment();
         Bundle args = new Bundle();
 
-        args.putInt(KEY_DAYTYPE, dayType);
+        args.putInt(BUNDLE_KEY_DAY_TYPE, dayType);
         dialogFragment.setArguments(args);
 
         return dialogFragment;
     }
 
+    /***********************************************************************************************
+     * OVERRIDE METHODS
+     **********************************************************************************************/
+    /****/
     @Override
     public void onResume() {
         super.onResume();
@@ -53,6 +67,7 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
         }
     }
 
+    /****/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         int layoutRes = R.layout.todo_input_dialog;
@@ -67,6 +82,7 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
         return customLayout;
     }
 
+    /****/
     @Override
     public void onClick(View v) {
         String itemText;
@@ -83,8 +99,8 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
             case R.id.inputDialog_btn_daily:
                 if(!TextUtils.isEmpty(newToDoItem.getText())) {
                     itemText = newToDoItem.getText().toString();
-                    int itemType = getArguments().getInt(KEY_DAYTYPE) == TYPE_WEEKDAY ?
-                            ToDo.CONTENT_WORK : ToDo.CONTENT_DAILY;
+                    int itemType = getArguments().getInt(BUNDLE_KEY_DAY_TYPE) == DAY_TYPE_WEEKDAY ?
+                            Constant.Model.CONTENT_WORK : Constant.Model.CONTENT_DAILY;
                     ((MainActivity)getActivity()).addDailyItem(itemText, itemType);
 
                     getDialog().dismiss();
@@ -96,6 +112,10 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
         }
     }
 
+    /***********************************************************************************************
+     * PRIVATE METHODS
+     **********************************************************************************************/
+    /****/
     private void findViewByIds() {
         lunchToDoBtn = (Button)customLayout.findViewById(R.id.inputDialog_btn_lunch);
         dailyToDoBtn = (Button)customLayout.findViewById(R.id.inputDialog_btn_daily);
@@ -105,16 +125,18 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
         newItemWrapper = (TextInputLayout)customLayout.findViewById(R.id.inputDialog_textWrap_newItem);
     }
 
+    /****/
     private void setListeners() {
         lunchToDoBtn.setOnClickListener(this);
         dailyToDoBtn.setOnClickListener(this);
         cancelBtn.setOnClickListener(this);
     }
 
+    /****/
     private void showHideButtons() {
-        int type = getArguments().getInt(KEY_DAYTYPE);
+        int dayType = getArguments().getInt(BUNDLE_KEY_DAY_TYPE);
 
-        if(type == TYPE_WEEKEND) {
+        if(dayType == DAY_TYPE_WEEKEND) {
             lunchToDoBtn.setVisibility(View.GONE);
             dailyToDoBtn.setText(getResources().getText(R.string.dailyToDo));
         } else {

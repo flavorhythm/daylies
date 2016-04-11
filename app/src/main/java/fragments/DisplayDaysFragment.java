@@ -3,7 +3,6 @@ package fragments;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,16 @@ import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
 import adapters.DaysAdapter;
-import models.Day;
 import models.DayName;
-import utils.DateCalcs;
+import utils.Constant;
 
-/**
- * Created by zyuki on 3/29/2016.
- */
+import static utils.Constant.Fragment.*;
+
+/***************************************************************************************************
+ * Created by zyuki on 2/26/2016.
+ *
+ * Class used to facilitate
+ **************************************************************************************************/
 public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemClickListener {
     private DaysAdapter daysAdapter;
 
@@ -35,8 +37,8 @@ public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemC
 
         if(!getArguments().isEmpty()) {
             buildWeek(
-                    getArguments().getInt(DateCalcs.KEY_YEAR),
-                    getArguments().getInt(DateCalcs.KEY_WEEK)
+                    getArguments().getInt(BUNDLE_KEY_YEAR),
+                    getArguments().getInt(BUNDLE_KEY_WEEK)
             );
         }
     }
@@ -57,10 +59,10 @@ public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Day day = daysAdapter.getItem(position);
+        int dayType = daysAdapter.getItemViewType(position);
 
-        if(day.getType() != DaysAdapter.TYPE_DIVIDER) {
-            ((MainActivity)getActivity()).showToDoList(day);
+        if(dayType != Constant.Adapter.TYPE_DIVIDER) {
+            ((MainActivity)getActivity()).showToDoList(daysAdapter.getItem(position));
         }
     }
 

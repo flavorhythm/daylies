@@ -19,7 +19,11 @@ import java.util.Map;
 import data.DataAccessObject;
 import models.DayName;
 import models.ToDo;
+import utils.Constant;
 import utils.DateCalcs;
+
+import static utils.Constant.Adapter.*;
+import static utils.Constant.Model.*;
 
 /***************************************************************************************************
  * Created by zyuki on 2/26/2016.
@@ -32,19 +36,12 @@ public class ToDoAdapter extends BaseAdapter {
      * GLOBAL VARIABLES
      **********************************************************************************************/
     /**Private variables**/
-    //TODO: aggregate constants
-    private static final int TYPE_COUNT = 2;
-
-    private static final int ERROR = -1;
-    private static final int TYPE_DIVIDER = 0;
-    private static final int TYPE_CONTENT = 1;
-
     private List<ToDo> toDoList;
     private LayoutInflater inflater;
     private DataAccessObject dataAccess;
     private Activity activity;
 
-    private Map<Integer, Integer> dividerPos;
+    private Map<String, Integer> dividerPos;
 
     /***********************************************************************************************
      * CONSTRUCTORS
@@ -66,7 +63,7 @@ public class ToDoAdapter extends BaseAdapter {
     /***********************************************************************************************
      * OVERRIDE METHODS
      **********************************************************************************************/
-    /**Override method that gets view type**/
+    /**Override method that gets view type (from extending BaseAdapter, required)**/
     @Override
     public int getItemViewType(int position) {
         //Gets item type from position
@@ -75,37 +72,39 @@ public class ToDoAdapter extends BaseAdapter {
         //content and divider
         switch(itemType) {
             //Converts all dividers into one divider type
-            case ToDo.DIVIDER_LUNCH: case ToDo.DIVIDER_WORK: case ToDo.DIVIDER_DAILY:
+            case DIVIDER_LUNCH: case DIVIDER_WORK: case DIVIDER_DAILY:
                 //Returns single divider type
                 return TYPE_DIVIDER;
             //Converts all contents into one content type
-            case ToDo.CONTENT_LUNCH:case ToDo.CONTENT_WORK:case ToDo.CONTENT_DAILY:
+            case CONTENT_LUNCH:case CONTENT_WORK:case CONTENT_DAILY:
                 //Returns content type
                 return TYPE_CONTENT;
             //Default returns error (item type was not found)
             default:
                 //Returns error
-                return ERROR;
+                return Constant.ERROR;
         }
     }
 
-    /**Override method that gets view type count**/
+    /**Override method that gets view type count (from extending BaseAdapter, required)**/
     @Override
-    public int getViewTypeCount() {return TYPE_COUNT;}
+    public int getViewTypeCount() {return TODO_TYPE_COUNT;}
 
-    /**Override method that gets count of the list**/
+    /**Override method that gets count of the list (from extending BaseAdapter, required)**/
     @Override
     public int getCount() {return toDoList.size();}
 
     /**Override method that gets the item at position in the list**/
+    /**(from extending BaseAdapter, required)**/
     @Override
     public ToDo getItem(int position) {return toDoList.get(position);}
 
     /**Override method that gets ID (in this case position) of the item residing in position**/
+    /**(from extending BaseAdapter)**/
     @Override
     public long getItemId(int position) {return position;}
 
-    /**Override method that builds a view for each item**/
+    /**Override method that builds a view for each item (from extending BaseAdapter, required)**/
     /**This method reuses a ViewHolder so that less memory is used**/
     @Override
     public View getView(final int position, View row, ViewGroup parent) {
@@ -143,7 +142,7 @@ public class ToDoAdapter extends BaseAdapter {
                     //Sets the tag of row to the recyclable view
                     row.setTag(viewHolder);
                     break;
-                case ERROR:
+                case Constant.ERROR:
                     return row;
             }
         //If the view is being recycled, sets the recyclable view to the row's tag
@@ -158,7 +157,7 @@ public class ToDoAdapter extends BaseAdapter {
         //Sets section length for each divider that is displayed
         if(getItemViewType(position) == TYPE_DIVIDER) {
             //Gets type of item at current position and declare variable for ease of readability
-            int dividerType = getItem(position).getType();
+            String dividerType = String.valueOf(getItem(position).getType());
             //Appends section length with parentheses to the TextView
             viewHolder.textItem.append(" " + "(" + String.valueOf(dividerPos.get(dividerType)) + ")");
         }
@@ -168,6 +167,7 @@ public class ToDoAdapter extends BaseAdapter {
     }
 
     /**Override method that updates divider positions once the list has updated**/
+    /**(from extending BaseAdapter, optional)**/
     @Override
     public void notifyDataSetChanged() {
         //Calls this method's Super
@@ -193,7 +193,6 @@ public class ToDoAdapter extends BaseAdapter {
     public void removeItem(final int listPos) {
         //Gets database ID of item from the position in the list
         int dbId = getItem(listPos).getId();
-//        int dividerType = contentToDivider(getItem(listPos).getType());
 
         //Deletes item from db using dbID
         dataAccess.deleteToDoItem(dbId);
@@ -256,17 +255,17 @@ public class ToDoAdapter extends BaseAdapter {
             //Switch statement that builds the appropriate list depending on the type of to do
             switch(item.getType()) {
                 //Case when the to do type is lunch
-                case ToDo.CONTENT_LUNCH:
+                case CONTENT_LUNCH:
                     //Adds the to do item to the corresponding local list
                     lunchToDos.add(item);
                     break; //Breaks switch statement
                 //Case when the to do type is after work
-                case ToDo.CONTENT_WORK:
+                case CONTENT_WORK:
                     //Adds the to do item to the corresponding local list
                     afterWork.add(item);
                     break; //Breaks switch statement
                 //Case when the to do type is daily
-                case ToDo.CONTENT_DAILY:
+                case CONTENT_DAILY:
                     //Adds the to do item to the corresponding local list
                     dailyToDos.add(item);
                     break; //Breaks switch statement
@@ -315,17 +314,17 @@ public class ToDoAdapter extends BaseAdapter {
         //Switch statement that converts divider type to divider text
         switch(dividerType) {
             //Case when divider type is for lunch to dos
-            case ToDo.DIVIDER_LUNCH:
+            case DIVIDER_LUNCH:
                 //Sets divider text to appropriate text for section
                 dividerText = activity.getResources().getString(R.string.divider_lunch);
                 break; //Breaks switch statement
             //Case when divider type is for after work to dos
-            case ToDo.DIVIDER_WORK:
+            case DIVIDER_WORK:
                 //Sets divider text to appropriate text for section
                 dividerText = activity.getResources().getString(R.string.divider_afterWork);
                 break; //Breaks switch statement
             //Case when divider type is for the entire day (weekend)
-            case ToDo.DIVIDER_DAILY:
+            case DIVIDER_DAILY:
                 //Sets divider text to appropriate text for section
                 dividerText = activity.getResources().getString(R.string.divider_daily);
                 break; //Breaks switch statement
@@ -346,7 +345,7 @@ public class ToDoAdapter extends BaseAdapter {
         int dividerType = contentToDivider(contentType);
 
         //Finds the position at the end of the section
-        int sectionEndsAt = dividerPos.get(dividerType);
+        int sectionEndsAt = dividerPos.get(String.valueOf(dividerType));
         //Builds divider according to the divider type
         ToDo divider = buildDivider(dividerType);
         //Checks whether the section exists by finding length of section
@@ -354,7 +353,7 @@ public class ToDoAdapter extends BaseAdapter {
         //Adds the item to the list and a divider if necessary
         if(sectionEndsAt == first) {
             //Checks whether the divider type is for lunch
-            if(dividerType == ToDo.DIVIDER_LUNCH) {
+            if(dividerType == DIVIDER_LUNCH) {
                 //Adds divider to the front of the list
                 toDoList.add(first, divider);
                 //Adds item to the front of the list
@@ -369,7 +368,7 @@ public class ToDoAdapter extends BaseAdapter {
         //Section already exists
         } else {
             //Checks whether the divider type is for lunch
-            if(dividerType == ToDo.DIVIDER_LUNCH) {
+            if(dividerType == DIVIDER_LUNCH) {
                 //adds item at the end of the lunch section
                 toDoList.add(sectionEndsAt + 1, item);
             //All other dividers/content
@@ -383,27 +382,24 @@ public class ToDoAdapter extends BaseAdapter {
     /**Private method that converts the content type parameter to its divider counterpart**/
     /**Used in private method addToList**/
     private int contentToDivider(int contentType) {
-        //Declares final error variable for ease of readability
-        final int error = -1;
-
         //Switch statement that converts the content type to its divider counterpart
         switch(contentType) {
             //Case when content type is lunch
-            case ToDo.CONTENT_LUNCH:
+            case CONTENT_LUNCH:
                 //Returns lunch divider
-                return ToDo.DIVIDER_LUNCH;
+                return DIVIDER_LUNCH;
             //Case when content type is after work
-            case ToDo.CONTENT_WORK:
+            case CONTENT_WORK:
                 //Returns after work divider
-                return ToDo.DIVIDER_WORK;
+                return DIVIDER_WORK;
             //Case when content type is daily (weekend)
-            case ToDo.CONTENT_DAILY:
+            case CONTENT_DAILY:
                 //Returns daily divider
-                return ToDo.DIVIDER_DAILY;
+                return DIVIDER_DAILY;
             //Case when content type is unknown
             default:
                 //Returns error
-                return error;
+                return Constant.ERROR;
         }
     }
 
@@ -434,7 +430,7 @@ public class ToDoAdapter extends BaseAdapter {
                     }
 
                     //Sets this divider type's size to the listSize minus dividerOffset
-                    dividerPos.put(dividerType, listSize - dividerOffset);
+                    dividerPos.put(String.valueOf(dividerType), listSize - dividerOffset);
                 }
             }
         //If global items list is empty
@@ -452,7 +448,7 @@ public class ToDoAdapter extends BaseAdapter {
             //Declares final variable for the int value zero for ease of readability
             final int clear = 0;
             //Clears this divider type's length/position
-            dividerPos.put(dividerType, clear);
+            dividerPos.put(String.valueOf(dividerType), clear);
         }
     }
 
@@ -463,9 +459,9 @@ public class ToDoAdapter extends BaseAdapter {
         List<Integer> dividerList = new ArrayList<>();
 
         //Adds the three types of dividers to the list
-        dividerList.add(ToDo.DIVIDER_LUNCH);
-        dividerList.add(ToDo.DIVIDER_WORK);
-        dividerList.add(ToDo.DIVIDER_DAILY);
+        dividerList.add(DIVIDER_LUNCH);
+        dividerList.add(DIVIDER_WORK);
+        dividerList.add(DIVIDER_DAILY);
 
         //Returns divider type list
         return dividerList;

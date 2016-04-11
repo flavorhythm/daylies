@@ -12,21 +12,24 @@ import android.widget.NumberPicker;
 
 import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
-import com.example.zyuki.daylies.WeekPickerActivity;
 
 import utils.DateCalcs;
 
-/**
- * Created by Flavorhythm on 3/3/2016.
- */
+import static utils.Constant.Fragment.*;
+
+/***************************************************************************************************
+ * Created by zyuki on 2/26/2016.
+ *
+ * Class used to facilitate
+ **************************************************************************************************/
 public class DialogYearPickFragment extends DialogFragment implements View.OnClickListener {
 	private NumberPicker yearPicker;
 
 	//TODO: develop custom picker and replace numberpicker
 	public static DialogYearPickFragment newInstance(int year, int week) {
         Bundle args = new Bundle();
-        args.putInt(DateCalcs.KEY_YEAR, year);
-		args.putInt(DateCalcs.KEY_WEEK, week);
+        args.putInt(BUNDLE_KEY_YEAR, year);
+		args.putInt(BUNDLE_KEY_WEEK, week);
 
         DialogYearPickFragment fragment = new DialogYearPickFragment();
         fragment.setArguments(args);
@@ -61,7 +64,7 @@ public class DialogYearPickFragment extends DialogFragment implements View.OnCli
 
 		yearPicker.setMinValue(DateCalcs.getCurrentYear());
 		yearPicker.setMaxValue(DateCalcs.getCurrentYear() + dateRange);
-        yearPicker.setValue(getArguments().getInt(DateCalcs.KEY_YEAR));
+        yearPicker.setValue(getArguments().getInt(BUNDLE_KEY_YEAR));
 
 		cancelBtn.setOnClickListener(this);
 		submitBtn.setOnClickListener(this);
@@ -79,7 +82,7 @@ public class DialogYearPickFragment extends DialogFragment implements View.OnCli
 				break;
 			case R.id.dialog_butn_submit:
 				int year = yearPicker.getValue();
-				int week = getArguments().getInt(DateCalcs.KEY_WEEK);
+				int week = getArguments().getInt(BUNDLE_KEY_WEEK);
 
 				MainActivity activity = (MainActivity)getActivity();
 				activity.dataFromWeeks(year, week);

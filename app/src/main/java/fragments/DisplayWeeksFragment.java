@@ -15,11 +15,14 @@ import com.example.zyuki.daylies.R;
 
 import adapters.WeeksAdapter;
 import models.WeeksInYear;
+import utils.Constant;
 import utils.DateCalcs;
 
-/**
- * Created by zyuki on 3/29/2016.
- */
+/***************************************************************************************************
+ * Created by zyuki on 2/26/2016.
+ *
+ * Class used to facilitate
+ **************************************************************************************************/
 public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItemClickListener {
     private WeeksAdapter weeksAdapter;
 
@@ -68,10 +71,9 @@ public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItem
     }
 
     public void notifyDataSetChanged(int week, boolean hasTodos) {
-        final int error = -1;
         int position = weeksAdapter.getPosByWeek(week);
 
-        if(position != error) {
+        if(position != Constant.ERROR) {
             weeksAdapter.getItem(position).setHasTodos(hasTodos);
             weeksAdapter.notifyDataSetChanged();
         }

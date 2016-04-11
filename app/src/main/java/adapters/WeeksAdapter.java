@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,7 +21,10 @@ import java.util.List;
 
 import data.DataAccessObject;
 import models.WeeksInYear;
+import utils.Constant;
 import utils.DateCalcs;
+
+import static utils.Constant.Adapter.*;
 
 /***************************************************************************************************
  * Created by zyuki on 2/26/2016.
@@ -124,8 +126,6 @@ public class WeeksAdapter extends BaseAdapter {
      **********************************************************************************************/
     /****/
     public int getPosByWeek(int week) {
-        final int error = -1;
-
         for(int pos = 0; pos < getCount(); pos++) {
             WeeksInYear thisWeek = getItem(pos);
             if(thisWeek != null && week == thisWeek.getWeekNum()) {
@@ -133,7 +133,7 @@ public class WeeksAdapter extends BaseAdapter {
             }
         }
 
-        return error;
+        return Constant.ERROR;
     }
 
     /****/
@@ -160,7 +160,7 @@ public class WeeksAdapter extends BaseAdapter {
 
             week.setYear(thisYear.get(Calendar.YEAR));
             week.setWeekNum(weekOfYear);
-            week.setMonth(DateCalcs.formatDate(Calendar.MONTH, thisYear.getTimeInMillis()));
+            week.setMonth(DateCalcs.formatDate(Constant.Util.FORMAT_MONTH, thisYear.getTimeInMillis()));
 
             week.setHasTodos(dataAccess.weekHasTodos(thisYear.get(Calendar.YEAR), weekOfYear));
 

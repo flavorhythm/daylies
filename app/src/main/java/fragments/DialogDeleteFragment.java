@@ -11,20 +11,32 @@ import android.view.ViewGroup;
 import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
-/**
- * Created by zyuki on 3/28/2016.
- */
+import static utils.Constant.Fragment.*;
+
+/***************************************************************************************************
+ * Created by zyuki on 2/26/2016.
+ *
+ * Class used to facilitate
+ **************************************************************************************************/
 public class DialogDeleteFragment extends DialogFragment implements DialogInterface.OnClickListener {
+    /***********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
+    /****/
     public static DialogDeleteFragment newInstance(int itemPos) {
         DialogDeleteFragment dialogFragment = new DialogDeleteFragment();
         Bundle args = new Bundle();
 
-        args.putInt(DialogRouter.KEY_ITEMPOS, itemPos);
+        args.putInt(BUNDLE_KEY_ITEM_POS, itemPos);
         dialogFragment.setArguments(args);
 
         return dialogFragment;
     }
 
+    /***********************************************************************************************
+     * OVERRIDE METHODS
+     **********************************************************************************************/
+    /****/
     @Override
     public void onResume() {
         super.onResume();
@@ -39,6 +51,7 @@ public class DialogDeleteFragment extends DialogFragment implements DialogInterf
         }
     }
 
+    /****/
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -49,11 +62,12 @@ public class DialogDeleteFragment extends DialogFragment implements DialogInterf
                 .create();
     }
 
+    /****/
     @Override
     public void onClick(DialogInterface dialog, int which) {
         switch(which) {
             case Dialog.BUTTON_POSITIVE:
-                int position = getArguments().getInt(DialogRouter.KEY_ITEMPOS);
+                int position = getArguments().getInt(BUNDLE_KEY_ITEM_POS);
                 ((MainActivity)getActivity()).removeItem(position);
 
                 dialog.dismiss();

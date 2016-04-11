@@ -5,7 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 /***************************************************************************************************
  * Created by zyuki on 2/26/2016.
  *
- * NEEDS COMMENTS
+ * Enum class used to build the database in DatabaseHelper and assist with retireving/editing data
+ * on the database through DataAccessObject
  **************************************************************************************************/
 public enum TblToDo {
 	/***********************************************************************************************

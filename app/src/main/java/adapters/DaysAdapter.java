@@ -22,7 +22,10 @@ import java.util.List;
 import data.DataAccessObject;
 import models.Day;
 import models.DayName;
+import utils.Constant;
 import utils.DateCalcs;
+
+import static utils.Constant.Adapter.*;
 
 /***************************************************************************************************
  * Created by zyuki on 2/26/2016.
@@ -34,19 +37,12 @@ public class DaysAdapter extends BaseAdapter {
     /***********************************************************************************************
      * GLOBAL VARIABLES
      **********************************************************************************************/
-    /**Public variables**/
-    /**Used for differentiating content data and monthly divider data**/
-    //TODO: aggregate constants
-    public static final int TYPE_COUNT = 2;
-    public static final int TYPE_DIVIDER = 0;
-    public static final int TYPE_CONTENT = 1;
-
     /**Private variables**/
-    private LayoutInflater inflater;
-    private List<Day> dayList;
+    private LayoutInflater inflater;        //inflater for the custom rows
+    private List<Day> dayList;              //Stores the currently displayed list of days
 
-    private Context context;
-    private DataAccessObject dataAccess;
+    private Context context;                //Used in getView for view alterations
+    private DataAccessObject dataAccess;    //Used to retrieve/put data into the database
 
     /***********************************************************************************************
      * CONSTRUCTORS
@@ -66,27 +62,29 @@ public class DaysAdapter extends BaseAdapter {
     /***********************************************************************************************
      * OVERRIDE METHODS
      **********************************************************************************************/
-    /**Override method that gets view type**/
+    /**Override method that gets view type (from extending BaseAdapter)**/
+    /**All the return values here must be less than the value returned by getViewTypeCount**/
     @Override
     public int getItemViewType(int position) {return getItem(position).getType();}
 
-    /**Override method that gets view type count**/
+    /**Override method that gets view type count (from extending BaseAdapter)**/
     @Override
-    public int getViewTypeCount() {return TYPE_COUNT;}
+    public int getViewTypeCount() {return DAYS_TYPE_COUNT;}
 
-    /**Override method that gets count of the list**/
+    /**Override method that gets count of the list (from extending BaseAdapter)**/
     @Override
     public int getCount() {return dayList.size();}
 
-    /**Override method that gets the item at position in the list**/
+    /**Override method that gets the item at position in the list (from extending BaseAdapter)**/
     @Override
     public Day getItem(int position) {return dayList.get(position);}
 
     /**Override method that gets ID (in this case position) of the item residing in position**/
+    /**(from extending BaseAdapter)**/
     @Override
     public long getItemId(int position) {return position;}
 
-    /**Override method that builds a view for each item**/
+    /**Override method that builds a view for each item (from extending BaseAdapter)**/
     @Override
     public View getView(int position, View row, ViewGroup parent) {
         //Local variables that are set to the appropriate layouts (better readability)
@@ -140,7 +138,7 @@ public class DaysAdapter extends BaseAdapter {
             case TYPE_DIVIDER:
                 //Local variable to store the month's name (first three chars only)
                 String month = DateCalcs.formatDate(
-                        Calendar.MONTH, day.getDate()
+                        Constant.Util.FORMAT_MONTH, day.getDate()
                 ).substring(0, 3);
                 //Sets the view's text to the month
                 viewHolder.month.setText(month);
@@ -149,7 +147,7 @@ public class DaysAdapter extends BaseAdapter {
             case TYPE_CONTENT:
                 //Sets the day of the month
                 viewHolder.dayOfMonth.setText(
-                        DateCalcs.formatDate(Calendar.DAY_OF_MONTH, day.getDate())
+                        DateCalcs.formatDate(Constant.Util.FORMAT_DAY_OF_MONTH, day.getDate())
                 );
                 //Sets the day of the week (first three cars only)
                 viewHolder.dayOfWeek.setText(
@@ -181,7 +179,6 @@ public class DaysAdapter extends BaseAdapter {
                 }
                 break;
         }
-
         //Returns inflated and customized row view
         return row;
     }
@@ -192,9 +189,6 @@ public class DaysAdapter extends BaseAdapter {
     /**Gets the position of the item corresponding to the day of dayName**/
     /**Used in public method DisplayDaysFragment.notifyDataSetChanged**/
     public int getPosByDay(DayName searchThisDay) {
-        //Error variable (better readability)
-        final int error = -1;
-
         //For loop that goes through all the days to check for todos
         for(int pos = 0; pos < getCount(); pos++) {
             //Gets day at every position
@@ -206,9 +200,8 @@ public class DaysAdapter extends BaseAdapter {
                 return pos;
             }
         }
-
         //Returns an error if the above return statement is skipped
-        return error;
+        return Constant.ERROR;
     }
 
     /**Sets up the entire list of days for this week**/

@@ -8,24 +8,21 @@ import java.util.Locale;
 import models.DayName;
 import models.WeeksInYear;
 
-import static java.util.Calendar.*;
+import static utils.Constant.Util.*;
 
-/**
- * Created by zyuki on 2/29/2016.
- */
+/***************************************************************************************************
+ * Created by zyuki on 2/26/2016.
+ *
+ * Class used to facilitate
+ **************************************************************************************************/
 public class DateCalcs {
-    //TODO: aggregate constants
-    public static final String KEY_YEAR = "year";
-    public static final String KEY_WEEK = "weekNum";
-
-    public static final int FULL_DATE = 0;
-
     private DateCalcs() {}
 
     public static String addZeroToNum(int num) {
+        final String leadingZero = "0";
         String numStr = String.valueOf(num);
 
-        return (num < 10) ? ("0" + numStr) : numStr;
+        return (num < 10) ? (leadingZero + numStr) : numStr;
     }
 
     public static final String formatDate(int returnType, long dateInMillis) {
@@ -33,14 +30,12 @@ public class DateCalcs {
         cal.setTimeInMillis(dateInMillis);
 
         switch(returnType) {
-            case FULL_DATE:
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-
-                return dateFormat.format(cal.getTime());
-            case MONTH:
-                return getMonthName(cal.get(MONTH));
-            case DAY_OF_MONTH:
-                return addZeroToNum(cal.get(DAY_OF_MONTH));
+            case FORMAT_FULL_DATE:
+                return new SimpleDateFormat("MM/dd/yyyy", Locale.US).format(cal.getTime());
+            case FORMAT_MONTH:
+                return getMonthName(cal.get(Calendar.MONTH));
+            case FORMAT_DAY_OF_MONTH:
+                return addZeroToNum(cal.get(Calendar.DAY_OF_MONTH));
             default:
                 return "Corrupt data";
         }
@@ -49,13 +44,13 @@ public class DateCalcs {
     public static final int getCurrentYear() {
         Calendar current = Calendar.getInstance();
 
-        return current.get(YEAR);
+        return current.get(Calendar.YEAR);
     }
 
     public static final int getCurrentWeek() {
         Calendar current = Calendar.getInstance();
 
-        return current.get(WEEK_OF_YEAR);
+        return current.get(Calendar.WEEK_OF_YEAR);
     }
 
     public static final boolean isCurrentYearWeek(WeeksInYear thisWeek) {
@@ -69,13 +64,15 @@ public class DateCalcs {
     }
 
     public static final boolean isCurrentDay(long dateInMillis) {
+        final int getYear = Calendar.YEAR;
+        final int getDayOfYear = Calendar.DAY_OF_YEAR;
         Calendar current = Calendar.getInstance();
 
         Calendar checkDate = Calendar.getInstance();
         checkDate.setTimeInMillis(dateInMillis);
 
-        if(checkDate.get(YEAR) == current.get(YEAR)) {
-            return checkDate.get(DAY_OF_YEAR) == current.get(DAY_OF_YEAR);
+        if(checkDate.get(getYear) == current.get(getYear)) {
+            return checkDate.get(getDayOfYear) == current.get(getDayOfYear);
         } else {return false;}
     }
 
@@ -86,20 +83,20 @@ public class DateCalcs {
     public static final Calendar endOfLastYear(final int currentYear) {
         final int daysInWeek = 7;
         int previousYear = currentYear - 1;
-        int weekOfYear = 1;
+        int firstWeekOfYear = 1;
 
         Calendar counterCal = Calendar.getInstance();
-        counterCal.set(YEAR, previousYear);
-        counterCal.set(DAY_OF_WEEK, MONDAY);
-        counterCal.set(WEEK_OF_YEAR, weekOfYear);
+        counterCal.set(Calendar.YEAR, previousYear);
+        counterCal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        counterCal.set(Calendar.WEEK_OF_YEAR, firstWeekOfYear);
 
         while (currentYear != previousYear) {
-            counterCal.add(DAY_OF_YEAR, daysInWeek);
-            previousYear = counterCal.get(YEAR);
+            counterCal.add(Calendar.DAY_OF_YEAR, daysInWeek);
+            previousYear = counterCal.get(Calendar.YEAR);
         }
 
         final int oneWeekOffset = -1;
-        counterCal.add(WEEK_OF_YEAR, oneWeekOffset);
+        counterCal.add(Calendar.WEEK_OF_YEAR, oneWeekOffset);
 
         return counterCal;
     }
@@ -107,6 +104,7 @@ public class DateCalcs {
     private static final String getMonthName(int monthNum) {
         String month = "month";
         DateFormatSymbols formatSymbols = new DateFormatSymbols();
+
         String[] months = formatSymbols.getMonths();
 
         if(monthNum >= 0 && monthNum <= 11) {month = months[monthNum];}
