@@ -25,6 +25,7 @@ import adapters.ToDoAdapter;
 import data.DataAccessObject;
 import fragments.DisplayDaysFragment;
 import fragments.DialogRouter;
+import fragments.DisplayTodosFragment;
 import fragments.DisplayWeeksFragment;
 import models.Day;
 import models.DayName;
@@ -39,7 +40,8 @@ import utils.DateCalcs;
 //TODO: need to prevent slider from sliding when clicked
 //TODO: move slider elements into it's own fragment?
 public class MainActivity extends AppCompatActivity
-        implements DisplayWeeksFragment.DataFromWeeks, View.OnClickListener, TabLayout.OnTabSelectedListener {
+        implements DisplayWeeksFragment.DataFromWeeks, View.OnClickListener,
+        TabLayout.OnTabSelectedListener, DisplayTodosFragment.DataFromTodos {
     /***********************************************************************************************
      * GLOBAL VARIABLES
      **********************************************************************************************/
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity
     private DisplayDaysFragment daysFrag;
     private DisplayWeeksFragment weeksFrag;
 
+    //TODO: save current data to shared preferences?
     private int currentYear, currentWeek;
     private DayName currentDay;
 
@@ -176,6 +179,12 @@ public class MainActivity extends AppCompatActivity
     /**Override method to retract slider when tab is reselected**/
     @Override
     public void onTabReselected(TabLayout.Tab tab) {retractSlider();}
+
+    @Override
+    public void dataFromTodos() {
+        notifyDaysFrag();
+        notifyWeeksFrag();
+    }
 
     /***********************************************************************************************
      * PUBLIC METHODS

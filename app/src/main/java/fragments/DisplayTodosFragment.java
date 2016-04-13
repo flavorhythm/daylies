@@ -44,6 +44,8 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
     private int currentYear, currentWeek;
     private DayName currentDay;
 
+    private DataFromTodos dataPass;
+
     /***********************************************************************************************
      * OVERRIDE METHODS
      **********************************************************************************************/
@@ -81,10 +83,16 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
         if(currentDay != null) {
             switch(currentDay) {
                 case MON: case TUE: case WED: case THU: case FRI:
-                    DialogRouter.instantiateInputDialog(DisplayTodosFragment.this, Constant.Fragment.DAY_TYPE_WEEKDAY);
+                    DialogRouter.instantiateInputDialog(
+                            DisplayTodosFragment.this,
+                            Constant.Fragment.DAY_TYPE_WEEKDAY
+                    );
                     break;
                 case SAT: case SUN:
-                    DialogRouter.instantiateInputDialog(DisplayTodosFragment.this, Constant.Fragment.DAY_TYPE_WEEKEND);
+                    DialogRouter.instantiateInputDialog(
+                            DisplayTodosFragment.this,
+                            Constant.Fragment.DAY_TYPE_WEEKEND
+                    );
                     break;
             }
         }
@@ -114,6 +122,9 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
         todoAdapter.add(new ToDo(yearWeekNum, Constant.Model.CONTENT_LUNCH, newToDo));
         todoAdapter.notifyDataSetChanged();
 
+        dataPass.notifyDaysFrag();
+        dataPass.notifyWeeksFrag();
+
         notifyDaysFrag();
         notifyWeeksFrag();
     }
@@ -125,6 +136,9 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
         todoAdapter.add(new ToDo(yearWeekNum, itemType, newToDo));
         todoAdapter.notifyDataSetChanged();
 
+        dataPass.notifyDaysFrag();
+        dataPass.notifyWeeksFrag();
+
         notifyDaysFrag();
         notifyWeeksFrag();
     }
@@ -133,6 +147,9 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
     public void removeItem(int position) {
         todoAdapter.removeItem(position);
         todoAdapter.notifyDataSetChanged();
+
+        dataPass.notifyDaysFrag();
+        dataPass.notifyWeeksFrag();
 
         notifyDaysFrag();
         notifyWeeksFrag();
@@ -146,5 +163,12 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
         fab = (FloatingActionButton)findViewById(R.id.slider_fab_addNewItem);
         todoList = (ListView)findViewById(R.id.slider_list_toDoList);
         todoDate = (TextView)findViewById(R.id.slider_text_date);
+    }
+
+    //TODO: implement interface to MainActivity so data can be passed from here to the main
+    public interface DataFromTodos {
+        void notifyDaysFrag();
+        void notifyWeeksFrag();
+        void expandPanel();
     }
 }
