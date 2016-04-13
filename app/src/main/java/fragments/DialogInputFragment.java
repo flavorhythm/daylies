@@ -2,7 +2,7 @@ package fragments;
 
 import android.app.Dialog;
 import android.support.design.widget.TextInputLayout;
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
 import utils.Constant;
@@ -34,6 +33,8 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
     private Button lunchToDoBtn, dailyToDoBtn, cancelBtn;
     private EditText newToDoItem;
     private TextInputLayout newItemWrapper;
+
+    DisplayTodosFragment todosFragment;
 
     /***********************************************************************************************
      * CONSTRUCTORS
@@ -79,6 +80,9 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        todosFragment = (DisplayTodosFragment)getFragmentManager()
+                .findFragmentById(R.id.main_fragment_slider);
+
         return customLayout;
     }
 
@@ -91,7 +95,8 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
             case R.id.inputDialog_btn_lunch:
                 if(!TextUtils.isEmpty(newToDoItem.getText())) {
                     itemText = newToDoItem.getText().toString();
-                    ((MainActivity)getActivity()).addLunchItem(itemText);
+
+                    if(todosFragment != null) {todosFragment.addLunchItem(itemText);}
 
                     getDialog().dismiss();
                 } else {newItemWrapper.setError("cannot be blank");}
@@ -101,7 +106,8 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
                     itemText = newToDoItem.getText().toString();
                     int itemType = getArguments().getInt(BUNDLE_KEY_DAY_TYPE) == DAY_TYPE_WEEKDAY ?
                             Constant.Model.CONTENT_WORK : Constant.Model.CONTENT_DAILY;
-                    ((MainActivity)getActivity()).addDailyItem(itemText, itemType);
+
+                    if(todosFragment != null) {todosFragment.addDailyItem(itemText, itemType);}
 
                     getDialog().dismiss();
                 } else {newItemWrapper.setError("cannot be blank");}

@@ -6,11 +6,17 @@ package models;
  * Class used to facilitate
  **************************************************************************************************/
 public class ToDo {
+    /***********************************************************************************************
+     * GLOBAL VARIABLES
+     **********************************************************************************************/
     private int id;
     private String yearWeekDay;
     private int type;
     private String item;
 
+    /***********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
     public ToDo() {}
 
     public ToDo(String yearWeekDay, int type, String item) {
@@ -25,11 +31,17 @@ public class ToDo {
         this.item = item;
     }
 
+    /***********************************************************************************************
+     * GETTER METHODS
+     **********************************************************************************************/
     public int getId() {return id;}
     public String getYearWeekDay() {return yearWeekDay;}
     public int getType() {return type;}
     public String getItem() {return item;}
 
+    /***********************************************************************************************
+     * SETTER METHODS
+     **********************************************************************************************/
     public void setId(int id) {this.id = id;}
     public void setYearWeekDay(String yearWeekDay) {this.yearWeekDay = yearWeekDay;}
     public void setType(int type) {this.type = type;}

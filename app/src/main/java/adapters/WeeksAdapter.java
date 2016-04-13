@@ -2,6 +2,7 @@ package adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public class WeeksAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<WeeksInYear> weeksList;
 
+    private Activity activity;
     private Context context;
     private DataAccessObject dataAccess;
 
@@ -51,6 +53,8 @@ public class WeeksAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(activity);
         dataAccess = ((ApplicationDatabase)activity.getApplicationContext()).dataAccess;
         weeksList = new ArrayList<>();
+
+        this.activity = activity;
         this.context = context;
     }
 
@@ -126,10 +130,12 @@ public class WeeksAdapter extends BaseAdapter {
      **********************************************************************************************/
     /****/
     public int getPosByWeek(int week) {
-        for(int pos = 0; pos < getCount(); pos++) {
-            WeeksInYear thisWeek = getItem(pos);
-            if(thisWeek != null && week == thisWeek.getWeekNum()) {
-                return pos;
+        if(week != Constant.ERROR) {
+            for(int pos = 0; pos < getCount(); pos++) {
+                WeeksInYear thisWeek = getItem(pos);
+                if(thisWeek != null && week == thisWeek.getWeekNum()) {
+                    return pos;
+                }
             }
         }
 
@@ -137,8 +143,11 @@ public class WeeksAdapter extends BaseAdapter {
     }
 
     /****/
-    public void buildWeeksInYear(int displayYear) {
+    public void buildWeeksInYear() {
         weeksList.clear();
+
+        SharedPreferences prefs = activity.getPreferences(Context.MODE_PRIVATE);
+        int displayYear = prefs.getInt(Constant.Prefs.PREF_KEY_YEAR, Constant.ERROR);
 
         final int addOneWeek = 1;
         int weekOfYear = 1;
@@ -174,7 +183,7 @@ public class WeeksAdapter extends BaseAdapter {
     }
 
     /***********************************************************************************************
-     * INNER CLASSES
+     * INNER CLASSES & INTERFACES
      **********************************************************************************************/
     /****/
     private static class ViewHolder {

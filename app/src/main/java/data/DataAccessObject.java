@@ -2,6 +2,7 @@ package data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -31,22 +32,16 @@ public class DataAccessObject {
      * CONSTRUCTORS
      **********************************************************************************************/
     /****/
-    public DataAccessObject(Context context) {
-        dbHelper = DatabaseHelper.getInstance(context);
-    }
+    public DataAccessObject(Context context) {dbHelper = DatabaseHelper.getInstance(context);}
 
     /***********************************************************************************************
      * PUBLIC METHODS
      **********************************************************************************************/
     /****/
-    public void open() throws SQLException {
-        db = dbHelper.getWritableDatabase();
-    }
+    public void open() throws SQLException {db = dbHelper.getWritableDatabase();}
 
     /****/
-    public void close() {
-        db.close();
-    }
+    public void close() {db.close();}
 
     /****/
     public List<ToDo> getToDoList(final String yearWeekDay) {
@@ -66,10 +61,22 @@ public class DataAccessObject {
             do {
                 ToDo item = new ToDo();
 
-                item.setId(cursor.getInt(cursor.getColumnIndex(TblToDo.KEY_ID.toString())));
-                item.setYearWeekDay(cursor.getString(cursor.getColumnIndex(TblToDo.YEAR_WEEK_DAY.toString())));
-                item.setType(cursor.getInt(cursor.getColumnIndex(TblToDo.TODO_TYPE.toString())));
-                item.setItem(cursor.getString(cursor.getColumnIndex(TblToDo.TODO_ITEM.toString())));
+                //
+                item.setId(
+                        cursor.getInt(cursor.getColumnIndex(TblToDo.KEY_ID.toString()))
+                );
+                //
+                item.setYearWeekDay(
+                        cursor.getString(cursor.getColumnIndex(TblToDo.YEAR_WEEK_DAY.toString()))
+                );
+                //
+                item.setType(
+                        cursor.getInt(cursor.getColumnIndex(TblToDo.TODO_TYPE.toString()))
+                );
+                //
+                item.setItem(
+                        cursor.getString(cursor.getColumnIndex(TblToDo.TODO_ITEM.toString()))
+                );
 
                 toDoList.add(item);
             } while(cursor.moveToNext());

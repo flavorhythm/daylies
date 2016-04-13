@@ -1,9 +1,9 @@
 package fragments;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import static utils.Constant.Fragment.*;
 
@@ -23,7 +23,7 @@ public class DialogRouter {
 	 * PUBLIC METHODS
 	 **********************************************************************************************/
 	/****/
-	public static void instantiatePickerDialog(Activity activity, int year, int week) {
+	public static void instantiatePickerDialog(AppCompatActivity activity, int year, int week) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
 		DialogYearPickFragment pickerDialog = DialogYearPickFragment.newInstance(year, week);
@@ -31,7 +31,7 @@ public class DialogRouter {
 	}
 
 	/****/
-	public static void instantiateInputDialog(Activity activity, int dayType) {
+	public static void instantiateInputDialog(AppCompatActivity activity, int dayType) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
 		DialogInputFragment inputDialog = DialogInputFragment.newInstance(dayType);
@@ -39,7 +39,7 @@ public class DialogRouter {
 	}
 
 	/****/
-	public static void instantiateDeleteDialog(Activity activity, int itemPos) {
+	public static void instantiateDeleteDialog(AppCompatActivity activity, int itemPos) {
 		FragmentTransaction fragTransaction = clearFragments(activity);
 
 		DialogDeleteFragment deleteDialog = DialogDeleteFragment.newInstance(itemPos);
@@ -50,8 +50,8 @@ public class DialogRouter {
 	 * PRIVATE METHODS
 	 **********************************************************************************************/
 	/****/
-	private static FragmentTransaction clearFragments(Activity activity) {
-		FragmentManager fragManager = activity.getFragmentManager();
+	private static FragmentTransaction clearFragments(AppCompatActivity activity) {
+		FragmentManager fragManager = activity.getSupportFragmentManager();
 		FragmentTransaction fragTransaction = fragManager.beginTransaction();
 
 		Fragment previousFrag = fragManager.findFragmentByTag(TAG_DIALOG);

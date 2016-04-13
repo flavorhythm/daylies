@@ -1,7 +1,7 @@
 package com.example.zyuki.daylies;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,25 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.ToDoAdapter;
 import data.DataAccessObject;
 import fragments.DisplayDaysFragment;
 import fragments.DialogRouter;
 import fragments.DisplayTodosFragment;
 import fragments.DisplayWeeksFragment;
-import models.Day;
 import models.DayName;
-import models.ToDo;
 import utils.Constant;
 import utils.DateCalcs;
 /***************************************************************************************************
@@ -39,8 +32,7 @@ import utils.DateCalcs;
  **************************************************************************************************/
 //TODO: need to prevent slider from sliding when clicked
 //TODO: move slider elements into it's own fragment?
-public class MainActivity extends AppCompatActivity
-        implements DisplayWeeksFragment.DataFromWeeks, View.OnClickListener,
+public class MainActivity extends AppCompatActivity implements DisplayWeeksFragment.DataFromWeeks,
         TabLayout.OnTabSelectedListener, DisplayTodosFragment.DataFromTodos {
     /***********************************************************************************************
      * GLOBAL VARIABLES
@@ -52,17 +44,11 @@ public class MainActivity extends AppCompatActivity
     private ViewPagerAdapter pagerAdapter;
 
     private SlidingUpPanelLayout slider;
-    private FloatingActionButton fab;
-    private ListView todoList;
-    private ToDoAdapter todoAdapter;
-    private TextView todoDate;
 
     private DisplayDaysFragment daysFrag;
     private DisplayWeeksFragment weeksFrag;
 
-    //TODO: save current data to shared preferences?
-    private int currentYear, currentWeek;
-    private DayName currentDay;
+    private SharedPreferences prefs;
 
     /***********************************************************************************************
      * OVERRIDE METHODS
@@ -73,8 +59,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        currentYear = DateCalcs.getCurrentYear();
-        currentWeek = DateCalcs.getCurrentWeek();
+        prefs = getPreferences(MODE_PRIVATE);
+
+        SharedPreferences.Editor prefEdit = prefs.edit();
+        prefEdit.putInt(Constant.Prefs.PREF_KEY_YEAR, DateCalcs.getCurrentYear());
+        prefEdit.putInt(Constant.Prefs.PREF_KEY_WEEK, DateCalcs.getCurrentWeek());
+        prefEdit.putInt(Constant.Prefs.PREF_KEY_DAY, DateCalcs.getCurrentDay());
+        prefEdit.apply();
 
         findViewByIds();
 
@@ -82,22 +73,6 @@ public class MainActivity extends AppCompatActivity
 
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
-
-        todoAdapter = new ToDoAdapter(MainActivity.this);
-        todoList.setAdapter(todoAdapter);
-        todoList.setEmptyView(findViewById(R.id.slider_text_emptyList));
-
-        todoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (todoAdapter.getItemViewType(position) != Constant.Adapter.TYPE_DIVIDER) {
-                    DialogRouter.instantiateDeleteDialog(MainActivity.this, position);
-                }
-                return true;
-            }
-        });
-
-        fab.setOnClickListener(this);
         tabLayout.setOnTabSelectedListener(this);
     }
 
@@ -112,16 +87,14 @@ public class MainActivity extends AppCompatActivity
     /**Routes the selected item menu to its correct corresponding action**/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         // A switch to route the selected items to the correct action
         switch(id) {
             case R.id.select_year:
-                DialogRouter.instantiatePickerDialog(MainActivity.this, currentYear, currentWeek);
+                DialogRouter.instantiatePickerDialog(MainActivity.this, getYear(), getWeek());
                 break;
             default:
                 break;
@@ -133,27 +106,9 @@ public class MainActivity extends AppCompatActivity
 
     /****/
     @Override
-    public void onClick(View v) {
-        if(currentDay != null) {
-            switch(currentDay) {
-                case MON: case TUE: case WED: case THU: case FRI:
-                    DialogRouter.instantiateInputDialog(MainActivity.this, Constant.Fragment.DAY_TYPE_WEEKDAY);
-                    break;
-                case SAT: case SUN:
-                    DialogRouter.instantiateInputDialog(MainActivity.this, Constant.Fragment.DAY_TYPE_WEEKEND);
-                    break;
-            }
-        }
-    }
-
-    /****/
-    @Override
-    public void dataFromWeeks(int year, int week) {
-        currentYear = year;
-        currentWeek = week;
-
-        daysFrag.buildWeek(year, week);
-        weeksFrag.buildYear(year);
+    public void dataFromWeeks() {
+        daysFrag.buildWeek();
+        weeksFrag.buildYear();
     }
 
     /**Override method for when the back button is pressed**/
@@ -180,11 +135,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onTabReselected(TabLayout.Tab tab) {retractSlider();}
 
+    /****/
     @Override
-    public void dataFromTodos() {
-        notifyDaysFrag();
-        notifyWeeksFrag();
+    public void updateFrags(boolean daysHasTodos) {
+        updateDaysFrag(daysHasTodos);
+        updateWeeksFrag();
     }
+
+    /****/
+    @Override
+    public void expandPanel() {slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);}
 
     /***********************************************************************************************
      * PUBLIC METHODS
@@ -197,51 +157,6 @@ public class MainActivity extends AppCompatActivity
         if(goToTab != null) {goToTab.select();}
     }
 
-    /****/
-    public void showToDoList(Day day) {
-        this.currentDay = day.getDay();
-        String date = day.getDay().toString() + ", ";
-        date += DateCalcs.formatDate(Constant.Util.FORMAT_FULL_DATE, day.getDate());
-
-        todoDate.setText(date);
-
-        todoAdapter.buildList(currentYear, currentWeek, currentDay);
-        todoAdapter.notifyDataSetChanged();
-
-        slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-    }
-
-    /****/
-    public void addLunchItem(String newToDo) {
-        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
-
-        todoAdapter.add(new ToDo(yearWeekNum, Constant.Model.CONTENT_LUNCH, newToDo));
-        todoAdapter.notifyDataSetChanged();
-
-        notifyDaysFrag();
-        notifyWeeksFrag();
-    }
-
-    /****/
-    public void addDailyItem(String newToDo, int itemType) {
-        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
-
-        todoAdapter.add(new ToDo(yearWeekNum, itemType, newToDo));
-        todoAdapter.notifyDataSetChanged();
-
-        notifyDaysFrag();
-        notifyWeeksFrag();
-    }
-
-    /****/
-    public void removeItem(int position) {
-        todoAdapter.removeItem(position);
-        todoAdapter.notifyDataSetChanged();
-
-        notifyDaysFrag();
-        notifyWeeksFrag();
-    }
-
     /***********************************************************************************************
      * PRIVATE METHODS
      **********************************************************************************************/
@@ -252,21 +167,12 @@ public class MainActivity extends AppCompatActivity
         tabLayout = (TabLayout)findViewById(R.id.main_tabLayout);
 
         slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding);
-        fab = (FloatingActionButton)findViewById(R.id.slider_fab_addNewItem);
-        todoList = (ListView)findViewById(R.id.slider_list_toDoList);
-        todoDate = (TextView)findViewById(R.id.slider_text_date);
     }
 
     /****/
     private void setupViewPager() {
-        Bundle args = new Bundle();
         daysFrag = new DisplayDaysFragment();
         weeksFrag = new DisplayWeeksFragment();
-
-        args.putInt(Constant.Fragment.BUNDLE_KEY_YEAR, currentYear);
-        args.putInt(Constant.Fragment.BUNDLE_KEY_WEEK, currentWeek);
-
-        daysFrag.setArguments(args);
 
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -277,16 +183,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     /****/
-    private void notifyDaysFrag() {
-        boolean hasTodos = todoAdapter.getCount() > 0;
-        daysFrag.notifyDataSetChanged(currentDay, hasTodos);
+    private void updateDaysFrag(boolean hasTodos) {
+        int dayPos = prefs.getInt(Constant.Prefs.PREF_KEY_DAY, Constant.ERROR);
+        DayName day = DayName.values()[dayPos];
+        daysFrag.notifyDataSetChanged(day, hasTodos);
     }
 
     /****/
-    private void notifyWeeksFrag() {
+    private void updateWeeksFrag() {
         DataAccessObject dataAccess = ((ApplicationDatabase)getApplicationContext()).dataAccess;
-        boolean hasTodos = dataAccess.weekHasTodos(currentYear, currentWeek);
-        weeksFrag.notifyDataSetChanged(currentWeek, hasTodos);
+        boolean hasTodos = dataAccess.weekHasTodos(
+                getYear(),
+                getWeek()
+        );
+        weeksFrag.notifyDataSetChanged(hasTodos);
     }
 
     /**Private method that retracts slider if expanded.**/
@@ -304,8 +214,12 @@ public class MainActivity extends AppCompatActivity
         } else {return false;}
     }
 
+    private int getYear() {return prefs.getInt(Constant.Prefs.PREF_KEY_YEAR, Constant.ERROR);}
+
+    private int getWeek() {return prefs.getInt(Constant.Prefs.PREF_KEY_WEEK, Constant.ERROR);}
+
     /***********************************************************************************************
-     * INNER CLASSES
+     * INNER CLASSES & INTERFACES
      **********************************************************************************************/
     /****/
     class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -1,6 +1,7 @@
 package fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,6 @@ import com.example.zyuki.daylies.R;
 import adapters.WeeksAdapter;
 import models.WeeksInYear;
 import utils.Constant;
-import utils.DateCalcs;
 
 /***************************************************************************************************
  * Created by zyuki on 2/26/2016.
@@ -24,12 +24,24 @@ import utils.DateCalcs;
  * Class used to facilitate
  **************************************************************************************************/
 public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItemClickListener {
+    /***********************************************************************************************
+     * GLOBAL VARIABLES
+     **********************************************************************************************/
+    /****/
     private WeeksAdapter weeksAdapter;
 
     private DataFromWeeks dataPass;
 
+    /***********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
+    /****/
     public DisplayWeeksFragment() {}
 
+    /***********************************************************************************************
+     * OVERRIDE METHODS
+     **********************************************************************************************/
+    /****/
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -37,14 +49,16 @@ public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItem
         dataPass = (DataFromWeeks)context;
     }
 
+    /****/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         weeksAdapter = new WeeksAdapter(getActivity(), getContext());
-        buildYear(DateCalcs.getCurrentYear());
+        buildYear();
     }
 
+    /****/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,19 +73,29 @@ public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItem
         return customView;
     }
 
+    /****/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         WeeksInYear weeksInYear = weeksAdapter.getItem(position);
-        int year = weeksInYear.getYear();
-        int week = weeksInYear.getWeekNum();
 
-        dataPass.dataFromWeeks(year, week);
+        SharedPreferences.Editor prefEdit = getActivity().getPreferences(Context.MODE_PRIVATE).edit();
+        prefEdit.putInt(Constant.Prefs.PREF_KEY_WEEK, weeksInYear.getWeekNum());
+        prefEdit.apply();
+
+        dataPass.dataFromWeeks();
 
         ((MainActivity)getActivity()).changePage(R.string.daysFragTitle);
     }
 
-    public void notifyDataSetChanged(int week, boolean hasTodos) {
-        int position = weeksAdapter.getPosByWeek(week);
+    /***********************************************************************************************
+     * PUBLIC METHODS
+     **********************************************************************************************/
+    /****/
+    public void notifyDataSetChanged(boolean hasTodos) {
+        SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int position = weeksAdapter.getPosByWeek(
+                prefs.getInt(Constant.Prefs.PREF_KEY_WEEK, Constant.ERROR)
+        );
 
         if(position != Constant.ERROR) {
             weeksAdapter.getItem(position).setHasTodos(hasTodos);
@@ -79,12 +103,17 @@ public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItem
         }
     }
 
-    public void buildYear(int year) {
-        weeksAdapter.buildWeeksInYear(year);
+    /****/
+    public void buildYear() {
+        weeksAdapter.buildWeeksInYear();
         weeksAdapter.notifyDataSetChanged();
     }
 
+    /***********************************************************************************************
+     * INNER CLASSES & INTERFACES
+     **********************************************************************************************/
+    /****/
     public interface DataFromWeeks {
-        void dataFromWeeks(int year, int week);
+        void dataFromWeeks();
     }
 }

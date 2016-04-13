@@ -16,8 +16,16 @@ import static utils.Constant.Util.*;
  * Class used to facilitate
  **************************************************************************************************/
 public class DateCalcs {
+    /***********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
+    /****/
     private DateCalcs() {}
 
+    /***********************************************************************************************
+     * PUBLIC METHODS
+     **********************************************************************************************/
+    /****/
     public static String addZeroToNum(int num) {
         final String leadingZero = "0";
         String numStr = String.valueOf(num);
@@ -25,6 +33,7 @@ public class DateCalcs {
         return (num < 10) ? (leadingZero + numStr) : numStr;
     }
 
+    /****/
     public static final String formatDate(int returnType, long dateInMillis) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(dateInMillis);
@@ -41,18 +50,29 @@ public class DateCalcs {
         }
     }
 
+    /****/
     public static final int getCurrentYear() {
         Calendar current = Calendar.getInstance();
 
         return current.get(Calendar.YEAR);
     }
 
+    /****/
     public static final int getCurrentWeek() {
         Calendar current = Calendar.getInstance();
 
         return current.get(Calendar.WEEK_OF_YEAR);
     }
 
+    /****/
+    public static final int getCurrentDay() {
+        int dayOffset = 2;
+        Calendar current = Calendar.getInstance();
+
+        return current.get(Calendar.DAY_OF_WEEK) - dayOffset;
+    }
+
+    /****/
     public static final boolean isCurrentYearWeek(WeeksInYear thisWeek) {
         int currentYear = getCurrentYear();
         int currentWeek = getCurrentWeek();
@@ -63,6 +83,7 @@ public class DateCalcs {
         return (currentYear == checkingYear) && (currentWeek == checkingWeek);
     }
 
+    /****/
     public static final boolean isCurrentDay(long dateInMillis) {
         final int getYear = Calendar.YEAR;
         final int getDayOfYear = Calendar.DAY_OF_YEAR;
@@ -76,10 +97,12 @@ public class DateCalcs {
         } else {return false;}
     }
 
+    /****/
     public static final String buildDateString(int year, int weekNum, DayName day) {
         return String.valueOf(year) + addZeroToNum(weekNum) + String.valueOf(day.ordinal());
     }
 
+    /****/
     public static final Calendar endOfLastYear(final int currentYear) {
         final int daysInWeek = 7;
         int previousYear = currentYear - 1;
@@ -101,6 +124,10 @@ public class DateCalcs {
         return counterCal;
     }
 
+    /***********************************************************************************************
+     * PRIVATE METHODS
+     **********************************************************************************************/
+    /****/
     private static final String getMonthName(int monthNum) {
         String month = "month";
         DateFormatSymbols formatSymbols = new DateFormatSymbols();

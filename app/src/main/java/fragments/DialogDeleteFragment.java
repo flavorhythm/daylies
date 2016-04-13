@@ -5,10 +5,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.view.ViewGroup;
 
-import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
 import static utils.Constant.Fragment.*;
@@ -19,6 +18,7 @@ import static utils.Constant.Fragment.*;
  * Class used to facilitate
  **************************************************************************************************/
 public class DialogDeleteFragment extends DialogFragment implements DialogInterface.OnClickListener {
+    private DisplayTodosFragment todosFragment;
     /***********************************************************************************************
      * CONSTRUCTORS
      **********************************************************************************************/
@@ -55,6 +55,10 @@ public class DialogDeleteFragment extends DialogFragment implements DialogInterf
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        todosFragment = (DisplayTodosFragment)getFragmentManager().findFragmentById(
+                R.id.main_fragment_slider
+        );
+
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.title_deleteDialog)
                 .setPositiveButton(R.string.button_delete, this)
@@ -68,7 +72,8 @@ public class DialogDeleteFragment extends DialogFragment implements DialogInterf
         switch(which) {
             case Dialog.BUTTON_POSITIVE:
                 int position = getArguments().getInt(BUNDLE_KEY_ITEM_POS);
-                ((MainActivity)getActivity()).removeItem(position);
+
+                if(todosFragment != null) {todosFragment.removeItem(position);}
 
                 dialog.dismiss();
                 break;

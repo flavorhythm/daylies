@@ -1,8 +1,10 @@
 package fragments;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.NumberPicker;
 import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
 
+import utils.Constant;
 import utils.DateCalcs;
 
 import static utils.Constant.Fragment.*;
@@ -23,8 +26,15 @@ import static utils.Constant.Fragment.*;
  * Class used to facilitate
  **************************************************************************************************/
 public class DialogYearPickFragment extends DialogFragment implements View.OnClickListener {
+	/***********************************************************************************************
+	 * GLOBAL VARIABLES
+	 **********************************************************************************************/
 	private NumberPicker yearPicker;
 
+	/***********************************************************************************************
+	 * CONSTRUCTORS
+	 **********************************************************************************************/
+	/****/
 	//TODO: develop custom picker and replace numberpicker
 	public static DialogYearPickFragment newInstance(int year, int week) {
         Bundle args = new Bundle();
@@ -37,6 +47,9 @@ public class DialogYearPickFragment extends DialogFragment implements View.OnCli
         return fragment;
     }
 
+	/***********************************************************************************************
+	 * OVERRIDE METHODS
+	 **********************************************************************************************/
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -81,11 +94,11 @@ public class DialogYearPickFragment extends DialogFragment implements View.OnCli
 				getDialog().dismiss();
 				break;
 			case R.id.dialog_butn_submit:
-				int year = yearPicker.getValue();
-				int week = getArguments().getInt(BUNDLE_KEY_WEEK);
+				SharedPreferences.Editor prefEdit = getActivity().getPreferences(Context.MODE_PRIVATE).edit();
+				prefEdit.putInt(Constant.Prefs.PREF_KEY_YEAR, yearPicker.getValue());
+				prefEdit.apply();
 
-				MainActivity activity = (MainActivity)getActivity();
-				activity.dataFromWeeks(year, week);
+				((MainActivity)getActivity()).dataFromWeeks();
 
 				getDialog().dismiss();
 				break;

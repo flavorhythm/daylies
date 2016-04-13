@@ -2,6 +2,7 @@ package adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class DaysAdapter extends BaseAdapter {
     private LayoutInflater inflater;        //inflater for the custom rows
     private List<Day> dayList;              //Stores the currently displayed list of days
 
+    private Activity activity;
     private Context context;                //Used in getView for view alterations
     private DataAccessObject dataAccess;    //Used to retrieve/put data into the database
 
@@ -53,6 +55,7 @@ public class DaysAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(activity);
         //Saves context to a global variable to be used later (used in getView)
         this.context = context;
+        this.activity = activity;
         //Instantiates an arraylist to the todoList variable
         dayList = new ArrayList<>();
         //Points the global variable to the open dataAccess variable in ApplicationDatabase
@@ -205,9 +208,14 @@ public class DaysAdapter extends BaseAdapter {
     }
 
     /**Sets up the entire list of days for this week**/
-    public void finishBuildingWeek(int year, int weekNum) {
+    public void finishBuildingWeek() {
         //Clears the current list to make room for a new set of days
         dayList.clear();
+
+        //Pulls the current year and week from Shared Preferences
+        SharedPreferences prefs = activity.getPreferences(Context.MODE_PRIVATE);
+        int currentYear = prefs.getInt(Constant.Prefs.PREF_KEY_YEAR, Constant.ERROR);
+        int currentWeek = prefs.getInt(Constant.Prefs.PREF_KEY_WEEK, Constant.ERROR);
 
         //Final variables that won't need to change
         final int daysInWeek = 7;
@@ -215,8 +223,8 @@ public class DaysAdapter extends BaseAdapter {
         //Sets a Calendar variable to the year and week that was passed as input
         Calendar firstDateOfWeek = Calendar.getInstance();
         firstDateOfWeek.clear();
-        firstDateOfWeek.set(Calendar.YEAR, year);
-        firstDateOfWeek.set(Calendar.WEEK_OF_YEAR, weekNum);
+        firstDateOfWeek.set(Calendar.YEAR, currentYear);
+        firstDateOfWeek.set(Calendar.WEEK_OF_YEAR, currentWeek);
         firstDateOfWeek.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
         addDivider(firstDateOfWeek);
@@ -230,11 +238,11 @@ public class DaysAdapter extends BaseAdapter {
             //Sets the private variable of day to pass onto the list
             day.setType(TYPE_CONTENT);
             day.setDate(firstDateOfWeek.getTimeInMillis());
-            day.setYear(year);
+            day.setYear(currentYear);
             day.setDay(DayName.values()[i]);
 
             //Determines whether or not this day has todos
-            String yearWeekDay = DateCalcs.buildDateString(year, weekNum, DayName.values()[i]);
+            String yearWeekDay = DateCalcs.buildDateString(currentYear, currentWeek, DayName.values()[i]);
             day.setHasTodos(dataAccess.dayHasTodos(yearWeekDay));
 
             //Adds the day to the list and notifies the adapter

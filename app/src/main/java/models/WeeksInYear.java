@@ -6,16 +6,30 @@ package models;
  * Class used to facilitate
  **************************************************************************************************/
 public class WeeksInYear {
+    /***********************************************************************************************
+     * GLOBAL VARIABLES
+     **********************************************************************************************/
     private int year;
     private int weekNum;
     private String month;
     private boolean hasTodos;
 
+    /***********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
+    public WeeksInYear() {}
+
+    /***********************************************************************************************
+     * GETTER METHODS
+     **********************************************************************************************/
     public int getYear() {return year;}
     public int getWeekNum() {return weekNum;}
     public String getMonth() {return month;}
     public boolean getHasTodos() {return hasTodos;}
 
+    /***********************************************************************************************
+     * SETTER METHODS
+     **********************************************************************************************/
     public void setYear(int year) {this.year = year;}
     public void setWeekNum(int weekNum) {this.weekNum = weekNum;}
     public void setMonth(String month) {this.month = month;}

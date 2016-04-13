@@ -1,13 +1,12 @@
 package fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.zyuki.daylies.MainActivity;
 import com.example.zyuki.daylies.R;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import adapters.ToDoAdapter;
 import models.Day;
@@ -31,7 +28,7 @@ import utils.DateCalcs;
  *
  * Class used to facilitate
  **************************************************************************************************/
-public class DisplayTodosFragment extends FragmentActivity implements View.OnClickListener {
+public class DisplayTodosFragment extends Fragment implements View.OnClickListener {
     /***********************************************************************************************
      * GLOBAL VARIABLES
      **********************************************************************************************/
@@ -41,56 +38,65 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
     private ToDoAdapter todoAdapter;
     private TextView todoDate;
 
-    private int currentYear, currentWeek;
-    private DayName currentDay;
-
     private DataFromTodos dataPass;
+
+    private View customView;
+    private SharedPreferences prefs;
 
     /***********************************************************************************************
      * OVERRIDE METHODS
      **********************************************************************************************/
-    /****/
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.slider_main);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        currentYear = DateCalcs.getCurrentYear();
-        currentWeek = DateCalcs.getCurrentWeek();
+        dataPass = (DataFromTodos)context;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        int layoutRes = R.layout.slider_main;
+        customView = inflater.inflate(layoutRes, container, false);
+        prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         findViewByIds();
 
-        todoAdapter = new ToDoAdapter(DisplayTodosFragment.this);
+        todoAdapter = new ToDoAdapter(getActivity());
         todoList.setAdapter(todoAdapter);
-        todoList.setEmptyView(findViewById(R.id.slider_text_emptyList));
+        todoList.setEmptyView(customView.findViewById(R.id.slider_text_emptyList));
 
         todoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (todoAdapter.getItemViewType(position) != Constant.Adapter.TYPE_DIVIDER) {
-                    DialogRouter.instantiateDeleteDialog(DisplayTodosFragment.this, position);
+                    DialogRouter.instantiateDeleteDialog((AppCompatActivity)getActivity(), position);
                 }
                 return true;
             }
         });
 
         fab.setOnClickListener(this);
+
+        return customView;
     }
 
     /****/
     @Override
     public void onClick(View v) {
+        DayName currentDay = DayName.values()[getDay()];
+
         if(currentDay != null) {
             switch(currentDay) {
                 case MON: case TUE: case WED: case THU: case FRI:
                     DialogRouter.instantiateInputDialog(
-                            DisplayTodosFragment.this,
+                            (AppCompatActivity)getActivity(),
                             Constant.Fragment.DAY_TYPE_WEEKDAY
                     );
                     break;
                 case SAT: case SUN:
                     DialogRouter.instantiateInputDialog(
-                            DisplayTodosFragment.this,
+                            (AppCompatActivity)getActivity(),
                             Constant.Fragment.DAY_TYPE_WEEKEND
                     );
                     break;
@@ -103,44 +109,45 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
      **********************************************************************************************/
     /****/
     public void showToDoList(Day day) {
-        this.currentDay = day.getDay();
         String date = day.getDay().toString() + ", ";
         date += DateCalcs.formatDate(Constant.Util.FORMAT_FULL_DATE, day.getDate());
 
         todoDate.setText(date);
 
-        todoAdapter.buildList(currentYear, currentWeek, currentDay);
+        todoAdapter.buildList(getYear(), getWeek(), DayName.values()[getDay()]);
         todoAdapter.notifyDataSetChanged();
 
-        slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        dataPass.expandPanel();
     }
 
     /****/
     public void addLunchItem(String newToDo) {
-        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
+        String yearWeekNum = DateCalcs.buildDateString(
+                getYear(),
+                getWeek(),
+                DayName.values()[getDay()]
+        );
 
         todoAdapter.add(new ToDo(yearWeekNum, Constant.Model.CONTENT_LUNCH, newToDo));
         todoAdapter.notifyDataSetChanged();
 
-        dataPass.notifyDaysFrag();
-        dataPass.notifyWeeksFrag();
-
-        notifyDaysFrag();
-        notifyWeeksFrag();
+        boolean hasTodos = todoAdapter.getCount() > 0;
+        dataPass.updateFrags(hasTodos);
     }
 
     /****/
     public void addDailyItem(String newToDo, int itemType) {
-        String yearWeekNum = DateCalcs.buildDateString(currentYear, currentWeek, currentDay);
+        String yearWeekNum = DateCalcs.buildDateString(
+                getYear(),
+                getWeek(),
+                DayName.values()[getDay()]
+        );
 
         todoAdapter.add(new ToDo(yearWeekNum, itemType, newToDo));
         todoAdapter.notifyDataSetChanged();
 
-        dataPass.notifyDaysFrag();
-        dataPass.notifyWeeksFrag();
-
-        notifyDaysFrag();
-        notifyWeeksFrag();
+        boolean hasTodos = todoAdapter.getCount() > 0;
+        dataPass.updateFrags(hasTodos);
     }
 
     /****/
@@ -148,11 +155,8 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
         todoAdapter.removeItem(position);
         todoAdapter.notifyDataSetChanged();
 
-        dataPass.notifyDaysFrag();
-        dataPass.notifyWeeksFrag();
-
-        notifyDaysFrag();
-        notifyWeeksFrag();
+        boolean hasTodos = todoAdapter.getCount() > 0;
+        dataPass.updateFrags(hasTodos);
     }
 
     /***********************************************************************************************
@@ -160,15 +164,26 @@ public class DisplayTodosFragment extends FragmentActivity implements View.OnCli
      **********************************************************************************************/
     /****/
     private void findViewByIds() {
-        fab = (FloatingActionButton)findViewById(R.id.slider_fab_addNewItem);
-        todoList = (ListView)findViewById(R.id.slider_list_toDoList);
-        todoDate = (TextView)findViewById(R.id.slider_text_date);
+        fab = (FloatingActionButton)customView.findViewById(R.id.slider_fab_addNewItem);
+        todoList = (ListView)customView.findViewById(R.id.slider_list_toDoList);
+        todoDate = (TextView)customView.findViewById(R.id.slider_text_date);
     }
 
-    //TODO: implement interface to MainActivity so data can be passed from here to the main
+    /****/
+    private int getYear() {return prefs.getInt(Constant.Prefs.PREF_KEY_YEAR, Constant.ERROR);}
+
+    /****/
+    private int getWeek() {return prefs.getInt(Constant.Prefs.PREF_KEY_WEEK, Constant.ERROR);}
+
+    /****/
+    private int getDay() {return prefs.getInt(Constant.Prefs.PREF_KEY_DAY, Constant.ERROR);}
+
+    /***********************************************************************************************
+     * INNER CLASSES & INTERFACES
+     **********************************************************************************************/
+    /****/
     public interface DataFromTodos {
-        void notifyDaysFrag();
-        void notifyWeeksFrag();
+        void updateFrags(boolean hasTodos);
         void expandPanel();
     }
 }
