@@ -31,18 +31,21 @@ import static utils.Constant.Adapter.*;
 /***************************************************************************************************
  * Created by zyuki on 2/26/2016.
  *
- * Adapter class extending from BaseAdapter that is set to a GridView in DisplayDaysFragment
- * Also stores the current list of days within the week that is displayed
+ * Adapter class extending from BaseAdapter that is set to a GridView in DisplayDaysFragment.
+ * Stores the current list of days within the week that is displayed
+ *
+ * This list is not saved onto the phone but always generated when the user changes the year to
+ * display or when the app is launched
  **************************************************************************************************/
 public class DaysAdapter extends BaseAdapter {
     /***********************************************************************************************
      * GLOBAL VARIABLES
      **********************************************************************************************/
     /**Private variables**/
-    private LayoutInflater inflater;        //inflater for the custom rows
+    private LayoutInflater inflater;        //Inflater for the custom rows
     private List<Day> dayList;              //Stores the currently displayed list of days
 
-    private Activity activity;
+    private Activity activity;              //Used in finishBuildingWeek for SharedPreferences
     private Context context;                //Used in getView for view alterations
     private DataAccessObject dataAccess;    //Used to retrieve/put data into the database
 
@@ -55,6 +58,7 @@ public class DaysAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(activity);
         //Saves context to a global variable to be used later (used in getView)
         this.context = context;
+        //Saves activity to a global variable to be used later (used in finishBuildingWeek)
         this.activity = activity;
         //Instantiates an arraylist to the todoList variable
         dayList = new ArrayList<>();
@@ -227,6 +231,8 @@ public class DaysAdapter extends BaseAdapter {
         firstDateOfWeek.set(Calendar.WEEK_OF_YEAR, currentWeek);
         firstDateOfWeek.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
+        //The first item will always be a month divider to display which month the user is currently
+        //seeing
         addDivider(firstDateOfWeek);
 
         //For loop that adds every day of the week (including additional dividers when necessary)
@@ -241,8 +247,13 @@ public class DaysAdapter extends BaseAdapter {
             day.setYear(currentYear);
             day.setDay(DayName.values()[i]);
 
-            //Determines whether or not this day has todos
-            String yearWeekDay = DateCalcs.buildDateString(currentYear, currentWeek, DayName.values()[i]);
+            //Creates the key yearWeekDay to search for todos for this day
+            String yearWeekDay = DateCalcs.buildDateString(
+                    currentYear,
+                    currentWeek,
+                    DayName.values()[i]
+            );
+            //Determines whether or not this day has todos and sets it to the current day
             day.setHasTodos(dataAccess.dayHasTodos(yearWeekDay));
 
             //Adds the day to the list and notifies the adapter
