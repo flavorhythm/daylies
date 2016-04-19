@@ -35,23 +35,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12fc888c-573b-45b6-b841-a573863fac14" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/floatingactionbutton_1_3_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/library_2_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/library_3_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_main.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/slider_main.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/fragments/DialogDeleteFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/fragments/DialogDeleteFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/fragments/DialogInputFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/fragments/DialogInputFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/fragments/DialogYearPickFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/fragments/DialogYearPickFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/fragments/DisplayDaysFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/fragments/DisplayDaysFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/fragments/DisplayTodosFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/fragments/DisplayTodosFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_todos.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_todos.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
     </list>
     <ignored path="daylies.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,18 +68,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <file leaf-file-name="DisplayTodosFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DisplayTodosFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0873635">
-              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.16115108">
+              <caret line="90" column="52" selection-start-line="90" selection-start-column="52" selection-end-line="90" selection-end-column="52" />
               <folding>
-                <marker date="1461098450534" expanded="true" signature="2047:2087" placeholder="&quot;android.support.design.widget.AppBarLayout$ScrollingVie...&quot;" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
           </provider>
         </entry>
       </file>
@@ -1682,13 +1666,13 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_todos.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/fragments/DisplayWeeksFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/fragments/DialogYearPickFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/fragments/DialogDeleteFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/fragments/DialogInputFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/fragments/DisplayDaysFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/fragments/DisplayTodosFragment.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/fragments/DisplayDaysFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/fragments/DisplayTodosFragment.java" />
       </list>
     </option>
   </component>
@@ -1922,6 +1906,60 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daylies" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fragments" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daylies" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daylies" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daylies" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2251,7 +2289,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32482827" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32580963" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2259,8 +2297,8 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34509805" sideWeight="0.50959486" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31697744" sideWeight="0.4904051" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20628998" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31697744" sideWeight="0.4904051" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20628998" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32777232" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32777232" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -5404,26 +5442,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DisplayWeeksFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.6699411">
-          <caret line="116" column="27" selection-start-line="116" selection-start-column="27" selection-end-line="116" selection-end-column="27" />
-          <folding>
-            <marker date="1460735359205" expanded="false" signature="27:528" placeholder="..." />
-            <marker date="1460735359205" expanded="true" signature="530:796" placeholder="/**...*/" />
-            <marker date="1460735359205" expanded="true" signature="1771:1855" placeholder="{...}" />
-            <marker date="1460735359205" expanded="true" signature="1934:2063" placeholder="{...}" />
-            <marker date="1460735359205" expanded="true" signature="2080:2103" placeholder="@{...}" />
-            <marker date="1460735359205" expanded="true" signature="2206:2542" placeholder="{...}" />
-            <marker date="1460735359205" expanded="true" signature="2654:3048" placeholder="{...}" />
-            <marker date="1460735359205" expanded="true" signature="3018:3040" placeholder="&quot;Days&quot;" />
-            <marker date="1460735359205" expanded="true" signature="3340:3736" placeholder="{...}" />
-            <marker date="1460735359205" expanded="true" signature="3777:3868" placeholder="{...}" />
-            <marker date="1460735359205" expanded="true" signature="4152:4189" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/ApplicationDatabase.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.26620826">
@@ -5438,54 +5456,6 @@
             <marker date="1460408878285" expanded="true" signature="1857:1992" placeholder="{...}" />
             <marker date="1460408878285" expanded="true" signature="2313:2351" placeholder="/**...*/" />
             <marker date="1460408878285" expanded="true" signature="2382:2692" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2935252">
-          <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-          <folding>
-            <marker date="1461098190074" expanded="true" signature="43:875" placeholder="..." />
-            <marker date="1461098190074" expanded="true" signature="876:1142" placeholder="/**...*/" />
-            <marker date="1461098190074" expanded="true" signature="1143:1252" placeholder="//..." />
-            <marker date="1461098190074" expanded="true" signature="1726:1749" placeholder="/**...*/" />
-            <marker date="1461098190074" expanded="true" signature="2288:2357" placeholder="/**...*/" />
-            <marker date="1461098190074" expanded="true" signature="2427:3046" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="3052:3124" placeholder="/**...*/" />
-            <marker date="1461098190074" expanded="true" signature="3189:3369" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="3375:3467" placeholder="/**...*/" />
-            <marker date="1461098190074" expanded="true" signature="3538:4183" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="3548:3744" placeholder="//..." />
-            <marker date="1461098190074" expanded="true" signature="4381:4451" placeholder="/**...*/" />
-            <marker date="1461098190074" expanded="true" signature="4498:4566" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="4748:4915" placeholder="/**...*/" />
-            <marker date="1461098190074" expanded="true" signature="4980:5052" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="5106:5196" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="5127:5150" placeholder="&quot;todos&quot;" />
-            <marker date="1461098190074" expanded="false" signature="5256:5267" placeholder=" { " />
-            <marker date="1461098190074" expanded="false" signature="5299:5305" placeholder=" }" />
-            <marker date="1461098190074" expanded="true" signature="5380:5438" placeholder="{...}" />
-            <marker date="1461098190074" expanded="false" signature="5494:5505" placeholder=" { " />
-            <marker date="1461098190074" expanded="false" signature="5536:5542" placeholder=" }" />
-            <marker date="1461098190074" expanded="true" signature="5825:6007" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="6278:6478" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="6525:7003" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="6778:6801" placeholder="&quot;todos&quot;" />
-            <marker date="1461098190074" expanded="true" signature="6848:6870" placeholder="&quot;Days&quot;" />
-            <marker date="1461098190074" expanded="true" signature="6916:6939" placeholder="&quot;Weeks&quot;" />
-            <marker date="1461098190074" expanded="true" signature="7066:7256" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="7304:7533" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="7561:7629" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="7657:7725" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="8030:9969" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="8717:8738" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="9049:9081" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="9146:9171" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="9261:9298" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="9611:9763" placeholder="{...}" />
-            <marker date="1461098190074" expanded="true" signature="9832:9963" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -5551,57 +5521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DisplayDaysFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.152518">
-          <caret line="32" column="30" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
-          <folding>
-            <marker date="1461098259808" expanded="true" signature="27:520" placeholder="..." />
-            <marker date="1461098259808" expanded="true" signature="522:788" placeholder="/**...*/" />
-            <marker date="1461098259808" expanded="true" signature="888:1109" placeholder="/**...*/" />
-            <marker date="1461098259808" expanded="true" signature="1184:1401" placeholder="/**...*/" />
-            <marker date="1461098259808" expanded="true" signature="1732:1880" placeholder="{...}" />
-            <marker date="1461098259808" expanded="true" signature="1991:2382" placeholder="{...}" />
-            <marker date="1461098259808" expanded="true" signature="2388:2411" placeholder="@{...}" />
-            <marker date="1461098259808" expanded="true" signature="2514:2853" placeholder="{...}" />
-            <marker date="1461098259808" expanded="true" signature="2954:3434" placeholder="{...}" />
-            <marker date="1461098259808" expanded="true" signature="3743:3972" placeholder="{...}" />
-            <marker date="1461098259808" expanded="true" signature="4013:4106" placeholder="{...}" />
-            <marker date="1461098259808" expanded="true" signature="4149:4192" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DisplayTodosFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.89496404">
-          <caret line="65" column="13" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
-          <folding>
-            <marker date="1461098259789" expanded="true" signature="27:797" placeholder="..." />
-            <marker date="1461098259789" expanded="true" signature="799:1065" placeholder="/**...*/" />
-            <marker date="1461098259789" expanded="true" signature="1381:1404" placeholder="/**...*/" />
-            <marker date="1461098259789" expanded="true" signature="1990:2063" placeholder="/**...*/" />
-            <marker date="1461098259789" expanded="true" signature="2120:2199" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="2277:2328" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="2345:2368" placeholder="@{...}" />
-            <marker date="1461098259789" expanded="true" signature="2491:3442" placeholder="{...}" />
-            <marker date="1461098259789" expanded="false" signature="2933:3100" placeholder="(parent, view, position, id) → {" />
-            <marker date="1461098259789" expanded="false" signature="3352:3367" placeholder="}" />
-            <marker date="1461098259789" expanded="true" signature="3501:4222" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="4497:4802" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="4860:5142" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="5214:5476" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="5530:5719" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="5990:6253" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="6302:6459" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="6498:6566" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="6605:6673" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="6711:6778" placeholder="{...}" />
-            <marker date="1461098259789" expanded="true" signature="7057:7108" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.71865886">
@@ -5619,16 +5538,121 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0873635">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6630265">
+          <caret line="25" column="56" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="56" />
           <folding>
+            <marker date="1461098450534" expanded="true" signature="87:2161" placeholder="..." />
+            <marker date="1461098450534" expanded="true" signature="454:2109" placeholder="..." />
+            <marker date="1461098450534" expanded="true" signature="635:1827" placeholder="..." />
+            <marker date="1461098450534" expanded="true" signature="820:1489" placeholder="..." />
+            <marker date="1461098450534" expanded="true" signature="977:1268" placeholder="..." />
+            <marker date="1461098450534" expanded="true" signature="1292:1459" placeholder="..." />
+            <marker date="1461098450534" expanded="true" signature="1544:1773" placeholder="..." />
+            <marker date="1461098450534" expanded="true" signature="1872:2088" placeholder="..." />
             <marker date="1461098450534" expanded="true" signature="2047:2087" placeholder="&quot;android.support.design.widget.AppBarLayout$ScrollingVie...&quot;" />
           </folding>
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
+      <provider selected="true" editor-type-id="android-designer">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DisplayWeeksFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.2258992">
+          <caret line="107" column="38" selection-start-line="107" selection-start-column="38" selection-end-line="107" selection-end-column="38" />
+          <folding>
+            <marker date="1460735359205" expanded="false" signature="27:528" placeholder="..." />
+            <marker date="1460735359205" expanded="true" signature="530:796" placeholder="/**...*/" />
+            <marker date="1460735359205" expanded="true" signature="1771:1855" placeholder="{...}" />
+            <marker date="1460735359205" expanded="true" signature="1934:2063" placeholder="{...}" />
+            <marker date="1460735359205" expanded="true" signature="2080:2103" placeholder="@{...}" />
+            <marker date="1460735359205" expanded="true" signature="2206:2542" placeholder="{...}" />
+            <marker date="1460735359205" expanded="true" signature="2654:3048" placeholder="{...}" />
+            <marker date="1460735359205" expanded="true" signature="3018:3040" placeholder="&quot;Days&quot;" />
+            <marker date="1460735359205" expanded="true" signature="3340:3736" placeholder="{...}" />
+            <marker date="1460735359205" expanded="true" signature="3777:3868" placeholder="{...}" />
+            <marker date="1460735359205" expanded="true" signature="4152:4189" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zyuki/daylies/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.9223021">
+          <caret line="182" column="51" selection-start-line="182" selection-start-column="51" selection-end-line="182" selection-end-column="51" />
+          <folding>
+            <marker date="1461098738354" expanded="true" signature="43:875" placeholder="..." />
+            <marker date="1461098738354" expanded="true" signature="876:1142" placeholder="/**...*/" />
+            <marker date="1461098738354" expanded="true" signature="1616:1639" placeholder="/**...*/" />
+            <marker date="1461098738354" expanded="true" signature="2178:2247" placeholder="/**...*/" />
+            <marker date="1461098738354" expanded="true" signature="2317:2936" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="2942:3014" placeholder="/**...*/" />
+            <marker date="1461098738354" expanded="true" signature="3079:3259" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="3265:3357" placeholder="/**...*/" />
+            <marker date="1461098738354" expanded="true" signature="3428:4073" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="3438:3634" placeholder="//..." />
+            <marker date="1461098738354" expanded="true" signature="4271:4341" placeholder="/**...*/" />
+            <marker date="1461098738354" expanded="true" signature="4388:4456" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="4638:4805" placeholder="/**...*/" />
+            <marker date="1461098738354" expanded="true" signature="4870:4942" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="4996:5086" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="5017:5040" placeholder="&quot;todos&quot;" />
+            <marker date="1461098738354" expanded="false" signature="5146:5157" placeholder=" { " />
+            <marker date="1461098738354" expanded="false" signature="5189:5195" placeholder=" }" />
+            <marker date="1461098738354" expanded="true" signature="5270:5328" placeholder="{...}" />
+            <marker date="1461098738354" expanded="false" signature="5384:5395" placeholder=" { " />
+            <marker date="1461098738354" expanded="false" signature="5426:5432" placeholder=" }" />
+            <marker date="1461098738354" expanded="true" signature="5715:5897" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="6168:6368" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="6415:6893" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="6668:6691" placeholder="&quot;todos&quot;" />
+            <marker date="1461098738354" expanded="true" signature="6738:6760" placeholder="&quot;Days&quot;" />
+            <marker date="1461098738354" expanded="true" signature="6806:6829" placeholder="&quot;Weeks&quot;" />
+            <marker date="1461098738354" expanded="true" signature="6956:7146" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="7194:7423" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="7451:7519" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="7547:7615" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="7920:9859" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="8607:8628" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="8939:8971" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="9036:9061" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="9151:9188" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="9501:9653" placeholder="{...}" />
+            <marker date="1461098738354" expanded="true" signature="9722:9853" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DisplayDaysFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.024460431">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding>
+            <marker date="1461098738366" expanded="true" signature="27:520" placeholder="..." />
+            <marker date="1461098738366" expanded="true" signature="522:788" placeholder="/**...*/" />
+            <marker date="1461098738366" expanded="true" signature="888:1109" placeholder="/**...*/" />
+            <marker date="1461098738366" expanded="true" signature="1743:1891" placeholder="{...}" />
+            <marker date="1461098738366" expanded="true" signature="2002:2393" placeholder="{...}" />
+            <marker date="1461098738366" expanded="true" signature="2399:2422" placeholder="@{...}" />
+            <marker date="1461098738366" expanded="true" signature="2525:2864" placeholder="{...}" />
+            <marker date="1461098738366" expanded="true" signature="2965:3445" placeholder="{...}" />
+            <marker date="1461098738366" expanded="true" signature="3754:3983" placeholder="{...}" />
+            <marker date="1461098738366" expanded="true" signature="4024:4117" placeholder="{...}" />
+            <marker date="1461098738366" expanded="true" signature="4160:4203" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/fragments/DisplayTodosFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16115108">
+          <caret line="90" column="52" selection-start-line="90" selection-start-column="52" selection-end-line="90" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

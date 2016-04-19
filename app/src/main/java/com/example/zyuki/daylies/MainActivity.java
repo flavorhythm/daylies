@@ -31,8 +31,6 @@ import utils.DateCalcs;
  *
  * Class used to facilitate
  **************************************************************************************************/
-//TODO: need to prevent slider from sliding when clicked
-//TODO: move slider elements into it's own fragment?
 public class MainActivity extends AppCompatActivity implements DisplayWeeksFragment.DataFromWeeks,
         DisplayTodosFragment.Callback, DisplayDaysFragment.Callback, DialogDeleteFragment.DelMethod,
         DialogInputFragment.InputMethods {

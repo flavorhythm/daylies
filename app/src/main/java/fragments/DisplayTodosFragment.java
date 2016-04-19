@@ -48,6 +48,9 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
     private View customView;
     private SharedPreferences prefs;
 
+    /***********************************************************************************************
+     * CONSTRUCTORS
+     **********************************************************************************************/
     /****/
     public DisplayTodosFragment() {}
 
@@ -66,6 +69,8 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+
     }
 
     /****/
@@ -74,8 +79,6 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         int layoutRes = R.layout.fragment_todos;
         customView = inflater.inflate(layoutRes, container, false);
-        prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
-
         findViewByIds();
 
         todoAdapter = new ToDoAdapter(getActivity());
