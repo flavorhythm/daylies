@@ -81,14 +81,15 @@ public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         int dayType = daysAdapter.getItemViewType(position);
-        int dayNum = daysAdapter.getItem(position).getDay().ordinal();
-
-        SharedPreferences.Editor prefEdit = getActivity()
-                .getPreferences(Context.MODE_PRIVATE).edit();
-        prefEdit.putInt(Constant.Prefs.PREF_KEY_DAY, dayNum);
-        prefEdit.apply();
 
         if(dayType != Constant.Adapter.TYPE_DIVIDER) {
+            int dayNum = daysAdapter.getItem(position).getDay().ordinal();
+
+            SharedPreferences.Editor prefEdit = getActivity()
+                    .getPreferences(Context.MODE_PRIVATE).edit();
+            prefEdit.putInt(Constant.Prefs.PREF_KEY_DAY, dayNum);
+            prefEdit.apply();
+
             dataPass.showToDoList(daysAdapter.getItem(position));
         }
     }
