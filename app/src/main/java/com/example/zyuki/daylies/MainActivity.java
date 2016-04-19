@@ -9,23 +9,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import data.DataAccessObject;
+import fragments.DialogDeleteFragment;
+import fragments.DialogInputFragment;
 import fragments.DisplayDaysFragment;
 import fragments.DialogRouter;
 import fragments.DisplayTodosFragment;
 import fragments.DisplayWeeksFragment;
+import models.Day;
 import models.DayName;
 import utils.Constant;
 import utils.DateCalcs;
@@ -37,7 +34,8 @@ import utils.DateCalcs;
 //TODO: need to prevent slider from sliding when clicked
 //TODO: move slider elements into it's own fragment?
 public class MainActivity extends AppCompatActivity implements DisplayWeeksFragment.DataFromWeeks,
-        TabLayout.OnTabSelectedListener, DisplayTodosFragment.DataFromTodos {
+        DisplayTodosFragment.Callback, DisplayDaysFragment.Callback, DialogDeleteFragment.DelMethod,
+        DialogInputFragment.InputMethods {
     /***********************************************************************************************
      * GLOBAL VARIABLES
      **********************************************************************************************/
@@ -47,10 +45,9 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
     private ViewPager viewPager;
     private ViewPagerAdapter pagerAdapter;
 
-    private SlidingUpPanelLayout slider;
-
     private DisplayDaysFragment daysFrag;
     private DisplayWeeksFragment weeksFrag;
+    private DisplayTodosFragment todosFrag;
 
     private SharedPreferences prefs;
 
@@ -77,9 +74,6 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
 
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setOnTabSelectedListener(this);
-
-        //TODO: add code here to prevent slider dragging?
     }
 
     /**Override method that creates the menu from layout >> menu_main.xml**/
@@ -119,33 +113,6 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         weeksFrag.buildYear();
     }
 
-    /**Override method for when the back button is pressed**/
-    @Override
-    public void onBackPressed() {
-        //If the slider wasn't retracted, collapse when the back button is pressed
-        if(!retractSlider()) {super.onBackPressed();}
-    }
-
-    /**Override method that is implemented from TabLayout.OnTabSelectedListener**/
-    /**Used to retract slider when tab is selected**/
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        //Retracts slider
-        retractSlider();
-        //Sets the viewPager's page (fragment) to the corresponding selected tab
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    /**Override method that is implemented from TabLayout.OnTabSelectedListener**/
-    /**Required to override but not used here**/
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {}
-
-    /**Override method that is implemented from TabLayout.OnTabSelectedListener**/
-    /**Used to retract slider when tab is reselected**/
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {retractSlider();}
-
     /**Override method that is implemented from fragments.DisplayTodosFragment.DataFromTodos**/
     /**Used in fragments.DisplayTodosFragment in the add/delete item methods**/
     /**Used to update the state of the days (within the week display) and weeks (within the
@@ -156,10 +123,27 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         updateWeeksFrag();
     }
 
-    /**Override method that is implemented from fragments.DisplayTodosFragment.DataFromTodos**/
-    /**Automatically expands the panel whenever a day is selected**/
     @Override
-    public void expandPanel() {slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);}
+    public void showToDoList(Day day) {
+        changePage(R.string.todosFragTitle);
+
+        todosFrag.showToDoList(day);
+    }
+
+    @Override
+    public void addLunchItem(String newToDo) {
+        todosFrag.addLunchItem(newToDo);
+    }
+
+    @Override
+    public void addDailyItem(String newToDo, int itemType) {
+        todosFrag.addDailyItem(newToDo, itemType);
+    }
+
+    @Override
+    public void removeItem(int position) {
+        todosFrag.removeItem(position);
+    }
 
     /***********************************************************************************************
      * PUBLIC METHODS
@@ -180,17 +164,17 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         viewPager = (ViewPager)findViewById(R.id.main_viewPager);
         tabLayout = (TabLayout)findViewById(R.id.main_tabLayout);
-
-        slider = (SlidingUpPanelLayout)findViewById(R.id.main_sliding);
     }
 
     /****/
     private void setupViewPager() {
+        todosFrag = new DisplayTodosFragment();
         daysFrag = new DisplayDaysFragment();
         weeksFrag = new DisplayWeeksFragment();
 
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+        pagerAdapter.addFragment(R.string.todosFragTitle, todosFrag);
         pagerAdapter.addFragment(R.string.daysFragTitle, daysFrag);
         pagerAdapter.addFragment(R.string.weeksFragTitle, weeksFrag);
 
@@ -201,32 +185,16 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
     private void updateDaysFrag(boolean hasTodos) {
         int dayPos = prefs.getInt(Constant.Prefs.PREF_KEY_DAY, Constant.ERROR);
         DayName day = DayName.values()[dayPos];
+
         daysFrag.notifyDataSetChanged(day, hasTodos);
     }
 
     /****/
     private void updateWeeksFrag() {
         DataAccessObject dataAccess = ((ApplicationDatabase)getApplicationContext()).dataAccess;
-        boolean hasTodos = dataAccess.weekHasTodos(
-                getYear(),
-                getWeek()
-        );
-        weeksFrag.notifyDataSetChanged(hasTodos);
-    }
+        boolean hasTodos = dataAccess.weekHasTodos(getYear(), getWeek());
 
-    /**Private method that retracts slider if expanded.**/
-    /**Returns true if collapsed, false otherwise**/
-    /**Used in override methods: onBackPressed, onTabSelected, and onTabReselected**/
-    private boolean retractSlider() {
-        boolean expanded = slider.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED;
-        boolean dragging = slider.getPanelState() == SlidingUpPanelLayout.PanelState.DRAGGING;
-        //If the slider is expanded, collapse when the back button is pressed
-        if(expanded || dragging) {
-            //Sets the slider state to collapsed
-            slider.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-            return true;
-            //If the panel is in any other state, run this method's Super
-        } else {return false;}
+        weeksFrag.notifyDataSetChanged(hasTodos);
     }
 
     private int getYear() {return prefs.getInt(Constant.Prefs.PREF_KEY_YEAR, Constant.ERROR);}
@@ -256,21 +224,15 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
          ******************************************************************************************/
         /****/
         @Override
-        public Fragment getItem(int position) {
-            return fragList.get(position);
-        }
+        public Fragment getItem(int position) {return fragList.get(position);}
 
         /****/
         @Override
-        public int getCount() {
-            return fragList.size();
-        }
+        public int getCount() {return fragList.size();}
 
         /****/
         @Override
-        public CharSequence getPageTitle(int position) {
-            return fragTitleList.get(position);
-        }
+        public CharSequence getPageTitle(int position) {return fragTitleList.get(position);}
 
         /*******************************************************************************************
          * PUBLIC METHODS
@@ -290,10 +252,4 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
             return fragTitleList.indexOf(title);
         }
     }
-
-//    class CustomSlidingPanel extends SlidingUpPanelLayout {
-//        public CustomSlidingPanel() {}
-//
-//
-//    }
 }

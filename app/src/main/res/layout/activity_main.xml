@@ -40,32 +40,12 @@
                 app:tabGravity="fill"/>
         </android.support.design.widget.AppBarLayout>
 
-        <com.sothree.slidinguppanel.SlidingUpPanelLayout
-            xmlns:sothree="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/main_sliding"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="bottom"
-            sothree:umanoDragView="@+id/main_fragment_slider"
-            sothree:umanoScrollableView="@+id/slider_list_toDoList"
-            sothree:umanoPanelHeight="10dp">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/main_viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-            <fragment
-                android:id="@+id/main_fragment_slider"
-                android:name="fragments.DisplayTodosFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout="@layout/slider_main" />
-
-            <!--<include layout="@layout/slider_main"/>-->
-
-        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

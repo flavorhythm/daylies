@@ -23,4 +23,5 @@
     <string name="divider_lunch">Lunchtime</string>
     <string name="divider_afterWork">After Work</string>
     <string name="divider_daily">Daily To Dos</string>
+    <string name="todosFragTitle">todos</string>
 </resources>

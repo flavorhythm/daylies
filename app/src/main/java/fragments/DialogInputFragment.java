@@ -1,6 +1,8 @@
 package fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
@@ -34,7 +36,7 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
     private EditText newToDoItem;
     private TextInputLayout newItemWrapper;
 
-    DisplayTodosFragment todosFragment;
+    private InputMethods dataPass;
 
     /***********************************************************************************************
      * CONSTRUCTORS
@@ -53,6 +55,14 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
     /***********************************************************************************************
      * OVERRIDE METHODS
      **********************************************************************************************/
+    /****/
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        dataPass = (InputMethods)context;
+    }
+
     /****/
     @Override
     public void onResume() {
@@ -80,9 +90,6 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        todosFragment = (DisplayTodosFragment)getFragmentManager()
-                .findFragmentById(R.id.main_fragment_slider);
-
         return customLayout;
     }
 
@@ -96,7 +103,7 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
                 if(!TextUtils.isEmpty(newToDoItem.getText())) {
                     itemText = newToDoItem.getText().toString();
 
-                    if(todosFragment != null) {todosFragment.addLunchItem(itemText);}
+                    dataPass.addLunchItem(itemText);
 
                     getDialog().dismiss();
                 } else {newItemWrapper.setError("cannot be blank");}
@@ -107,7 +114,7 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
                     int itemType = getArguments().getInt(BUNDLE_KEY_DAY_TYPE) == DAY_TYPE_WEEKDAY ?
                             Constant.Model.CONTENT_WORK : Constant.Model.CONTENT_DAILY;
 
-                    if(todosFragment != null) {todosFragment.addDailyItem(itemText, itemType);}
+                    dataPass.addDailyItem(itemText, itemType);
 
                     getDialog().dismiss();
                 } else {newItemWrapper.setError("cannot be blank");}
@@ -149,5 +156,10 @@ public class DialogInputFragment extends DialogFragment implements View.OnClickL
             lunchToDoBtn.setVisibility(View.VISIBLE);
             dailyToDoBtn.setText(getResources().getText(R.string.afterWorkToDo));
         }
+    }
+
+    public interface InputMethods {
+        void addLunchItem(String newToDo);
+        void addDailyItem(String newToDo, int itemType);
     }
 }

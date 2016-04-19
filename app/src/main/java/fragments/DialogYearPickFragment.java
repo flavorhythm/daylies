@@ -35,6 +35,7 @@ public class DialogYearPickFragment extends DialogFragment implements View.OnCli
 	 * CONSTRUCTORS
 	 **********************************************************************************************/
 	/****/
+	//TODO: remove text on todosfrag when year changes
 	//TODO: develop custom picker and replace numberpicker
 	public static DialogYearPickFragment newInstance(int year, int week) {
         Bundle args = new Bundle();

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.GridView;
 import com.example.zyuki.daylies.R;
 
 import adapters.DaysAdapter;
+import models.Day;
 import models.DayName;
 import utils.Constant;
 
@@ -27,7 +29,8 @@ public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemC
      * GLOBAL VARIABLES
      **********************************************************************************************/
     private DaysAdapter daysAdapter;
-    private DisplayTodosFragment todosFragment;
+
+    private Callback dataPass;
 
     /***********************************************************************************************
      * CONSTRUCTORS
@@ -37,6 +40,16 @@ public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemC
     /***********************************************************************************************
      * OVERRIDE METHODS
      **********************************************************************************************/
+    /****/
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        dataPass = (Callback)context; //Might not work because it is being implemented in another fragment
+    }
+
+    /****/
+
     //Runs before onCreateView
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,9 +61,6 @@ public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemC
         boolean emptyYear = prefs.contains(Constant.Prefs.PREF_KEY_YEAR);
         boolean emptyWeek = prefs.contains(Constant.Prefs.PREF_KEY_WEEK);
         if(emptyYear && emptyWeek) {buildWeek();}
-
-        todosFragment = (DisplayTodosFragment)getFragmentManager()
-                .findFragmentById(R.id.main_fragment_slider);
     }
 
     @Nullable
@@ -78,7 +88,7 @@ public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemC
         prefEdit.apply();
 
         if(dayType != Constant.Adapter.TYPE_DIVIDER) {
-            if(todosFragment != null) {todosFragment.showToDoList(daysAdapter.getItem(position));}
+            dataPass.showToDoList(daysAdapter.getItem(position));
         }
     }
 
@@ -99,5 +109,10 @@ public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemC
     public void buildWeek() {
         daysAdapter.finishBuildingWeek();
         daysAdapter.notifyDataSetChanged();
+    }
+
+    /****/
+    public interface Callback {
+        void showToDoList(Day day);
     }
 }

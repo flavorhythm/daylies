@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.example.zyuki.daylies.R;
 
+import java.util.ArrayList;
+
 import adapters.ToDoAdapter;
 import models.Day;
 import models.DayName;
@@ -41,10 +43,13 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
     private ToDoAdapter todoAdapter;
     private TextView todoDate;
 
-    private DataFromTodos dataPass;
+    private Callback dataPass;
 
     private View customView;
     private SharedPreferences prefs;
+
+    /****/
+    public DisplayTodosFragment() {}
 
     /***********************************************************************************************
      * OVERRIDE METHODS
@@ -55,14 +60,19 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        dataPass = (DataFromTodos)context;
+        dataPass = (Callback)context;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     /****/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        int layoutRes = R.layout.slider_main;
+        int layoutRes = R.layout.fragment_todos;
         customView = inflater.inflate(layoutRes, container, false);
         prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
 
@@ -70,7 +80,7 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
 
         todoAdapter = new ToDoAdapter(getActivity());
         todoList.setAdapter(todoAdapter);
-        todoList.setEmptyView(customView.findViewById(R.id.slider_text_emptyList));
+        todoList.setEmptyView(customView.findViewById(R.id.fragTodos_text_emptyList));
 
         todoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -82,28 +92,7 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
             }
         });
 
-//        todoList.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if(event.getAction() == MotionEvent.ACTION_CANCEL) {
-//                    Log.v("touchListCancelled", event.toString());
-//                    return true;
-//                } else {
-//                    Log.v("touchList", event.toString());
-//                    return false;
-//                }
-//            }
-//        });
-
         fab.setOnClickListener(this);
-
-        todoList.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.v("touch", event.toString());
-                return true;
-            }
-        });
 
         return customView;
     }
@@ -143,8 +132,6 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
 
         todoAdapter.buildList(getYear(), getWeek(), DayName.values()[getDay()]);
         todoAdapter.notifyDataSetChanged();
-
-        dataPass.expandPanel();
     }
 
     /****/
@@ -183,9 +170,9 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
      **********************************************************************************************/
     /****/
     private void findViewByIds() {
-        fab = (FloatingActionButton)customView.findViewById(R.id.slider_fab_addNewItem);
-        todoList = (ListView)customView.findViewById(R.id.slider_list_toDoList);
-        todoDate = (TextView)customView.findViewById(R.id.slider_text_date);
+        fab = (FloatingActionButton)customView.findViewById(R.id.fragTodos_fab_addNewItem);
+        todoList = (ListView)customView.findViewById(R.id.fragTodos_list_toDoList);
+        todoDate = (TextView)customView.findViewById(R.id.fragTodos_text_date);
     }
 
     /****/
@@ -210,8 +197,7 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
      * INNER CLASSES & INTERFACES
      **********************************************************************************************/
     /****/
-    public interface DataFromTodos {
+    public interface Callback {
         void updateFrags(boolean hasTodos);
-        void expandPanel();
     }
 }

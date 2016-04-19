@@ -1,7 +1,9 @@
 package fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +20,11 @@ import static utils.Constant.Fragment.*;
  * Class used to facilitate
  **************************************************************************************************/
 public class DialogDeleteFragment extends DialogFragment implements DialogInterface.OnClickListener {
-    private DisplayTodosFragment todosFragment;
+    /***********************************************************************************************
+     * GLOBAL VARIABLES
+     **********************************************************************************************/
+    /****/
+    private DelMethod dataPass;
     /***********************************************************************************************
      * CONSTRUCTORS
      **********************************************************************************************/
@@ -38,6 +44,14 @@ public class DialogDeleteFragment extends DialogFragment implements DialogInterf
      **********************************************************************************************/
     /****/
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        dataPass = (DelMethod)context;
+    }
+
+    /****/
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -55,10 +69,6 @@ public class DialogDeleteFragment extends DialogFragment implements DialogInterf
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        todosFragment = (DisplayTodosFragment)getFragmentManager().findFragmentById(
-                R.id.main_fragment_slider
-        );
-
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.title_deleteDialog)
                 .setPositiveButton(R.string.button_delete, this)
@@ -73,7 +83,7 @@ public class DialogDeleteFragment extends DialogFragment implements DialogInterf
             case Dialog.BUTTON_POSITIVE:
                 int position = getArguments().getInt(BUNDLE_KEY_ITEM_POS);
 
-                if(todosFragment != null) {todosFragment.removeItem(position);}
+                dataPass.removeItem(position);
 
                 dialog.dismiss();
                 break;
@@ -81,5 +91,9 @@ public class DialogDeleteFragment extends DialogFragment implements DialogInterf
                 dialog.dismiss();
                 break;
         }
+    }
+
+    public interface DelMethod {
+        void removeItem(int position);
     }
 }
