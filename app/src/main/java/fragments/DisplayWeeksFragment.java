@@ -54,7 +54,7 @@ public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        weeksAdapter = new WeeksAdapter(getActivity(), getContext());
+        weeksAdapter = new WeeksAdapter(getActivity());
         buildYear();
     }
 
@@ -105,7 +105,7 @@ public class DisplayWeeksFragment extends Fragment implements AdapterView.OnItem
 
     /****/
     public void buildYear() {
-        weeksAdapter.buildWeeksInYear();
+        weeksAdapter.getWeeksInYear();
         weeksAdapter.notifyDataSetChanged();
     }
 

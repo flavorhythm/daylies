@@ -47,15 +47,7 @@ public class DataAccessObject {
     public List<ToDo> getToDoList(final String yearWeekDay) {
         List<ToDo> toDoList = new ArrayList<>();
 
-        Cursor cursor = db.query(
-                TblToDo.TABLE_NAME.toString(),
-                TblToDo.ALL_COLUMNS,
-                TblToDo.YEAR_WEEK_DAY + " =?",
-                new String[] {yearWeekDay},
-                null,
-                null,
-                TblToDo.KEY_ID + " ASC"
-        );
+        Cursor cursor = getCursor(yearWeekDay);
 
         if(cursor.moveToFirst()) {
             do {
@@ -89,15 +81,7 @@ public class DataAccessObject {
 
     /****/
     public boolean dayHasTodos(final String yearWeekDay) {
-        Cursor cursor = db.query(
-                TblToDo.TABLE_NAME.toString(),
-                TblToDo.ALL_COLUMNS,
-                TblToDo.YEAR_WEEK_DAY + " =?",
-                new String[] {yearWeekDay},
-                null,
-                null,
-                TblToDo.KEY_ID + " ASC"
-        );
+        Cursor cursor = getCursor(yearWeekDay);
 
         boolean hasTodos = cursor.moveToFirst();
         cursor.close();
@@ -134,6 +118,22 @@ public class DataAccessObject {
         return db.delete(TblToDo.TABLE_NAME.toString(),
                 TblToDo.KEY_ID + " =?",
                 new String[] {String.valueOf(id)}
+        );
+    }
+
+    /***********************************************************************************************
+     * PRIVATE METHODS
+     **********************************************************************************************/
+    /****/
+    private Cursor getCursor(final String yearWeekDay) {
+        return db.query(
+                TblToDo.TABLE_NAME.toString(),
+                TblToDo.ALL_COLUMNS,
+                TblToDo.YEAR_WEEK_DAY + " =?",
+                new String[] {yearWeekDay},
+                null,
+                null,
+                TblToDo.KEY_ID + " ASC"
         );
     }
 }

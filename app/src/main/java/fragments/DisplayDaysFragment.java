@@ -42,7 +42,7 @@ public class DisplayDaysFragment extends Fragment implements AdapterView.OnItemC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        daysAdapter = new DaysAdapter(getActivity(), getContext());
+        daysAdapter = new DaysAdapter(getActivity());
 
         SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
         boolean emptyYear = prefs.contains(Constant.Prefs.PREF_KEY_YEAR);

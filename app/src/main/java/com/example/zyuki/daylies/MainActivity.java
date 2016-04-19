@@ -9,8 +9,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -53,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
     /***********************************************************************************************
      * OVERRIDE METHODS
      **********************************************************************************************/
-    /****/
+    /**Override method that runs once this Activity's lifecycle begins**/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,9 +78,11 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         setupViewPager();
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setOnTabSelectedListener(this);
+
+        //TODO: add code here to prevent slider dragging?
     }
 
-    /**Creates the menu from layout >> menu_main.xml**/
+    /**Override method that creates the menu from layout >> menu_main.xml**/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
             // Inflate the menu; this adds items to the action bar if it is present.
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
             return true;
     }
 
-    /**Routes the selected item menu to its correct corresponding action**/
+    /**Override method that routes the selected item menu to its correct corresponding action**/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -104,7 +110,9 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         return super.onOptionsItemSelected(item);
     }
 
-    /****/
+    /**Override method that is implemented from fragment.DisplayTodosFragment.DataFromTodos**/
+    /**This method rebuilds the week/year lists whenever there's a change in the display year**/
+    /**Used in override method fragments.DialogYearPickFragment.onClick**/
     @Override
     public void dataFromWeeks() {
         daysFrag.buildWeek();
@@ -118,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         if(!retractSlider()) {super.onBackPressed();}
     }
 
-    /**Override method to retract slider when tab is selected**/
+    /**Override method that is implemented from TabLayout.OnTabSelectedListener**/
+    /**Used to retract slider when tab is selected**/
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         //Retracts slider
@@ -127,22 +136,28 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
         viewPager.setCurrentItem(tab.getPosition());
     }
 
-    /**Override method required but not used here**/
+    /**Override method that is implemented from TabLayout.OnTabSelectedListener**/
+    /**Required to override but not used here**/
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {}
 
-    /**Override method to retract slider when tab is reselected**/
+    /**Override method that is implemented from TabLayout.OnTabSelectedListener**/
+    /**Used to retract slider when tab is reselected**/
     @Override
     public void onTabReselected(TabLayout.Tab tab) {retractSlider();}
 
-    /****/
+    /**Override method that is implemented from fragments.DisplayTodosFragment.DataFromTodos**/
+    /**Used in fragments.DisplayTodosFragment in the add/delete item methods**/
+    /**Used to update the state of the days (within the week display) and weeks (within the
+     * year display) with a mark that shows the user said day/week has todos**/
     @Override
     public void updateFrags(boolean daysHasTodos) {
         updateDaysFrag(daysHasTodos);
         updateWeeksFrag();
     }
 
-    /****/
+    /**Override method that is implemented from fragments.DisplayTodosFragment.DataFromTodos**/
+    /**Automatically expands the panel whenever a day is selected**/
     @Override
     public void expandPanel() {slider.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);}
 
@@ -275,4 +290,10 @@ public class MainActivity extends AppCompatActivity implements DisplayWeeksFragm
             return fragTitleList.indexOf(title);
         }
     }
+
+//    class CustomSlidingPanel extends SlidingUpPanelLayout {
+//        public CustomSlidingPanel() {}
+//
+//
+//    }
 }

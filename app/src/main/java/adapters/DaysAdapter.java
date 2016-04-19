@@ -46,24 +46,22 @@ public class DaysAdapter extends BaseAdapter {
     private List<Day> dayList;              //Stores the currently displayed list of days
 
     private Activity activity;              //Used in finishBuildingWeek for SharedPreferences
-    private Context context;                //Used in getView for view alterations
     private DataAccessObject dataAccess;    //Used to retrieve/put data into the database
 
     /***********************************************************************************************
      * CONSTRUCTORS
      **********************************************************************************************/
     /**One and only constructor**/
-    public DaysAdapter(Activity activity, Context context) {
+    public DaysAdapter(Activity activity) {
         //Inflates the layout from the passed activity variable
         inflater = LayoutInflater.from(activity);
-        //Saves context to a global variable to be used later (used in getView)
-        this.context = context;
-        //Saves activity to a global variable to be used later (used in finishBuildingWeek)
-        this.activity = activity;
         //Instantiates an arraylist to the todoList variable
         dayList = new ArrayList<>();
         //Points the global variable to the open dataAccess variable in ApplicationDatabase
         dataAccess = ((ApplicationDatabase)activity.getApplicationContext()).dataAccess;
+
+        //Saves activity to a global variable to be used later (used in finishBuildingWeek)
+        this.activity = activity;
     }
 
     /***********************************************************************************************
@@ -170,7 +168,10 @@ public class DaysAdapter extends BaseAdapter {
                 //Checks to see what day it is
                 if(DateCalcs.isCurrentDay(day.getDate())) {
                     //Highlights the item if it's the current day
-                    int whiteTextColor = ContextCompat.getColor(context, R.color.whiteText);
+                    int whiteTextColor = ContextCompat.getColor(
+                            activity.getApplicationContext(),
+                            R.color.whiteText
+                    );
 
                     viewHolder.itemGroup.setBackgroundResource(R.color.colorPrimary);
                     viewHolder.dayOfMonth.setTextColor(whiteTextColor);
@@ -178,7 +179,10 @@ public class DaysAdapter extends BaseAdapter {
                 } else {
                     //Reverts the item back to normal
                     //This is required since views are recycled
-                    int blackTextColor = ContextCompat.getColor(context, R.color.darkText);
+                    int blackTextColor = ContextCompat.getColor(
+                            activity.getApplicationContext(),
+                            R.color.darkText
+                    );
 
                     viewHolder.itemGroup.setBackgroundColor(Color.TRANSPARENT);
                     viewHolder.dayOfMonth.setTextColor(blackTextColor);
@@ -244,7 +248,6 @@ public class DaysAdapter extends BaseAdapter {
             //Sets the private variable of day to pass onto the list
             day.setType(TYPE_CONTENT);
             day.setDate(firstDateOfWeek.getTimeInMillis());
-            day.setYear(currentYear);
             day.setDay(DayName.values()[i]);
 
             //Creates the key yearWeekDay to search for todos for this day

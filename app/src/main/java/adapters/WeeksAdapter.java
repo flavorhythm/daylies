@@ -25,8 +25,6 @@ import models.WeeksInYear;
 import utils.Constant;
 import utils.DateCalcs;
 
-import static utils.Constant.Adapter.*;
-
 /***************************************************************************************************
  * Created by zyuki on 2/26/2016.
  *
@@ -42,38 +40,37 @@ public class WeeksAdapter extends BaseAdapter {
     private List<WeeksInYear> weeksList;
 
     private Activity activity;
-    private Context context;
     private DataAccessObject dataAccess;
 
     /***********************************************************************************************
      * CONSTRUCTORS
      **********************************************************************************************/
-    /****/
-    public WeeksAdapter(Activity activity, Context context) {
+    /**One and only constructor**/
+    public WeeksAdapter(Activity activity) {
         inflater = LayoutInflater.from(activity);
         dataAccess = ((ApplicationDatabase)activity.getApplicationContext()).dataAccess;
         weeksList = new ArrayList<>();
 
         this.activity = activity;
-        this.context = context;
     }
 
     /***********************************************************************************************
      * OVERRIDE METHODS
      **********************************************************************************************/
-    /****/
+    /**Override method that gets the number of elements within the list**/
     @Override
     public int getCount() {return weeksList.size();}
 
-    /****/
+    /**Override method that returns the item at the given position**/
     @Override
     public WeeksInYear getItem(int position) {return weeksList.get(position);}
 
-    /****/
+    /**Override method that returns the item ID of the item at the given position**/
+    /**Necessary to override. Not used within the app-specific classes of this app**/
     @Override
     public long getItemId(int position) {return position;}
 
-    /****/
+    /**Override method that returns a populated view to inject into the gridview**/
     @Override
     public View getView(int position, View row, ViewGroup parent) {
         int layoutRes = R.layout.row_weeks;
@@ -107,14 +104,14 @@ public class WeeksAdapter extends BaseAdapter {
 		//set to previous views will randomly be recycled into future views
 		//Changed from setting view to gone/visible to changing text content
         if(DateCalcs.isCurrentYearWeek(week)) {
-            int whiteTextColor = ContextCompat.getColor(context, R.color.whiteText);
+            int whiteTextColor = ContextCompat.getColor(activity.getApplicationContext(), R.color.whiteText);
 
             viewHolder.itemGroup.setBackgroundResource(R.color.colorPrimary);
             viewHolder.year.setTextColor(whiteTextColor);
             viewHolder.month.setTextColor(whiteTextColor);
             viewHolder.weekNum.setTextColor(whiteTextColor);
         } else {
-            int blackTextColor = ContextCompat.getColor(context, R.color.darkText);
+            int blackTextColor = ContextCompat.getColor(activity.getApplicationContext(), R.color.darkText);
 
             viewHolder.itemGroup.setBackgroundColor(Color.TRANSPARENT);
             viewHolder.year.setTextColor(blackTextColor);
@@ -128,7 +125,8 @@ public class WeeksAdapter extends BaseAdapter {
     /***********************************************************************************************
      * PUBLIC METHODS
      **********************************************************************************************/
-    /****/
+    /**Public method that finds the position of the item given the week**/
+    /**Used in public method fragments.DisplayWeeksFragment.notifyDataSetChanged**/
     public int getPosByWeek(int week) {
         if(week != Constant.ERROR) {
             for(int pos = 0; pos < getCount(); pos++) {
@@ -142,8 +140,9 @@ public class WeeksAdapter extends BaseAdapter {
         return Constant.ERROR;
     }
 
-    /****/
-    public void buildWeeksInYear() {
+    /**Public method that builds the list of weeks within the selected year**/
+    /**Used in public method fragments.DisplayWeeksFragment.buildYear**/
+    public void getWeeksInYear() {
         weeksList.clear();
 
         SharedPreferences prefs = activity.getPreferences(Context.MODE_PRIVATE);
@@ -185,7 +184,8 @@ public class WeeksAdapter extends BaseAdapter {
     /***********************************************************************************************
      * INNER CLASSES & INTERFACES
      **********************************************************************************************/
-    /****/
+    /**ViewHolder class that acts like a View Recycler**/
+    /**Used in override method getView**/
     private static class ViewHolder {
         RelativeLayout itemGroup;
 

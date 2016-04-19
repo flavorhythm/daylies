@@ -7,7 +7,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -46,6 +49,8 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
     /***********************************************************************************************
      * OVERRIDE METHODS
      **********************************************************************************************/
+    /**Override method that initializes an inner interface object**/
+    /**This method runs as soon as the fragment is attached to a ViewGroup**/
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -53,6 +58,7 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
         dataPass = (DataFromTodos)context;
     }
 
+    /****/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,7 +82,28 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
             }
         });
 
+//        todoList.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if(event.getAction() == MotionEvent.ACTION_CANCEL) {
+//                    Log.v("touchListCancelled", event.toString());
+//                    return true;
+//                } else {
+//                    Log.v("touchList", event.toString());
+//                    return false;
+//                }
+//            }
+//        });
+
         fab.setOnClickListener(this);
+
+        todoList.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.v("touch", event.toString());
+                return true;
+            }
+        });
 
         return customView;
     }
@@ -122,11 +149,7 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
 
     /****/
     public void addLunchItem(String newToDo) {
-        String yearWeekNum = DateCalcs.buildDateString(
-                getYear(),
-                getWeek(),
-                DayName.values()[getDay()]
-        );
+        String yearWeekNum = getYearWeekNum();
 
         todoAdapter.add(new ToDo(yearWeekNum, Constant.Model.CONTENT_LUNCH, newToDo));
         todoAdapter.notifyDataSetChanged();
@@ -137,11 +160,7 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
 
     /****/
     public void addDailyItem(String newToDo, int itemType) {
-        String yearWeekNum = DateCalcs.buildDateString(
-                getYear(),
-                getWeek(),
-                DayName.values()[getDay()]
-        );
+        String yearWeekNum = getYearWeekNum();
 
         todoAdapter.add(new ToDo(yearWeekNum, itemType, newToDo));
         todoAdapter.notifyDataSetChanged();
@@ -167,6 +186,15 @@ public class DisplayTodosFragment extends Fragment implements View.OnClickListen
         fab = (FloatingActionButton)customView.findViewById(R.id.slider_fab_addNewItem);
         todoList = (ListView)customView.findViewById(R.id.slider_list_toDoList);
         todoDate = (TextView)customView.findViewById(R.id.slider_text_date);
+    }
+
+    /****/
+    private String getYearWeekNum() {
+        return DateCalcs.buildDateString(
+                getYear(),
+                getWeek(),
+                DayName.values()[getDay()]
+        );
     }
 
     /****/
